@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% include 'shared/header_refrences.html' %}
+    {% block header_references %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% block content %}{% endblock %}
+    {% include 'shared/footer_refrences.html' %}
+    {% block footer_references %}{% endblock %}
+</body>
+</html>
