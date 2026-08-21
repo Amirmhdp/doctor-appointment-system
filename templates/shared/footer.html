@@ -1,0 +1,131 @@
+<footer class="flex flex-col justify-center gap-3 mt-5 px-7 py-7 bg-navy">
+  <div class="flex flex-col md:flex-row justify-center md:justify-between md:items-start md:border-b md:border-deep-blue py-4 gap-2.5">
+    {% comment %}info of medicare website{% endcomment %}
+    <div class="flex flex-col px-3 py-2 justify-center gap-3 border-b md:border-l md:border-b-0 border-deep-blue py-2 md:w-[30%]">
+      <div class="flex flex-row items-center gap-1">
+        <h2 class="text-primary-special text-2xl text font-bold">Medi<span class="text-white">Care</span></h2>
+        {% comment %} <img src="/static/images/logo.png" class="w-fit" alt="logo" /> {% endcomment %}
+      </div>
+      <p class="text-sm text-white text-right">مدی کر با ارائه خدمات پزشکی آنلاین و تسهیل نوبت گیری از پزشکان متخصص راه اندازی شده است. مادر کنار شما هستیم با تجربه ای سریع امن و مطمئن از خدمات درمانی داشته باشید</p>
+      <div class="grid grid-cols-2 gap-2">
+        <div class="flex flex-col justify-center items-center gap-1 px-2 py-2">
+          <i data-lucide="clock" class="w-10 h-10 lg:w-12 lg:h-12 p-2 text-royal-blue"></i>
+          <span class="text-sm lg:text-[16px] text-white font-bold text-center">پشتیبانی 24 ساعته</span>
+          <span class="text-xs lg:text-sm text-medium-gray text-center">ما هر زمان که نیاز داشته باشید در کنار شما هستم</span>
+        </div>
+        <div class="flex flex-col justify-center items-center px-2 py-2 gap-1">
+          <i data-lucide="shield-check" class="w-10 h-10 lg:w-12 lg:h-12 p-2 text-royal-blue"></i>
+          <span class="text-sm lg:text-[16px] text-white font-bold text-center">مراقبت مطمئن</span>
+          <span class="text-xs lg:text-sm text-medium-gray text-center">خدمات درمانی ایمن, قابل اعتماد و با کیفیت</span>
+        </div>
+      </div>
+    </div>
+    {% comment %}fast access link{% endcomment %}
+    <div class="md:hidden flex flex-col justify-center  list-none gap-3 border-b border-deep-blue py-2">
+      <span id="open-fast-link" class="text-[16px] text-white border border-deep-blue py-3 px-3 flex items-center justify-between cursor-pointer">
+        لینک های سریع
+        <i data-lucide="chevron-down" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+      </span>
+
+      <div id="list-fast-link" class="flex flex-col justify-center gap-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
+        <li class="text-white text-[15px] flex flex-row items-center gap-1 border-t border-deep-blue pt-2">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href="">خانه</a>
+        </li>
+        <li class="text-white text-[15px] flex flex-row items-center gap-1">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href="">لیست پزشکان</a>
+        </li>
+        <li class="text-white text-[15px] flex flex-row items-center gap-1">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>رزرو نوبت
+        </li>
+        <li class="text-white text-[15px] flex flex-row items-center gap-1">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>سوالات متداول
+        </li>
+        <li class="text-white text-[15px] flex flex-row items-center gap-1">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>قوانین و مقررات
+        </li>
+        <li class="text-white text-[15px] flex flex-row items-center gap-1">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>درباره ما
+        </li>
+        <li class="text-white text-[15px] flex flex-row items-center gap-1">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>تماس با ما
+        </li>
+      </div>
+    </div>
+    <div class="flex items-center justify-center  w-[30%] md:w-[17%] lg:w-[12%]">
+      <div class="hidden md:flex flex-col gap-3 md:w-full   justify-center list-none">
+        <span class="text-white text-[15px]">لینک های سریع</span>
+        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-[10px] transition-transform duration-300">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href="">خانه</a>
+        </li>
+        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-[10px] transition-transform duration-300">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href="">لیست پزشکان</a>
+        </li>
+        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-[10px] transition-transform duration-300">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>رزرو نوبت
+        </li>
+        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-[10px] transition-transform duration-300">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>سوالات متداول
+        </li>
+        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-[10px] transition-transform duration-300">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>قوانین و مقررات
+        </li>
+        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-[10px] transition-transform duration-300">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>درباره ما
+        </li>
+        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-[10px] transition-transform duration-300">
+          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+
+          <a href=""></a>تماس با ما
+        </li>
+      </div>
+    </div>
+    <div class="flex flex-col justify-between md:border-r px-2 py-1 border-deep-blue md:w-[30%]">
+      {% comment %}social media{% endcomment %}
+      <div class="flex flex-col justify-center gap-3 py-2 pb-4 border-b border-deep-blue">
+        <span class="text-white text-[15px] md:text-[17px]">ما را در شبکه های اجتماعی دنبال کنید</span>
+        <div class="flex items-center gap-2 w-full">
+          <a href="" class="p-2 lg:p-4 border border-dark-blue rounded-full w-[14%] md:w-[20%] lg:w-[14%]" alt="logo-linkedin"><img src="/static/images/linkedin-161-svgrepo-com.svg" /></a>
+          <a href="" class="p-2 lg:p-3 border border-dark-blue rounded-full w-[14%] md:w-[20%] lg:w-[14%]" alt="logo-linkedin"><img src="/static/images/telegram-svgrepo-com.svg" /></a>
+          <a href="" class="p-2 lg:p-3 border border-dark-blue rounded-full w-[14%] md:w-[20%] lg:w-[14%]" alt="logo-linkedin"><img src="/static/images/whatsapp-svgrepo-com (1).svg" /></a>
+          <a href="" class="p-2 border border-dark-blue rounded-full w-[14%] md:w-[20%] lg:w-[14%]" alt="logo-linkedin"><img src="/static/images/instagram-svgrepo-com.svg" /></a>
+        </div>
+      </div>
+      {% comment %}trust logo{% endcomment %}
+      <div class="flex items-center gap-2 px-2 py-4">
+        <a href="" class="w-[30%]"><img src="/static/images/enamad.png" alt="enmad-logo" /></a>
+        <a href="" class="w-[30%]"><img src="/static/images/etehadie-logo.webp" alt="etehadie-logo" /></a>
+      </div>
+    </div>
+  </div>
+  <div class="flex items-center justify-center gap-1">
+    <i data-lucide="copyright" class="w-5 h-5 text-white"></i>
+    <p class="text-white text-[15px]">کلیه‌ی حقوق این وبسایت متعلق به شرکت مدی کر می باشد</p>
+  </div>
+
+</footer>
