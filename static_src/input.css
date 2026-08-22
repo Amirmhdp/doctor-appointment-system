@@ -16,12 +16,14 @@
   --color-low-gray: #eaecf0;
   --color-medium-gray: #9ca3ae;
   --color-overlay-gray: #777879;
+  --color-light-gray: #e0e3e8;
   --color-custom-black: #1d2939;
   --color-light-blue: #e0edfd;
   --color-navy: #01173f;
   --color-royal-blue: #446cc5;
   --color-deep-blue: #08295a;
   --color-dark-blue: #09377d;
+  --color-slate-gray: #4e556a;
 
   /* font-family */
   --font-iran: "IRANSans", sans-serif;

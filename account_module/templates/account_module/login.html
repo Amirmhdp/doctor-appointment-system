@@ -1,0 +1,57 @@
+{% extends 'account_module/base_authentication.html' %}
+{% block title %}
+  ورود به حساب کاربری
+{% endblock %}
+
+{% block form_authentication %}
+  <div class="flex flex-col justify-center items-center gap-3 w-full md:w-120 md:border-2 md:border-light-gray md:rounded-lg md:py-5.25 md:px-6.5 lg:w-[43%] lg:border-none">
+    <div class="flex items-center justify-center -ml-12.5 mb-6">
+      <div class="flex flex-col justify-center">
+        <h2 class="text-primary-special text-2xl text font-bold">Medi<span class="text-primary-dark-blue">Care</span></h2>
+        <span class="text-sm text-slate-gray">خدمات پزشکی آنلاین</span>
+      </div>
+      <div>
+        <img src="/static/images/logo.png" class="w-27 -mr-6.25 -mt-1.5" alt="logo" />
+      </div>
+    </div>
+    <div class="flex flex-col justify-center items-center gap-2 mb-6">
+      <h1 class="text-2xl text-custom-black font-bold">به مدیکر خوش آمدید</h1>
+      <span class="text-sm text-slate-gray font-bold">برای ادامه وارد حساب کاربری خود شوید</span>
+    </div>
+    <form class="flex flex-col justify-between gap-4 w-[85%]">
+      <div class="flex w-full flex-col justify-center gap-1.5">
+        <label for="email-or-number" class="text-[15px] text-slate-gray font-bold">شماره موبایل</label>
+        <div class="flex items-center gap-1.5 border-2 border-light-gray px-3 py-2 rounded-lg focus-within:border-primary-special duration-150 ease-in">
+          <i data-lucide="user" class="w-5 h-5 text-slate-gray"></i>
+          <input class="w-full focus:outline-none focus:ring-0 outline-none h-full mt-0.75 border-none text-slate-gray text-sm placeholder:text-sm placeholder:text-gray-400 placeholder:font-bold" type="text" name="" id="email-or-number" />
+        </div>
+      </div>
+      <div class="flex w-full flex-col justify-center gap-1.5">
+        <label for="password-input" class="text-[15px] text-slate-gray font-bold">رمز عبور</label>
+        <div class="flex w-full items-center gap-2">
+          <div class="flex items-center gap-1.5 w-full border-2 border-light-gray px-3 py-2 rounded-lg focus-within:border-primary-special duration-150 ease-in">
+            <i data-lucide="lock-keyhole" class="w-5 h-5 text-slate-gray"></i>
+            <input id="password-input" class="w-full password-input focus:outline-none focus:ring-0 outline-none h-full mt-0.75 border-none text-slate-gray text-sm placeholder:text-sm placeholder:text-gray-400 placeholder:font-bold" placeholder="" type="password" name="" />
+          </div>
+          <button type="button" id="" class="cursor-pointer toggle-password"><i data-lucide="eye-off" class="w-11 h-11 text-slate-gray border-2 border-light-gray p-3 rounded-full"></i></button>
+        </div>
+      </div>
+
+      <div class="flex w-full flex-row items-center justify-between">
+        <div class="flex items-center gap-2">
+          <input type="checkbox" name="" class="cursor-pointer" id="remember-me" />
+          <label for="remember-me" class="text-sm text-slate-gray font-bold">مرا به خاطر بسپار</label>
+        </div>
+        <a href="" class="text-[13px] text-primary-special">رمز عبور خود را فراموش کرده اید؟</a>
+      </div>
+      <button type="submit" class="flex items-center justify-center gap-2 mt-2 cursor-pointer bg-primary-special hover:bg-primary-special/75 active:bg-primary-special/50 duration-150 ease-in-out text-white rounded-lg text-sm py-2.5 px-6">
+        <i data-lucide="log-in" class="w-5 h-5"></i>
+        ورود به حساب کاربری
+      </button>
+      <div class="flex items-center gap-1 mt-2">
+        <span class="text-sm text-slate-gray font-bold">حساب کاربری ندارید؟</span>
+        <a href="" class="text-sm text-primary-special font-bold">ثبت نام کنید</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}
