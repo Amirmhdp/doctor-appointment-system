@@ -9,38 +9,53 @@
 }
 
 @theme {
-  --color-primary-special: #0170fc;
-  --color-primary-dark-blue: #15203b;
-  --color-primary-blue-gray: #5d677e;
-  --color-primary-blue-hover: #1473f5;
-  --color-low-gray: #eaecf0;
-  --color-medium-gray: #9ca3ae;
-  --color-overlay-gray: #777879;
-  --color-light-gray: #e0e3e8;
-  --color-custom-black: #1d2939;
-  --color-light-blue: #e0edfd;
-  --color-navy: #01173f;
-  --color-royal-blue: #446cc5;
-  --color-deep-blue: #08295a;
-  --color-dark-blue: #09377d;
-  --color-slate-gray: #4e556a;
+    --color-primary-special: #0170fc;
+    --color-primary-dark-blue: #15203b;
+    --color-primary-blue-gray: #5d677e;
+    --color-primary-blue-hover: #1473f5;
+    --color-low-gray: #eaecf0;
+    --color-medium-gray: #9ca3ae;
+    --color-overlay-gray: #777879;
+    --color-light-gray: #e0e3e8;
+    --color-custom-black: #1d2939;
+    --color-light-blue: #e0edfd;
+    --color-navy: #01173f;
+    --color-royal-blue: #446cc5;
+    --color-deep-blue: #08295a;
+    --color-dark-blue: #09377d;
+    --color-slate-gray: #4e556a;
 
-  /* font-family */
-  --font-iran: "IRANSans", sans-serif;
+    /* font-family */
+    --font-iran: "IRANSans", sans-serif;
 
-  /* animation */
-  --animate-slide-up: slide-up 0.7s ease-out forwards;
+    /* animation */
+    --animate-slide-up: slide-up 0.7s ease-out forwards;
 
-  @keyframes slide-up {
-      from {
-          opacity: 0;
-          transform: translateY(50px);
-      }
+    @keyframes slide-up {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
 
-      to {
-          opacity: 1;
-          transform: translateY(0);
-      }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }
 
+/* datepicker style */
+
+@layer components {
+    .datepicker-plot-area {
+        font-family: "IRANSans", sans-serif !important;
+    }
+    .swiper {
+        width: 600px;
+        height: 300px;
+    }
+
+}
+
+
+/* infinite slider */
