@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'account_module',
+    'doctors_module',
     'django_render_partial'
 ]
 
