@@ -1,0 +1,473 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+  پروفایل پزشک
+{% endblock %}
+
+{% block content %}
+  <main class="mt-14 px-4 py-3 overflow-hidden">
+    <div class="flex items-center gap-2">
+      <a href="" class="text-sm text-slate-gray font-bold">خانه</a>
+      <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special"></i>
+      <a href="" class="text-sm text-slate-gray font-bold">پزشکان</a>
+      <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special"></i>
+      <a href="" class="text-sm text-slate-gray font-bold">دکتر علیرضا محمدی</a>
+    </div>
+    <div class="flex flex-col justify-center mt-3">
+      <div class="flex flex-col justify-center items-start gap-2.5 mt-3 md:rounded-lg md:px-3 md:py-3 md:shadow-[0_0_20px_#e0edfd]">
+        <div class="flex flex-col justify-center items-start gap-2.5 md:flex-row md:items-center lg:justify-start">
+          <div class="flex items-center justify-center md:items-start md:justify-center lg:justify-items-start md:w-[50%] lg:w-[35%]">
+            <img src="/static/images/doctor-blob.png" class="w-full sm:w-[60%] md:w-full" alt="doctor-blob" />
+          </div>
+          <div class="flex flex-col justify-center items-start gap-3 md:w-[50%] lg:w-[65%] lg:flex-row">
+            <div class="flex flex-col justify-center items-start gap-3 lg:w-[70%]">
+              <h1 class="text-lg text-custom-black font-bold lg:text-[21px]">دکتر علیرضا محمدی</h1>
+              <h4 class="text-sm text-slate-gray font-bold -mt-1 lg:text-[16px]">متخصص قلب و عروق</h4>
+              <div class="flex items-center gap-2">
+                <span class="flex items-center gap-1 text-sm text-custom-black font-bold">
+                  <img src="/static/images/star-svgrepo-com (2).svg" alt="star-icon" class="w-5 h-5" />
+                  4.8 (345 نظر)
+                </span>
+                <span class="text-sm text-custom-black font-bold border-r border-light-gray pr-2">12 سال تجربه</span>
+              </div>
+              <p class="text-sm text-slate-gray lg:text-[15px]">دکتر علیرضا محمدی متخصص قلب و عروق با بیش از ١٢ سال تجربه در زمینه نشخیص و درماں هیئ و هصتد اېسد ىوره تغخم خود را در دانشكاه علوم پزشكی تهران با موقفیت به يايان رساندهاند.</p>
+              <div class="lg:flex hidden items-center justify-between gap-4">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="hospital" class="w-10 h-10 text-primary-special border border-blue-300 p-2 rounded-lg"></i>
+                  <div class="flex flex-col justify-center gap-1">
+                    <span class="text-sm text-custom-black font-bold">مطب</span>
+                    <span class="text-xs text-slate-gray font-bold">تهران سعادت آباد</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i data-lucide="badge-check" class="w-10 h-10 text-primary-special border border-blue-300 p-2 rounded-lg"></i>
+                  <div class="flex flex-col justify-center gap-1">
+                    <span class="text-sm text-custom-black font-bold">شماره نظام پزشکی</span>
+                    <span class="text-xs text-slate-gray font-bold">123456</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i data-lucide="languages" class="w-10 h-10 text-primary-special border border-blue-300 p-2 rounded-lg"></i>
+                  <div class="flex flex-col justify-center gap-1">
+                    <span class="text-sm text-custom-black font-bold">زبان</span>
+                    <span class="text-xs text-slate-gray font-bold">فارسی انگلیسی</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-col justify-center items-center gap-2 w-full lg:w-[30%]">
+              <button id="booking-btn" class="flex items-center cursor-pointer justify-center gap-2 bg-primary-special text-sm text-white hover:bg-primary-special/75 py-2 px-3 w-full rounded-lg">
+                <i data-lucide="calendar-check" class="w-5 h-5 text-white"></i>
+                رزرو نوبت
+              </button>
+              <button class="flex items-center cursor-pointer justify-center gap-2 bg-white text-sm text-primary-special border border-primary-special py-2 px-3 w-full rounded-lg hover:bg-primary-special hover:text-white duration-200 ease-in-out">
+                <i data-lucide="heart" class="w-5 h-5 hover:text-white"></i>
+                افزودن به علاقه مندی
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col justify-center lg:flex-row lg:items-start lg:justify-between items-center gap-3">
+      <div class="flex flex-col md:flex-row md:w-full md:justify-between md:items-center lg:w-auto lg:flex-col lg:justify-center justify-center gap-2 mt-3">
+        <div class="flex md:w-[50%] lg:w-full flex-col justify-center gap-2 rounded-lg px-3 py-3 shadow-[0_0_20px_#e0edfd]">
+          <span class="flex items-center gap-1.5 text-[16px] text-custom-black font-bold"><i data-lucide="map-pin" class="w-9 h-9 p-2 bg-light-blue rounded-full text-primary-special"></i>اطلاعات مطب</span>
+          <span class="flex items-center gap-1.5 text-sm text-slate-gray font-bold border-b border-light-gray pb-2"><i data-lucide="map" class="w-11.25 h-10 p-2 bg-light-blue rounded-full text-primary-special"></i> تهران، سعادت آباد. ميدان كاج. خيابان سرو شرقى، يلاك ٢١٠. واحد</span>
+          <span class="flex items-center gap-1.5 text-sm text-slate-gray font-bold border-b border-light-gray pb-2"><i data-lucide="phone" class="w-9 h-9 p-2 bg-light-blue rounded-full text-primary-special"></i>١٣٣٣٥٢٧٨-٠٢١</span>
+          <span class="flex items-center gap-1.5 text-sm text-slate-gray font-bold border-b border-light-gray pb-2"><i data-lucide="smartphone" class="w-9 h-9 p-2 bg-light-blue rounded-full text-primary-special"></i>١٢٣-٠٩١٢-٥۶٧</span>
+          <span class="flex items-center gap-1.5 text-sm text-slate-gray font-bold border-b border-light-gray pb-2"><i data-lucide="mail" class="w-9 h-9 p-2 bg-light-blue rounded-full text-primary-special"></i>info@medicare.com</span>
+        </div>
+        <div class="flex md:w-[50%] lg:w-full flex-col justify-center gap-2 mt-3 rounded-lg px-3 py-3 shadow-[0_0_20px_#e0edfd]">
+          <span class="flex items-center gap-2 text-[16px] text-custom-black font-bold"><i data-lucide="clock" class="w-9 h-9 p-2 bg-light-blue rounded-full text-primary-special"></i>ساعات حضور</span>
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />شنبه</span>
+            <span class="text-sm text-slate-gray font-bold">8:00 - 14:00</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />یکشنبه</span>
+            <span class="text-sm text-slate-gray font-bold">16:00 - 20:00</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />دوشنبه</span>
+            <span class="text-sm text-slate-gray font-bold">12:00 - 16:00</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />سه شنبه</span>
+            <span class="text-sm text-slate-gray font-bold">8:00 - 14:00</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />چهارشنبه</span>
+            <span class="text-sm text-slate-gray font-bold">16:00 - 20:00</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />پنج شنبه</span>
+            <span class="text-sm text-slate-gray font-bold">12:00 - 16:00</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />جمعه</span>
+            <span class="text-sm text-slate-gray font-bold">تعطیل</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col justify-center gap-3 mt-3 w-full">
+        <div class="flex items-center gap-8 overflow-x-auto whitespace-nowrap pb-3 rounded-lg px-3 py-3 shadow-[0_0_20px_#e0edfd]">
+          <div class="cursor-pointer">
+            <span data-content="doctor-info" class="nav-item flex flex-col justify-center group text-primary-special text-custom-black text-sm font-bold hover:text-primary-special duration-200 ease-in-out">
+              <span>درباره پزشک</span>
+              <span class="nav-item-border mt-1 h-0.5 w-full w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+            </span>
+          </div>
+          <div class="cursor-pointer">
+            <span data-content="comments" class="nav-item flex flex-col justify-center group text-custom-black text-sm font-bold hover:text-primary-special duration-200 ease-in-out">
+              <span>نظرات کاربران (453)</span>
+              <span class="nav-item-border mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+            </span>
+          </div>
+          <div class="cursor-pointer">
+            <span data-content="faq-questions" class="nav-item flex flex-col justify-center group text-custom-black text-sm font-bold hover:text-primary-special duration-200 ease-in-out">
+              <span>سوالات متداول</span>
+              <span class="nav-item-border mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+            </span>
+          </div>
+        </div>
+        <div id="doctor-info" class="flex content-doctor flex-col justify-center rounded-lg px-3 py-3 shadow-[0_0_20px_#e0edfd]">
+          <div class="flex flex-col justify-center gap-3">
+            <span class="flex items-center gap-2 text-[16px] font-bold text-custom-black"><i data-lucide="hospital" class="w-10 h-10 text-primary-special border border-blue-300 p-2 rounded-lg"></i>درباره پزشک</span>
+            <p class="text-xs lg:text-sm leading-7 text-slate-gray font-bold">دكتر عليرضا محمدى صتخصصى فشب مشرسو عروق با بيش از ١٣ سال سابقه كار در زمينه تشخيص ودرمان بيمارى هاى قليى وعروقى مى باشند. ابشان در زمينه أنزيوكرافى. أكوكاردبوكرافى، تست ورنزش ودرمان نترستى قلبي شجربه بالشى كلزيد. ١٣٣٣٥٢٧٨-٠٢١ هدف دكتر محمدى اراله بهترين خدصات درمانى با رويكردى عامى وهمراه با همدلى با ببماران است.</p>
+          </div>
+          <div class="flex flex-col justify-center gap-3 mt-2">
+            <div class="flex flex-col justify-center gap-3">
+              <span class="text-[16px] text-custom-black flex items-center gap-2 font-bold"><i data-lucide="hospital" class="w-10 h-10 text-primary-special border border-blue-300 p-2 rounded-lg"></i>عضویت</span>
+              <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />عضو انجمن قلب ایران</span>
+              <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />عضو انجمن قلب و عروق جهان</span>
+              <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />عضو انجمن اكوكاردبوكرافى ايران</span>
+            </div>
+            <div class="flex flex-col justify-center gap-3">
+              <span class="text-[16px] text-custom-black flex items-center gap-1 font-bold"><i data-lucide="hospital" class="w-10 h-10 text-primary-special border border-blue-300 p-2 rounded-lg"></i>تحصیلات</span>
+              <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />دکترای تخصصی قلب و عروق</span>
+              <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" /> دانشكاه علوم بزشكى تهران</span>
+              <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img src="/static/images/circle-svgrepo-com.svg" class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle" />جوره فلوشيب فوق تخصصى اكوكاردبوكرافى</span>
+            </div>
+          </div>
+          <div class="flex flex-col justify-center gap-3 mt-2">
+            <span class="text-[16px] text-custom-black flex items-center gap-2 font-bold"><i data-lucide="hospital" class="w-10 h-10 text-primary-special border border-blue-300 p-2 rounded-lg"></i>بیماری های قابل درمان</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5">
+              <span class="text-sm text-slate-gray rounded-lg border border-light-gray font-bold text-center px-3 py-2">بیماری عروق کرونر</span>
+              <span class="text-sm text-slate-gray rounded-lg border border-light-gray font-bold text-center px-3 py-2">فشار خون بالا</span>
+              <span class="text-sm text-slate-gray rounded-lg border border-light-gray font-bold text-center px-3 py-2">نارسایی قلبی</span>
+              <span class="text-sm text-slate-gray rounded-lg border border-light-gray font-bold text-center px-3 py-2">کلسترول بالا</span>
+              <span class="text-sm text-slate-gray rounded-lg border border-light-gray font-bold text-center px-3 py-2">درد قفسه سینه</span>
+            </div>
+          </div>
+        </div>
+        <div id="comments" class="hidden content-doctor flex-col justify-center items-start gap-3.5 rounded-lg px-3 py-3 shadow-[0_0_20px_#e0edfd]">
+          <div class="flex items-center justify-between w-full">
+            <span class="text-sm text-custom-black font-bold flex items-center gap-2">
+              <i data-lucide="message-circle" class="w-11.25 h-10 p-2 bg-light-blue rounded-full text-primary-special"></i>
+              نظرات (543)
+            </span>
+            <button id="open-comment-box-btn" class="flex items-center gap-2 justify-center border border-primary-special text-primary-special rounded-lg px-4 py-1.5 hover:bg-primary-special cursor-pointer hover:text-white duration-200 ease-in-out transition-all group"><i data-lucide="message-square-plus" class="w-6 h-6 group-hover:text-white text-primary-special"></i>ثبت نظر</button>
+          </div>
+          <div class="w-full flex flex-col justify-center items-start gap-3 border border-light-gray px-3 py-2 rounded-lg">
+            <div class="flex items-center gap-2 w-full">
+              <i data-lucide="user" class="w-11.25 h-10 p-2 bg-light-blue rounded-full text-primary-special"></i>
+              <div class="flex items-start justify-between w-full">
+                <div class="flex flex-col justify-center items-start gap-2">
+                  <span class="text-sm text-custom-black font-bold">کاربر مدیکر</span>
+                  <div class="flex items-center gap-1">
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                  </div>
+                </div>
+                <span class="text-sm text-custom-black font-bold">1405/06/04</span>
+              </div>
+            </div>
+            <span class="flex items-center gap-2 text-slate-gray text-sm">
+              <i data-lucide="thumbs-up" class="w-5 h-5 text-green-600"></i>
+              این پزشک را پیشنهاد میکنم
+            </span>
+            <p class="text-sm text-custom-black font-bold w-full leading-6">بسیار طبیب حاذق و دانشمند و با صبر و حوصله فراوان تمام آزمایشات را مطالعه نمود و برای هر موردی اراِه طریق فرمودند سپاسگزارم</p>
+          </div>
+          <div class="w-full flex flex-col justify-center items-start gap-3 border border-light-gray px-3 py-2 rounded-lg">
+            <div class="flex items-center gap-2 w-full">
+              <i data-lucide="user" class="w-11.25 h-10 p-2 bg-light-blue rounded-full text-primary-special"></i>
+              <div class="flex items-start justify-between w-full">
+                <div class="flex flex-col justify-center items-start gap-2">
+                  <span class="text-sm text-custom-black font-bold">کاربر مدیکر</span>
+                  <div class="flex items-center gap-1">
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                  </div>
+                </div>
+                <span class="text-sm text-custom-black font-bold">1405/06/04</span>
+              </div>
+            </div>
+            <span class="flex items-center gap-2 text-slate-gray text-sm">
+              <i data-lucide="thumbs-up" class="w-5 h-5 text-green-600"></i>
+              این پزشک را پیشنهاد میکنم
+            </span>
+            <p class="text-sm text-custom-black font-bold w-full leading-6">بسیار طبیب حاذق و دانشمند و با صبر و حوصله فراوان تمام آزمایشات را مطالعه نمود و برای هر موردی اراِه طریق فرمودند سپاسگزارم</p>
+          </div>
+          <div class="w-full flex flex-col justify-center items-start gap-3 border border-light-gray px-3 py-2 rounded-lg">
+            <div class="flex items-center gap-2 w-full">
+              <i data-lucide="user" class="w-11.25 h-10 p-2 bg-light-blue rounded-full text-primary-special"></i>
+              <div class="flex items-start justify-between w-full">
+                <div class="flex flex-col justify-center items-start gap-2">
+                  <span class="text-sm text-custom-black font-bold">کاربر مدیکر</span>
+                  <div class="flex items-center gap-1">
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                    <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+                  </div>
+                </div>
+                <span class="text-sm text-custom-black font-bold">1405/06/04</span>
+              </div>
+            </div>
+            <span class="flex items-center gap-2 text-slate-gray text-sm">
+              <i data-lucide="thumbs-up" class="w-5 h-5 text-green-600"></i>
+              این پزشک را پیشنهاد میکنم
+            </span>
+            <p class="text-sm text-custom-black font-bold w-full leading-6">بسیار طبیب حاذق و دانشمند و با صبر و حوصله فراوان تمام آزمایشات را مطالعه نمود و برای هر موردی اراِه طریق فرمودند سپاسگزارم</p>
+          </div>
+          <span class="w-full cursor-pointer text-sm text-primary-special flex items-center gap-1 justify-center">
+            مشاهده بیشتر
+            <i data-lucide="chevron-down" class="w-5 h-5"></i>
+          </span>
+        </div>
+        <form id="send-comment-box" class="z-40 px-4 py-2.5 invisible opacity-0 transition-all duration-200 ease-in pointer-events-none flex-col items-center gap-5 fixed top-0 left-0 bottom-0 right-0 bg-white md:top-14 md:left-1/2 md:-translate-x-1/2 md:bottom-auto md:rounded-lg md:px-5">
+          <div class="w-full">
+            <span class="flex items-center gap-2 border-b pb-3 border-light-gray text-sm font-bold text-slate-gray">
+              <button type="button" class="cursor-pointer" id="close-commentbox"><i data-lucide="chevron-right" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i></button>
+              بازگشت
+            </span>
+          </div>
+          <div class="flex w-full items-center gap-3 bg-primary-special px-3 py-2 rounded-lg">
+            <img src="/static/images/XJnyiiQAUbuBBpgLppsdUEX4SNU5F3v45StIP52B.jpg" class="w-20 h-20 rounded-full p-2 border-2 border-white" alt="doctor-image" />
+            <div class="flex flex-col justify-center gap-2.5 w-full">
+              <h1 class="text-lg text-white font-bold">دکتر علی محمدی</h1>
+              <h3 class="text-sm text-white font-bold">ارتوپدی</h3>
+            </div>
+          </div>
+          <div class="flex w-full flex-col items-center justify-center gap-3">
+            <span class="text-[15px] text-custom-black font-bold">به تجربه‌تان از نوبت گرفته شده چه امتیازی می‌دهید؟</span>
+            <div class="flex items-center justify-center gap-2 w-full" dir="ltr">
+              <i data-lucide="star" data-rating="1" class="star stroke-primary-special w-8 h-8"></i>
+              <i data-lucide="star" data-rating="2" class="star stroke-primary-special w-8 h-8"></i>
+              <i data-lucide="star" data-rating="3" class="star stroke-primary-special w-8 h-8"></i>
+              <i data-lucide="star" data-rating="4" class="star stroke-primary-special w-8 h-8"></i>
+              <i data-lucide="star" data-rating="5" class="star stroke-primary-special w-8 h-8"></i>
+
+            </div>
+          </div>
+          <div class="flex w-full flex-col justify-between items-center gap-3">
+            <span class="text-[15px] text-custom-black font-bold">آیا دکتر را به سایر کاربران پیشنهاد می کنید؟</span>
+            <div class="flex items-center justify-between gap-3">
+              <button type="button" class="flex items-center justify-center gap-2 like-dislike-btn text-sm text-primary-special bg-white border border-primary-special px-4 py-2 rounded-lg group hover:bg-primary-special hover:text-white transition-all duration-300 cursor-pointer ease-in-out"><i data-lucide="thumbs-up" id="like" class="like-dislike-icon w-5 h-5 text-primary-special group-hover:text-white"></i>پیشنهاد میکنم</button>
+              <button type="button" class="flex items-center justify-center gap-2 like-dislike-btn text-sm text-primary-special bg-white border border-primary-special px-4 py-2 rounded-lg group hover:bg-primary-special hover:text-white transition-all duration-300 cursor-pointer ease-in-out"><i data-lucide="thumbs-down" id="dis-like" class="like-dislike-icon w-5 h-5 text-primary-special group-hover:text-white"></i>پیشنهاد نمیکنم</button>
+            </div>
+          </div>
+          <div class="w-full flex flex-col items-center justify-center gap-2">
+            <span class="text-[15px] text-custom-black font-bold">تجربە شما از این نوبت چطور بود؟</span>
+            <span class="text-[13px] text-slate-gray font-bold">لطفاً نظر خود را درباره‌ی دکتر، منشی و محیط مطب با ما و کاربران به اشتراک بگذارید.</span>
+            <textarea name="" rows="6" placeholder="اینجا بنویسید...." class="border border-light-gray p-2.5 text-sm text-custom-black w-full placeholder:text-sm placeholder:text-slate-gray rounded-lg outline-none focus:border-primary-special transition-all ease-in-out duration-300" id=""></textarea>
+          </div>
+          <button class="cursor-pointer text-sm text-primary-special bg-white px-4 py-2 border border-primary-special w-full rounded-lg hover:bg-primary-special hover:text-white transition-all duration-300 ease-in-out lg:w-[50%] mb-3">ثبت نظر</button>
+        </form>
+        <div id="faq-questions" class="hidden content-doctor flex-col justify-center items-start gap-3.5 rounded-lg px-3 py-3 shadow-[0_0_20px_#e0edfd]">
+          <span class="text-sm text-custom-black font-bold flex items-center gap-2">
+            <i data-lucide="message-circle" class="w-11.25 h-10 p-2 bg-light-blue rounded-full text-primary-special"></i>
+            سوالات متداول
+          </span>
+          <div class="w-full flex flex-col justify-center items-start gap-3 border border-light-gray px-3 py-2 rounded-lg pb-0">
+            <span class="faq-dropdown cursor-pointer text-sm text-custom-black font-bold flex items-center gap-2">
+              <i data-lucide="plus" class="plus-icon w-[14%] h-[18%] sm:w-8.75 sm:h-8.75 p-1.5 bg-light-blue rounded-full text-primary-special"></i>
+              چه زمانی باید برای مشکلات قلبی به متخصص قلب مراجعه کنم؟
+            </span>
+            <p class="answer-faq text-sm text-slate-gray font-bold leading-6 h-0 invisible opacity-0 duration-200 ease-in">اگر علائمی مثل درد یا فشار قفسه سینه، تپش قلب مکرر، تنگی نفس، سرگیجه یا سابقه بیماری قلبی دارید، بهتر است برای ارزیابی دقیق به متخصص قلب مراجعه کنید.</p>
+          </div>
+          <div class="w-full flex flex-col justify-center items-start gap-3 border border-light-gray px-3 py-2 rounded-lg pb-0">
+            <span class="faq-dropdown cursor-pointer text-sm text-custom-black font-bold flex items-center gap-2">
+              <i data-lucide="plus" class="plus-icon w-[14%] h-[18%] sm:w-8.75 sm:h-8.75 p-1.5 bg-light-blue rounded-full text-primary-special"></i>
+              چه زمانی باید برای مشکلات قلبی به متخصص قلب مراجعه کنم؟
+            </span>
+            <p class="answer-faq text-sm text-slate-gray font-bold leading-6 h-0 invisible opacity-0 duration-200 ease-in">اگر علائمی مثل درد یا فشار قفسه سینه، تپش قلب مکرر، تنگی نفس، سرگیجه یا سابقه بیماری قلبی دارید، بهتر است برای ارزیابی دقیق به متخصص قلب مراجعه کنید.</p>
+          </div>
+          <div class="w-full flex flex-col justify-center items-start gap-3 border border-light-gray px-3 py-2 rounded-lg pb-0">
+            <span class="faq-dropdown cursor-pointer text-sm text-custom-black font-bold flex items-center gap-2">
+              <i data-lucide="plus" class="plus-icon w-[14%] h-[18%] sm:w-8.75 sm:h-8.75 p-1.5 bg-light-blue rounded-full text-primary-special"></i>
+              چه زمانی باید برای مشکلات قلبی به متخصص قلب مراجعه کنم؟
+            </span>
+            <p class="answer-faq text-sm text-slate-gray font-bold leading-6 h-0 invisible opacity-0 duration-200 ease-in">اگر علائمی مثل درد یا فشار قفسه سینه، تپش قلب مکرر، تنگی نفس، سرگیجه یا سابقه بیماری قلبی دارید، بهتر است برای ارزیابی دقیق به متخصص قلب مراجعه کنید.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="booking-list" class="invisible opacity-0 transition-all duration-200 ease-in pointer-events-none fixed z-40 top-0 bottom-0 left-0 right-0 md:top-14 md:left-1/2 md:-translate-x-1/2 md:bottom-auto md:rounded-lg md:px-5 bg-white flex flex-col items-center gap-6.25 px-3 py-2 md:w-fit lg:py-5 lg:px-6.25">
+      <div class="w-full">
+        <span class="flex items-center gap-2 border-b pb-3 border-light-gray text-sm font-bold text-slate-gray">
+          <button type="button" class="cursor-pointer" id="close-booking-list"><i data-lucide="chevron-right" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i></button>
+          بازگشت
+        </span>
+      </div>
+      <div class="flex items-start gap-4 w-full">
+        <img src="/static/images/XJnyiiQAUbuBBpgLppsdUEX4SNU5F3v45StIP52B.jpg" class="w-14.5 h-14.5 md:w-16.25 md:h-16.25 rounded-full" alt="doctor-img" />
+        <div class="flex flex-col justify-center gap-2">
+          <span class="text-[16px] text-custom-black font-bold">دکتر علیرضا محمدی</span>
+          <span class="text-[13px] leading-6 text-slate-gray font-bold flex items-start gap-2">اصفهان، چهارراه توحید، ابتدای توحید شمالی، جنب تاکسی بی سیم، ساختمان آوین، طبقه اول، واحد 2</span>
+        </div>
+      </div>
+
+      <!-- Slider main container -->
+      <div class="swiper special-list w-full h-fit mt-5">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper flex! items-center!">
+          <!-- Slides -->
+
+          <div data-booking-id="booking-appoiment-1" class="cursor-pointer group bock-day-btn flex! flex-col! w-fit! justify-center items-center border swiper-slide border-primary-special border-light-gray rounded-lg gap-2 px-3 py-2 hover:border-primary-special duration-200 ease-in-out">
+            <span class="text-xs text-primary-special text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">شنبه</span>
+            <span class="text-sm text-primary-special text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">7 شهریور</span>
+            <span class="text-xs text-primary-special text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">35 نوبت</span>
+          </div>
+          <div data-booking-id="booking-appoiment-2" class="cursor-pointer group bock-day-btn flex! flex-col! w-fit! justify-center items-center border swiper-slide border-light-gray rounded-lg gap-2 px-3 py-2 hover:border-primary-special duration-200 ease-in-out">
+            <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">سه شنبه</span>
+            <span class="text-sm text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">4 مهر</span>
+            <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">35 نوبت</span>
+          </div>
+          <div data-booking-id="booking-appoiment-3" class="cursor-pointer group bock-day-btn flex! flex-col! w-fit! justify-center items-center border swiper-slide border-light-gray rounded-lg gap-2 px-3 py-2 hover:border-primary-special duration-200 ease-in-out">
+            <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">دوشنبه</span>
+            <span class="text-sm text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">9 آبان</span>
+            <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">35 نوبت</span>
+          </div>
+          <div data-booking-id="booking-appoiment-4" class="cursor-pointer group bock-day-btn flex! flex-col! w-fit! justify-center items-center border swiper-slide border-light-gray rounded-lg gap-2 px-3 py-2 hover:border-primary-special duration-200 ease-in-out">
+            <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">پنج شنبه</span>
+            <span class="text-sm text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">7 آذر</span>
+            <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">35 نوبت</span>
+          </div>
+        </div>
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
+        <div class="swiper-button-next text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
+      </div>
+
+      {% comment %} <div class="grid grid-cols-4 w-full gap-2">
+        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
+          <span class="text-xs text-custom-black font-bold">شنبه</span>
+          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
+          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
+        </div>
+        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
+          <span class="text-xs text-custom-black font-bold">شنبه</span>
+          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
+          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
+        </div>
+        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
+          <span class="text-xs text-custom-black font-bold">شنبه</span>
+          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
+          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
+        </div>
+        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
+          <span class="text-xs text-custom-black font-bold">شنبه</span>
+          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
+          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
+        </div>
+        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
+          <span class="text-xs text-custom-black font-bold">شنبه</span>
+          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
+          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
+        </div>
+      </div> {% endcomment %}
+
+      <div class="flex flex-col justify-center gap-3 w-full">
+        <div class="grid grid-cols-4 w-full gap-2 booking-appoiment" id="booking-appoiment-1">
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+        </div>
+        <div class="hidden grid-cols-4 w-full gap-2 booking-appoiment" id="booking-appoiment-2">
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">17:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">18:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">19:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">20:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">21:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">22:20</span>
+          </div>
+        </div>
+        <div class="hidden grid-cols-4 w-full gap-2 booking-appoiment" id="booking-appoiment-3">
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+        </div>
+        <div class="hidden grid-cols-4 w-full gap-2 booking-appoiment" id="booking-appoiment-4">
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+          <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
+            <span class="text-sm text-custom-black font-bold">16:20</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

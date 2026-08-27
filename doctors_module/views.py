@@ -6,3 +6,6 @@ from django.views.generic import TemplateView
 
 class DoctorListView(TemplateView):
     template_name = 'doctors_module/doctors_list_page.html'
+    
+class DoctorProfileView(TemplateView):
+    template_name = 'doctors_module/doctor_profile.html'

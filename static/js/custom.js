@@ -251,7 +251,7 @@ if (searchBox && searchIcon && overlay) {
 if (searchBox && closeIconSearchBox) {
 
     closeIconSearchBox.addEventListener('click', () => {
-        searchBox.classList.remove('opacity-100', 'visible' , 'pointer-events-auto');
+        searchBox.classList.remove('opacity-100', 'visible', 'pointer-events-auto');
         searchBox.classList.add('opacity-0', 'invisible', 'pointer-events-none');
         overlay.classList.remove('opacity-100', 'visible');
         overlay.classList.add('opacity-0', 'invisible');
@@ -306,3 +306,272 @@ if (searchInput && clearInputBtn && resultSearch && trendSearch) {
 
     })
 }
+
+
+// faq dropdown
+const answerFaq = document.querySelectorAll('.answer-faq');
+const faqDropdowns = document.querySelectorAll('.faq-dropdown');
+
+if (answerFaq && faqDropdowns) {
+    faqDropdowns.forEach(dropdown => {
+
+        dropdown.addEventListener('click', () => {
+
+            const answer = dropdown.nextElementSibling;
+            const plusIcon = dropdown.querySelector('.plus-icon');
+
+            const isClosed = answer.classList.contains('h-0');
+
+            if (isClosed) {
+
+
+                answer.classList.remove(
+                    'invisible',
+                    'opacity-0',
+                    'h-0'
+                );
+
+                answer.classList.add(
+                    'visible',
+                    'opacity-100',
+                    'h-fit'
+                );
+
+                plusIcon.setAttribute('data-lucide', 'minus');
+
+            } else {
+
+
+                answer.classList.remove(
+                    'visible',
+                    'opacity-100',
+                    'h-fit'
+                );
+
+                answer.classList.add(
+                    'invisible',
+                    'opacity-0',
+                    'h-0'
+                );
+
+                plusIcon.setAttribute('data-lucide', 'plus');
+            }
+
+            lucide.createIcons();
+
+        });
+
+    });
+}
+
+
+const navItems = document.querySelectorAll('.nav-item');
+const doctorContent = document.querySelectorAll('.content-doctor');
+
+
+// navigation info doctor page
+if (doctorContent && navItems) {
+    navItems.forEach(navItem => {
+
+        navItem.addEventListener('click', () => {
+
+            navItems.forEach(item => {
+
+                item.classList.remove('text-primary-special');
+
+                const border = item.querySelector('.nav-item-border');
+
+                border.classList.remove('w-full');
+                border.classList.add('w-0');
+
+            });
+
+            // فعال کردن آیتم کلیک شده
+            navItem.classList.add('text-primary-special');
+
+            const border = navItem.querySelector('.nav-item-border');
+
+            border.classList.remove('w-0');
+            border.classList.add('w-full');
+
+            const getContent = navItem.dataset.content;
+
+            const content = document.getElementById(getContent);
+            console.log(content);
+
+
+            doctorContent.forEach(con => {
+                con.classList.add('hidden');
+                con.classList.remove('flex');
+            })
+            content.classList.remove('hidden');
+            content.classList.add('flex');
+
+        });
+
+    });
+}
+
+// appoiment booking
+
+const bockDayBtns = document.querySelectorAll('.bock-day-btn');
+const bookingAppoimentContents = document.querySelectorAll('.booking-appoiment');
+
+if (bockDayBtns) {
+    bockDayBtns.forEach(bockDayBtn => {
+
+        bockDayBtn.addEventListener('click', () => {
+
+            bockDayBtns.forEach(btn => {
+
+                btn.classList.remove('border-primary-special');
+
+                const contentBockBtns =
+                    btn.querySelectorAll('.content-boock-day-btn');
+
+                contentBockBtns.forEach(content => {
+                    content.classList.remove('text-primary-special');
+                });
+
+            });
+
+            bockDayBtn.classList.add('border-primary-special');
+
+            const contentBockBtns =
+                bockDayBtn.querySelectorAll('.content-boock-day-btn');
+
+            contentBockBtns.forEach(content => {
+                content.classList.add('text-primary-special');
+            });
+            bookingAppoimentContents.forEach(bookingAppoimentContent => {
+                bookingAppoimentContent.classList.add('hidden');
+            })
+            const getbookingAppoimentId = bockDayBtn.dataset.bookingId;
+            const bookingAppoimenId = document.getElementById(getbookingAppoimentId);
+            bookingAppoimenId.classList.remove('hidden');
+            bookingAppoimenId.classList.add('grid');
+
+
+        });
+
+    });
+}
+
+// open close booking appoiment
+
+const bookingBtn = document.getElementById('booking-btn');
+const bookingList = document.getElementById('booking-list');
+const closeBookingList = document.getElementById('close-booking-list');
+bookingBtn.addEventListener('click', () => {
+    bookingList.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+    bookingList.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+    overlay.classList.remove('opacity-0', 'invisible');
+    overlay.classList.add('opacity-100', 'visible');
+    body.style.overflow = 'hidden'
+})
+closeBookingList.addEventListener('click', () => {
+    bookingList.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+    bookingList.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+    overlay.classList.add('opacity-0', 'invisible');
+    overlay.classList.remove('opacity-100', 'visible');
+    body.style.overflow = 'auto'
+})
+overlay.addEventListener('click', () => {
+    bookingList.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+    bookingList.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+    overlay.classList.add('opacity-0', 'invisible');
+    overlay.classList.remove('opacity-100', 'visible');
+    body.style.overflow = 'auto'
+})
+
+
+// open close commentbox
+
+const openCommentBoxBtn = document.getElementById('open-comment-box-btn');
+const sendCommentBox = document.getElementById('send-comment-box');
+const closeCommentBox = document.getElementById('close-commentbox');
+
+if (openCommentBoxBtn, sendCommentBox, closeCommentBox) {
+    openCommentBoxBtn.addEventListener('click', () => {
+        sendCommentBox.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        sendCommentBox.classList.add('visible', 'opacity-100', 'pointer-events-auto', 'flex');
+        overlay.classList.add('visible', 'opacity-100');
+        overlay.classList.remove('invisible', 'opacity-0');
+        body.style.overflow = 'hidden';
+    });
+    closeCommentBox.addEventListener('click', () => {
+        sendCommentBox.classList.remove('visible', 'opacity-100', 'pointer-events-auto', 'flex');
+        sendCommentBox.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto';
+    })
+    overlay.addEventListener('click', () => {
+        sendCommentBox.classList.remove('visible', 'opacity-100', 'pointer-events-auto', 'flex');
+        sendCommentBox.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto';
+    })
+};
+
+// rating ui for commentbox
+
+const stars = document.querySelectorAll('.star');
+
+stars.forEach(star => {
+
+    star.addEventListener('click', () => {
+
+        const ratingNumber = Number(star.dataset.rating);
+
+        stars.forEach(item => {
+
+            const itemRating = Number(item.dataset.rating);
+
+
+            if (itemRating <= ratingNumber) {
+                item.classList.add('fill-primary-special');
+            } else {
+                item.classList.remove('fill-primary-special');
+            }
+
+        });
+
+    });
+
+});
+
+// like dislike btn
+
+const likeDisLikeBtns = document.querySelectorAll('.like-dislike-btn');
+const likeDisLikeIcon = document.querySelectorAll('.like-dislike-icon');
+
+likeDisLikeBtns.forEach(likeDisLikeBtn => {
+    likeDisLikeBtn.addEventListener('click', () => {
+        likeDisLikeBtns.forEach(btn => {
+            btn.classList.remove('bg-primary-special', 'text-white');
+            btn.classList.add('bg-white', 'text-primary-special');
+            const icon = btn.querySelector('.like-dislike-icon');
+            icon.classList.remove('text-white');
+            icon.classList.add('text-primary-special');
+        })
+        likeDisLikeBtn.classList.add('bg-primary-special', 'text-white');
+        likeDisLikeBtn.classList.remove('bg-white', 'text-primary-special');
+        const icon = likeDisLikeBtn.querySelector('.like-dislike-icon');
+        icon.classList.remove('text-primary-special');
+        icon.classList.add('text-white');
+    })
+})
+
+const dayAppoiments = document.querySelectorAll('.booking-appoiment-item');
+dayAppoiments.forEach(dayAppoiment => {
+    dayAppoiment.addEventListener('click', () => {
+        dayAppoiments.forEach(item => {
+            item.classList.remove('border-primary-special');
+            item.classList.add('border-light-gray');
+        })
+        dayAppoiment.classList.add('border-primary-special');
+        dayAppoiment.classList.remove('border-light-gray');
+    })
+})
