@@ -1,0 +1,1067 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+  داشبورد پزشک
+{% endblock %}
+
+{% block content %}
+  <main class="mt-14 flex flex-col justify-center items-start gap-3 md:flex-row md:items-start px-3 py-2">
+    <div class="flex items-start flex-col justify-center gap-5 w-full md:w-[35%] lg:w-[23%] md:px-3 md:py-3.5 md:shadow-[0_0_20px_#e0edfd] md:mt-4 md:rounded-lg">
+      <aside class="flex flex-col w-full bg-white border-l border-slate-100 md:p-5 shrink-0">
+        <!-- Doctor info card -->
+        <div class="hidden md:flex w-full items-center gap-3 bg-primary-special px-3 py-2 rounded-lg mb-6">
+          <img src="https://i.pravatar.cc/160?img=68" class="w-12 h-12 rounded-full p-0.5 border-2 border-white object-cover" alt="doctor-image" />
+          <div class="flex flex-col justify-center gap-1 w-full">
+            <h1 class="text-sm text-white font-bold">دکتر علی محمدی</h1>
+            <h3 class="text-xs text-white font-bold opacity-90">ارتوپدی</h3>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="flex-1 h-13.75 space-y-1 w-full fixed bottom-0 right-0 left-0 z-10 md:static bg-white flex items-center overflow-x-auto md:flex-col md:z-0 md:items-start">
+          <button data-panel-id="dashboard" class="item-nav-panel w-full cursor-pointer whitespace-nowrap flex items-center gap-3 px-3 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium group hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 icon-docotr-panel group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+            </svg>داشبورد
+          </button>
+          <button data-panel-id="patients" class="item-nav-panel w-full cursor-pointer whitespace-nowrap flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:bg-blue-600 hover:text-white group text-sm transition-all duration-300 ease-in-out">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 icon-docotr-panel group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>بیماران
+          </button>
+          <button data-panel-id="appoiment" class="item-nav-panel w-full cursor-pointer whitespace-nowrap flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:bg-blue-600 hover:text-white group text-sm transition-all duration-300 ease-in-out">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 icon-docotr-panel group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>نوبت‌ها
+          </button>
+          <button data-panel-id="manage-visit-time" class="item-nav-panel w-full cursor-pointer whitespace-nowrap flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:bg-blue-600 hover:text-white group text-sm transition-all duration-300 ease-in-out">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 icon-docotr-panel group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>زمان ویزیت
+          </button>
+          <button data-panel-id="doctor-profile" class="item-nav-panel w-full cursor-pointer whitespace-nowrap flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-500 hover:bg-blue-600 hover:text-white group text-sm transition-all duration-300 ease-in-out">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 icon-docotr-panel group-hover:text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="7" r="4" />
+              <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+            </svg>پروفایل
+          </button>
+          <!-- Logout -->
+          <a href="#" style="margin-top: 0px;" class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-slate-500 hover:bg-red-50 hover:text-red-600 text-sm md:mt-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
+            </svg>خروج
+          </a>
+        </nav>
+      </aside>
+    </div>
+    <div class="w-full lg:w-[80%] md:w-[65%] px-3 md:py-3.5 shadow-[0_0_20px_#e0edfd] md:mt-4 mt-0 pt-0 rounded-lg">
+      <div class="mt-4 doctor-info-panel" id="dashboard">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-3 py-2 md:py-5">
+          <div>
+            <h1 class="text-2xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">سلام دکتر علی محمدی <span>👋</span></h1>
+            <p class="text-slate-500 text-sm mt-1 md:hidden lg:inline">به پنل مدیریت مطب خوش آمدید. در اینجا می‌توانید وضعیت نوبت‌های مطب خود را مدیریت کنید.</p>
+          </div>
+        </div>
+        <!-- ============ STAT CARDS ROW (4 cards) ============ -->
+        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <!-- Card: بیماران امروز -->
+          <div class="bg-white rounded-2xl p-5 flex flex-col justify-center items-center px-3 py-3.5 shadow-[0_0_20px_#e0edfd]">
+            <div class="w-11 h-11 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+              <i data-lucide="users" class="w-5 h-5 text-blue-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-800">125</div>
+            <div class="text-sm text-slate-500 mt-1">بیماران امروز</div>
+          </div>
+          <!-- Card: نوبت‌های امروز -->
+          <div class="bg-white rounded-2xl p-5 flex flex-col justify-center items-center px-3 py-3.5 shadow-[0_0_20px_#e0edfd]">
+            <div class="w-11 h-11 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+              <i data-lucide="calendar" class="w-5 h-5 text-blue-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-800">32</div>
+            <div class="text-sm text-slate-500 mt-1">نوبت‌های امروز</div>
+          </div>
+
+          <!-- Card: نوبت های انجام شده -->
+          <div class="bg-white rounded-2xl p-5 flex flex-col justify-center items-center px-3 py-3.5 shadow-[0_0_20px_#e0edfd]">
+            <div class="w-11 h-11 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+              <i data-lucide="CalendarCheck2" class="w-5 h-5 text-blue-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-800">21</div>
+            <div class="text-sm text-slate-500 mt-1">نوبت های تکمیل شده</div>
+          </div>
+
+          <!-- Card: رضایت بیماران -->
+          <div class="bg-white rounded-2xl p-5 flex flex-col justify-center items-center px-3 py-3.5 shadow-[0_0_20px_#e0edfd]">
+            <div class="w-11 h-11 rounded-full bg-blue-50 flex items-center justify-center mb-4">
+              <i data-lucide="heart" class="w-5 h-5 text-blue-600"></i>
+            </div>
+            <div class="text-2xl font-bold text-slate-800">98%</div>
+            <div class="text-sm text-slate-500 mt-1">رضایت بیماران</div>
+          </div>
+        </div>
+        <!-- ============ THREE-COLUMN ROW: today / chart / upcoming ============ -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <div class="bg-white rounded-2xl p-5 px-3 py-3.5 shadow-[0_0_20px_#e0edfd] mt-4">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="font-bold text-slate-800">نوبت‌های امروز</h2>
+              <button id="open-today-appoiment" class="text-blue-600 text-sm font-medium cursor-pointer">مشاهده همه</button>
+            </div>
+
+            <ul class="space-y-4">
+              <!-- appointment item -->
+              <li class="flex items-center gap-3">
+                <img src="https://i.pravatar.cc/80?img=12" alt="" class="w-11 h-11 rounded-full object-cover" />
+                <div class="flex-1 min-w-0">
+                  <div class="text-sm font-medium text-slate-800 truncate">امیر حسین رضایی</div>
+                  <div class="text-xs text-slate-500">ویزیت پیگیری</div>
+                </div>
+                <div class="text-left">
+                  <div class="text-xs text-slate-500 mb-1">09:00</div>
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2 py-1 rounded-full">تایید شده</span>
+                </div>
+              </li>
+
+              <li class="flex items-center gap-3">
+                <img src="https://i.pravatar.cc/80?img=45" alt="" class="w-11 h-11 rounded-full object-cover" />
+                <div class="flex-1 min-w-0">
+                  <div class="text-sm font-medium text-slate-800 truncate">سارا احمدی</div>
+                  <div class="text-xs text-slate-500">بررسی نتایج</div>
+                </div>
+                <div class="text-left">
+                  <div class="text-xs text-slate-500 mb-1">10:30</div>
+                  <span class="text-[11px] bg-amber-50 text-amber-700 px-2 py-1 rounded-full">در انتظار</span>
+                </div>
+              </li>
+
+              <li class="flex items-center gap-3">
+                <img src="https://i.pravatar.cc/80?img=33" alt="" class="w-11 h-11 rounded-full object-cover" />
+                <div class="flex-1 min-w-0">
+                  <div class="text-sm font-medium text-slate-800 truncate">علی کریمی</div>
+                  <div class="text-xs text-slate-500">ویزیت اولیه</div>
+                </div>
+                <div class="text-left">
+                  <div class="text-xs text-slate-500 mb-1">12:00</div>
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2 py-1 rounded-full">تایید شده</span>
+                </div>
+              </li>
+
+              <li class="flex items-center gap-3">
+                <img src="https://i.pravatar.cc/80?img=47" alt="" class="w-11 h-11 rounded-full object-cover" />
+                <div class="flex-1 min-w-0">
+                  <div class="text-sm font-medium text-slate-800 truncate">مریم محمدی</div>
+                  <div class="text-xs text-slate-500">بررسی چکاپ</div>
+                </div>
+                <div class="text-left">
+                  <div class="text-xs text-slate-500 mb-1">14:30</div>
+                  <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-1 rounded-full">در حال انتظار</span>
+                </div>
+              </li>
+            </ul>
+
+            <div class="text-center text-xs text-slate-400 mt-5 pt-4 border-t border-slate-100">
+              تعداد نوبت‌های امروز: <span class="font-medium text-slate-600">32</span>
+            </div>
+          </div>
+          <div class="space-y-5">
+            <div class="bg-white rounded-2xl p-5 px-3 py-3.5 shadow-[0_0_20px_#e0edfd] mt-4">
+              <div class="flex items-center justify-between mb-4">
+                <h2 class="font-bold text-slate-800">نوبت‌های پیش رو</h2>
+                <button id="open-next-appoiment" class="text-blue-600 text-sm font-medium cursor-pointer">مشاهده همه</button>
+              </div>
+
+              <ul class="space-y-4">
+                <li class="flex items-center gap-3">
+                  <img src="https://i.pravatar.cc/80?img=12" alt="" class="w-11 h-11 rounded-full object-cover" />
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-slate-800 truncate">امیر حسین رضایی</div>
+                    <div class="text-xs text-slate-500">ویزیت پیگیری</div>
+                  </div>
+                  <div class="text-left">
+                    <div class="text-xs text-slate-500 mb-1">09:00</div>
+                    <span class="text-[11px] bg-blue-50 text-blue-700 px-2 py-1 rounded-full">فردا</span>
+                  </div>
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <img src="https://i.pravatar.cc/80?img=45" alt="" class="w-11 h-11 rounded-full object-cover" />
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-slate-800 truncate">سارا احمدی</div>
+                    <div class="text-xs text-slate-500">بررسی نتایج</div>
+                  </div>
+                  <div class="text-left">
+                    <div class="text-xs text-slate-500 mb-1">10:30</div>
+                    <span class="text-[11px] bg-blue-50 text-blue-700 px-2 py-1 rounded-full">فردا</span>
+                  </div>
+                </li>
+
+                <li class="flex items-center gap-3">
+                  <img src="https://i.pravatar.cc/80?img=33" alt="" class="w-11 h-11 rounded-full object-cover" />
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-slate-800 truncate">علی کریمی</div>
+                    <div class="text-xs text-slate-500">ویزیت اولیه</div>
+                  </div>
+                  <div class="text-left">
+                    <div class="text-xs text-slate-500 mb-1">14:00</div>
+                    <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-1 rounded-full">۲۶ اردیبهشت</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--                                   ================================================================
+         SECTION 3: APPOINTMENTS PAGE CONTENT (این بخش نوبت‌ها است)
+         ================================================================                                   -->
+      <div id="appoiment" class="doctor-info-panel flex-1 p-6 space-y-5 hidden px-3 py-3.5 mt-4 rounded-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+              نوبت‌ها<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+            </h1>
+            <p class="text-sm text-slate-500 mt-1">لیست تمام نوبت‌های امروز و روزهای آینده.</p>
+          </div>
+        </div>
+
+        {% comment %} <div class="flex items-center gap-3">
+          <select class="border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-600 bg-white focus:outline-none">
+            <option>همه وضعیت‌ها</option>
+            <option>تایید شده</option>
+            <option>در انتظار</option>
+            <option>لغو شده</option>
+          </select>
+          <div class="flex items-center gap-2 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-600 bg-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>۱۴۰۳/۰۲/۲۴
+          </div>
+          <button class="border border-blue-200 text-blue-600 rounded-xl px-4 py-2.5 text-sm font-medium bg-blue-50">امروز</button>
+        </div> {% endcomment %}
+
+        <div class="bg-white rounded-2xl overflow-y-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-slate-400 text-xs border-b border-slate-100">
+                <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">ساعت</th>
+                <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">بیمار</th>
+                <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">نوع ویزیت</th>
+                <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">وضعیت</th>
+                <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">مبلغ (تومان)</th>
+                <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">عملیات</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+              <tr>
+                <td class="py-3.5 px-5 text-slate-500">09:00</td>
+                <td class="px-5 font-medium text-slate-700">سارا احمدی</td>
+                <td class="px-5 text-slate-500">ویزیت حضوری</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
+                </td>
+                <td class="px-5 text-slate-500">۳۰۰,۰۰۰</td>
+                <td class="px-5 flex gap-2">
+                  <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                    </svg>
+                  </button>
+                  <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="1" />
+                      <circle cx="19" cy="12" r="1" />
+                      <circle cx="5" cy="12" r="1" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-5 text-slate-500">10:30</td>
+                <td class="px-5 font-medium text-slate-700">محمد رضا کریمی</td>
+                <td class="px-5 text-slate-500">ویزیت آنلاین</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full whitespace-nowrap">در انتظار</span>
+                </td>
+                <td class="px-5 text-slate-500">۲۵۰,۰۰۰</td>
+                <td class="px-5 flex gap-2">
+                  <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                    </svg>
+                  </button>
+                  <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="1" />
+                      <circle cx="19" cy="12" r="1" />
+                      <circle cx="5" cy="12" r="1" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-5 text-slate-500">12:00</td>
+                <td class="px-5 font-medium text-slate-700">علی حسینی</td>
+                <td class="px-5 text-slate-500">ویزیت حضوری</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
+                </td>
+                <td class="px-5 text-slate-500">۳۰۰,۰۰۰</td>
+                <td class="px-5 flex gap-2">
+                  <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                    </svg>
+                  </button>
+                  <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="1" />
+                      <circle cx="19" cy="12" r="1" />
+                      <circle cx="5" cy="12" r="1" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-5 text-slate-500">14:30</td>
+                <td class="px-5 font-medium text-slate-700">زهرا صنعتی</td>
+                <td class="px-5 text-slate-500">ویزیت آنلاین</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-red-50 text-red-700 px-2.5 py-1 rounded-full whitespace-nowrap">لغو شده</span>
+                </td>
+                <td class="px-5 text-slate-500">-</td>
+                <td class="px-5 flex gap-2">
+                  <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                    </svg>
+                  </button>
+                  <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="1" />
+                      <circle cx="19" cy="12" r="1" />
+                      <circle cx="5" cy="12" r="1" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-5 text-slate-500">16:00</td>
+                <td class="px-5 font-medium text-slate-700">امیرحسین نادری</td>
+                <td class="px-5 text-slate-500">ویزیت حضوری</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
+                </td>
+                <td class="px-5 text-slate-500">۳۰۰,۰۰۰</td>
+                <td class="px-5 flex gap-2">
+                  <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                    </svg>
+                  </button>
+                  <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="1" />
+                      <circle cx="19" cy="12" r="1" />
+                      <circle cx="5" cy="12" r="1" />
+                    </svg>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="flex items-center justify-center gap-2 py-4 text-xs text-slate-400 border-t border-slate-50">
+            <button class="w-7 h-7 rounded-lg hover:bg-slate-50">...</button>
+            <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۴</button>
+            <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۳</button>
+            <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۲</button>
+            <button class="w-7 h-7 rounded-lg bg-blue-600 text-white">۱</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="patients" class="doctor-info-panel flex-1 space-y-5 hidden px-3 py-3.5 mt-4 rounded-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+              بیماران<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+              </svg>
+            </h1>
+            <p class="text-sm text-slate-500 mt-1">لیست تمام بیمارانی که به شما مراجعه کرده‌اند.</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-slate-400 text-xs border-b border-slate-100">
+                <th class="text-right font-medium py-3.5 px-5">نام بیمار</th>
+                <th class="text-right font-medium py-3.5 px-5">شماره تماس</th>
+                <th class="text-right font-medium py-3.5 px-5">کد ملی</th>
+                <th class="text-right font-medium py-3.5 px-5">آخرین نوبت</th>
+                <th class="text-right font-medium py-3.5 px-5">وضعیت</th>
+                <th class="text-right font-medium py-3.5 px-5">عملیات</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+              <!-- patient row -->
+              <tr>
+                <td class="py-3.5 px-5 flex items-center gap-3">
+                  <img src="https://i.pravatar.cc/80?img=45" class="w-9 h-9 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700">سارا احمدی</span>
+                </td>
+                <td class="px-5 text-slate-500 whitespace-nowrap">0912-345-6789</td>
+                <td class="px-5 text-slate-500">1234567890</td>
+                <td class="px-5 text-slate-500">1403/02/30</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">فعال</span>
+                </td>
+                <td class="px-5">
+                  <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">جزئیات</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-5 flex items-center gap-3">
+                  <img src="https://i.pravatar.cc/80?img=33" class="w-9 h-9 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700">محمد رضا کریمی</span>
+                </td>
+                <td class="px-5 text-slate-500 whitespace-nowrap">0935-234-5678</td>
+                <td class="px-5 text-slate-500">2345678901</td>
+                <td class="px-5 text-slate-500">1403/02/18</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">فعال</span>
+                </td>
+                <td class="px-5">
+                  <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">جزئیات</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-5 flex items-center gap-3">
+                  <img src="https://i.pravatar.cc/80?img=12" class="w-9 h-9 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700">علی حسینی</span>
+                </td>
+                <td class="px-5 text-slate-500 whitespace-nowrap">0911-987-6543</td>
+                <td class="px-5 text-slate-500">3456789012</td>
+                <td class="px-5 text-slate-500">1403/02/15</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-red-50 text-red-700 px-2.5 py-1 rounded-full">غیرفعال</span>
+                </td>
+                <td class="px-5">
+                  <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">جزئیات</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-5 flex items-center gap-3">
+                  <img src="https://i.pravatar.cc/80?img=47" class="w-9 h-9 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700">زهرا صنعتی</span>
+                </td>
+                <td class="px-5 text-slate-500 whitespace-nowrap">0938-456-1234</td>
+                <td class="px-5 text-slate-500">4567890123</td>
+                <td class="px-5 text-slate-500">1403/02/10</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">فعال</span>
+                </td>
+                <td class="px-5">
+                  <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">جزئیات</button>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3.5 px-5 flex items-center gap-3">
+                  <img src="https://i.pravatar.cc/80?img=25" class="w-9 h-9 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700">امیرحسین نادری</span>
+                </td>
+                <td class="px-5 text-slate-500 whitespace-nowrap">0919-876-5432</td>
+                <td class="px-5 text-slate-500">5678901234</td>
+                <td class="px-5 text-slate-500">1403/02/05</td>
+                <td class="px-5">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">فعال</span>
+                </td>
+                <td class="px-5">
+                  <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">جزئیات</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="flex items-center justify-center gap-2 py-4 text-xs text-slate-400 border-t border-slate-50">
+            <button class="w-7 h-7 rounded-lg hover:bg-slate-50">...</button>
+            <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۵</button>
+            <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۴</button>
+            <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۳</button>
+            <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۲</button>
+            <button class="w-7 h-7 rounded-lg bg-blue-600 text-white">۱</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="manage-visit-time" class="doctor-info-panel flex-1 space-y-5 hidden px-3 py-3.5 mt-4 rounded-lg">
+        <div>
+          <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+            مدیریت زمان ویزیت<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </h1>
+          <p class="text-sm text-slate-500 mt-1">ساعات کاری و بازه‌های نوبت‌دهی مطب خود را تنظیم کنید.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <!-- Weekly working hours: takes 2 columns -->
+          <div class="lg:col-span-2 bg-white rounded-2xl p-1">
+            <div class="flex items-center justify-between mb-5">
+              <h2 class="font-bold text-slate-800">ساعات کاری هفتگی</h2>
+              <button id="openExceptionModal" class="text-blue-600 text-xs font-medium border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer">افزودن بازه استثنا</button>
+            </div>
+
+            <div class="space-y-2.5 overflow-x-auto">
+              <!-- day row: active -->
+              <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
+                <button data-act-inact="false" class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer"><span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span></button>
+                <span class="w-16 text-sm font-medium text-slate-400">شنبه</span>
+                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۶:۰۰</span>
+                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۶ نوبت</span>
+                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
+                <button data-act-inact="false" class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer"><span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span></button>
+                <span class="w-16 text-sm font-medium text-slate-400">یکشنبه</span>
+                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۶:۰۰</span>
+                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۶ نوبت</span>
+                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
+                <button data-act-inact="false" class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer"><span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span></button>
+                <span class="w-16 text-sm font-medium text-slate-400">دوشنبه</span>
+                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۴:۰۰</span>
+                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۲ نوبت</span>
+                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
+                <button data-act-inact="false" class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer"><span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span></button>
+                <span class="w-16 text-sm font-medium text-slate-400">سه‌شنبه</span>
+                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۶:۰۰</span>
+                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۶ نوبت</span>
+                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
+                <button data-act-inact="false" class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer"><span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span></button>
+                <span class="w-16 text-sm font-medium text-slate-400">چهارشنبه</span>
+                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۶:۰۰</span>
+                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۶ نوبت</span>
+                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
+                <button data-act-inact="false" class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer"><span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span></button>
+                <span class="w-16 text-sm font-medium text-slate-400">پنجشنبه</span>
+                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۲:۰۰</span>
+                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment" id="">۸ نوبت</span>
+                <button class="text-slate-300 edit-appoiment-day cursor-pointer" id="">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                  </svg>
+                </button>
+              </div>
+              <!-- day row: inactive (closed) -->
+              <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
+                <button data-act-inact="false" class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer"><span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span></button>
+                <span class="w-16 text-sm font-medium text-slate-400">جمعه</span>
+                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">تعطیل</span>
+                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment w-0 h-0" id=""></span>
+                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right column: general settings + summary -->
+          <div class="space-y-5">
+            <div class="bg-white rounded-2xl">
+              <h2 class="font-bold text-slate-800 mb-4">تنظیمات کلی</h2>
+              <div class="space-y-4">
+                <div>
+                  <label class="block text-xs text-slate-500 mb-1.5">مدت هر ویزیت</label>
+                  <select class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none cursor-pointer">
+                    <option>۱۵ دقیقه</option>
+                    <option>۲۰ دقیقه</option>
+                    <option selected>۳۰ دقیقه</option>
+                    <option>۴۵ دقیقه</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs text-slate-500 mb-1.5">استراحت بین نوبت‌ها</label>
+                  <select class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none cursor-pointer">
+                    <option>بدون استراحت</option>
+                    <option selected>۱۰ دقیقه</option>
+                    <option>۱۵ دقیقه</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs text-slate-500 mb-1.5">حداکثر نوبت روزانه</label>
+                  <input type="number" value="20" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none cursor-pointer" />
+                </div>
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl mt-1 cursor-pointer">ذخیره تنظیمات</button>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl">
+              <h2 class="font-bold text-slate-800 mb-4">خلاصه هفته</h2>
+              <div class="space-y-3">
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-slate-500">روزهای کاری</span>
+                  <span class="font-medium text-slate-700">۶ روز</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-slate-500">مجموع نوبت‌های هفته</span>
+                  <span class="font-medium text-slate-700">۸۴ نوبت</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-slate-500">میانگین ساعات کاری روزانه</span>
+                  <span class="font-medium text-slate-700">۷ ساعت</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="doctor-profile" class="doctor-info-panel flex-1 space-y-5 hidden px-3 py-3.5 mt-4 rounded-lg">
+        <div>
+          <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+            پروفایل<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="7" r="4" />
+              <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
+            </svg>
+          </h1>
+          <p class="text-sm text-slate-500 mt-1">اطلاعات حساب کاربری و پروفایل شما</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <!-- Profile summary card -->
+          <div class="bg-white rounded-2xl p-1">
+            <h2 class="font-bold text-slate-800 mb-5">اطلاعات پروفایل</h2>
+            <div class="flex flex-col items-center text-center mb-5">
+              <div class="relative">
+                <img src="https://i.pravatar.cc/160?img=68" class="w-24 h-24 rounded-full object-cover" alt="" />
+                <button class="absolute bottom-0 left-0 w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white border-2 border-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                    <circle cx="12" cy="13" r="4" />
+                  </svg>
+                </button>
+              </div>
+              <div class="font-bold text-slate-800 mt-3">دکتر علی محمدی</div>
+              <div class="text-xs text-slate-400 mt-1">متخصص قلب و عروق</div>
+            </div>
+
+            <div class="space-y-3 border-t border-slate-100 pt-4 text-sm">
+              <div class="flex justify-between">
+                <span class="text-slate-400 text-xs">شماره نظام پزشکی:</span>
+                <span class="text-slate-700 text-xs">۱۲۳۴۵</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400 text-xs">مطب:</span>
+                <span class="text-slate-700 text-xs">تهران، سعادت‌آباد</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400 text-xs">عضو از:</span>
+                <span class="text-slate-700 text-xs">فروردین ۱۴۰۰</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Edit form: takes 2 columns -->
+          <div class="lg:col-span-2 bg-white rounded-2xl p-1">
+            <h2 class="font-bold text-slate-800 mb-5">تغییر اطلاعات</h2>
+
+            <div class="space-y-4">
+              <div>
+                <label class="block text-xs text-slate-500 mb-1.5">نام و نام خانوادگی</label>
+                <input type="text" value="دکتر علی محمدی" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400" />
+              </div>
+              <div>
+                <label class="block text-xs text-slate-500 mb-1.5">تخصص</label>
+                <input type="text" value="متخصص قلب و عروق" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400" />
+              </div>
+              <div>
+                <label class="block text-xs text-slate-500 mb-1.5">شماره تماس</label>
+                <input type="text" value="0912-345-6789" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400" />
+              </div>
+              <div>
+                <label class="block text-xs text-slate-500 mb-1.5">ایمیل</label>
+                <input type="email" value="ali.mohammadi@medicare.com" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400" />
+              </div>
+              <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl mt-2 cursor-pointer">ذخیره تغییرات</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% comment %}modals{% endcomment %}
+    <div id="todayModal" class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
+      <div class="relative w-full h-full bg-white md:rounded-2xl max-w-2xl md:max-h-[85vh] overflow-y-auto p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-bold text-slate-800">نوبت‌های امروز</h2>
+          <button id="closeTodayModal" class="text-slate-400 hover:text-slate-600 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-slate-400 text-xs border-b border-slate-100">
+                <th class="text-right font-medium py-3 px-3">ساعت</th>
+                <th class="text-right font-medium py-3 px-3">بیمار</th>
+                <th class="text-right font-medium py-3 px-3">نوع ویزیت</th>
+                <th class="text-right font-medium py-3 px-3">وضعیت</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+              <tr>
+                <td class="py-3 px-3 text-slate-500">09:00</td>
+                <td class="px-3 flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/80?img=45" class="w-8 h-8 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700 whitespace-nowrap mx-5">سارا احمدی</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت پیگیری</td>
+                <td class="px-3">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 text-slate-500">10:30</td>
+                <td class="px-3 flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/80?img=33" class="w-8 h-8 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700 whitespace-nowrap mx-5">محمد رضا کریمی</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">بررسی نتایج</td>
+                <td class="px-3">
+                  <span class="text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full whitespace-nowrap">در انتظار</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 text-slate-500">12:00</td>
+                <td class="px-3 flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/80?img=12" class="w-8 h-8 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700 whitespace-nowrap mx-5">علی حسینی</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت اولیه</td>
+                <td class="px-3">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3 text-slate-500">14:30</td>
+                <td class="px-3 flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/80?img=47" class="w-8 h-8 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700 whitespace-nowrap mx-5">زهرا صنعتی</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">بررسی چکاپ</td>
+                <td class="px-3">
+                  <span class="text-[11px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full whitespace-nowrap">در حال انتظار</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="upcomingModal" class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
+      <div class="relative bg-white md:rounded-2xl w-full max-w-2xl w-full h-full md:max-h-[85vh] overflow-y-auto p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-bold text-slate-800">نوبت‌های پیش‌رو</h2>
+          <button id="closeupcomingModal" class="text-slate-400 hover:text-slate-600 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="w-full overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-slate-400 text-xs border-b border-slate-100">
+                <th class="text-right font-medium py-3 px-3">تاریخ</th>
+                <th class="text-right font-medium py-3 px-3">ساعت</th>
+                <th class="text-right font-medium py-3 px-3">بیمار</th>
+                <th class="text-right font-medium py-3 px-3">نوع ویزیت</th>
+                <th class="text-right font-medium py-3 px-3">وضعیت</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50">
+              <tr>
+                <td class="py-3 px-3">
+                  <span class="text-[11px] bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full whitespace-nowrap">فردا</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">09:00</td>
+                <td class="px-3 flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/80?img=45" class="w-8 h-8 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700 whitespace-nowrap mx-5">سارا احمدی</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت پیگیری</td>
+                <td class="px-3">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3">
+                  <span class="text-[11px] bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full whitespace-nowrap">فردا</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">10:30</td>
+                <td class="px-3 flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/80?img=33" class="w-8 h-8 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700 whitespace-nowrap mx-5">محمد رضا کریمی</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">بررسی نتایج</td>
+                <td class="px-3">
+                  <span class="text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full whitespace-nowrap">در انتظار</span>
+                </td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3">
+                  <span class="text-[11px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full whitespace-nowrap">۲۶ اردیبهشت</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">14:00</td>
+                <td class="px-3 flex items-center gap-2">
+                  <img src="https://i.pravatar.cc/80?img=12" class="w-8 h-8 rounded-full object-cover" alt="" />
+                  <span class="font-medium text-slate-700 whitespace-nowrap mx-5">علی کریمی</span>
+                </td>
+                <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت اولیه</td>
+                <td class="px-3">
+                  <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div id="exceptionModal" class="fixed inset-0 z-50 flex items-center justify-center invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 md:top-10 ease-in-out">
+      <div class="bg-white md:rounded-2xl w-full h-full md:h-fit md:max-w-md p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-bold text-slate-800">افزودن بازه استثنا</h2>
+          <button id="closeExceptionModal" class="text-slate-400 hover:text-slate-600 cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs text-slate-500 mb-1.5">تاریخ</label>
+            <input type="text" placeholder="۱۴۰۳/۰۳/۱۵" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs text-slate-500 mb-1.5">از ساعت</label>
+              <input type="text" placeholder="۰۸:۰۰" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400" />
+            </div>
+            <div>
+              <label class="block text-xs text-slate-500 mb-1.5">تا ساعت</label>
+              <input type="text" placeholder="۱۶:۰۰" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-500 mb-1.5">نوع بازه</label>
+            <select class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none cursor-pointer">
+              <option class="cursor-pointer">مرخصی / تعطیل کامل روز</option>
+              <option class="cursor-pointer">تغییر ساعت کاری</option>
+              <option class="cursor-pointer">افزودن ساعت کاری اضافه</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-500 mb-1.5">توضیحات (اختیاری)</label>
+            <textarea rows="3" placeholder="مثلا: مرخصی استعلاجی" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 resize-none"></textarea>
+          </div>
+
+          <div class="flex gap-3 pt-2">
+            <button id="closeexceptionModal2" class="flex-1 border border-slate-200 text-slate-600 text-sm font-medium py-2.5 rounded-xl cursor-pointer">انصراف</button>
+            <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl cursor-pointer">ذخیره بازه</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="patientDetailsModal" class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
+      <div class="relative bg-white md:rounded-2xl w-full h-full md:h-fit md:max-w-md p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-bold text-slate-800">جزئیات بیمار</h2>
+          <button id="closePatientDetailsModal" class="text-slate-400 hover:text-slate-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Patient header -->
+        <div class="flex items-center gap-4 bg-slate-50 rounded-xl p-4 mb-5">
+          <img id="pm-img" src="https://i.pravatar.cc/160?img=45" class="w-16 h-16 rounded-full object-cover" alt="" />
+          <div>
+            <div id="pm-name" class="font-bold text-slate-800">سارا احمدی</div>
+            <span id="pm-status" class="inline-block mt-2 text-[11px] px-2.5 py-1 rounded-full bg-green-50 text-green-700">فعال</span>
+          </div>
+        </div>
+
+        <!-- Info: stacked vertically -->
+        <div class="space-y-3 text-sm">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <span class="text-xs text-slate-400">شماره تماس</span>
+            <span id="pm-phone" class="text-slate-700 font-medium">0912-345-6789</span>
+          </div>
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <span class="text-xs text-slate-400">کد ملی</span>
+            <span id="pm-code" class="text-slate-700 font-medium">1234567890</span>
+          </div>
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <span class="text-xs text-slate-400">آخرین نوبت</span>
+            <span id="pm-last" class="text-slate-700 font-medium">1403/02/30</span>
+          </div>
+        </div>
+
+        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl mt-5" id="closePatientDetailsModal2">بستن</button>
+      </div>
+    </div>
+    <div id="editStatusModal" class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
+      <div class="relative bg-white md:rounded-2xl h-full w-full md:h-fit md:max-w-sm p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-bold text-slate-800">ویرایش وضعیت نوبت</h2>
+          <button class="text-slate-400 hover:text-slate-600 close" id="closeEditStatusModal">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Appointment summary -->
+        <div class="flex items-center gap-3 bg-slate-50 rounded-xl p-3 mb-5">
+          <img id="sm-img" src="https://i.pravatar.cc/80?img=45" class="w-10 h-10 rounded-full object-cover" alt="" />
+          <div>
+            <div id="sm-name" class="text-sm font-medium text-slate-700">سارا احمدی</div>
+            <div id="sm-meta" class="text-xs text-slate-400">امروز، ۰۹:۰۰ — ویزیت حضوری</div>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs text-slate-500 mb-2">وضعیت نوبت</label>
+            <div class="space-y-2">
+              <label class="flex items-center gap-2.5 border border-slate-200 rounded-xl px-4 py-2.5 cursor-pointer has-checked:border-green-400 has-checked:bg-green-50">
+                <input type="radio" name="status" value="تایید شده" class="accent-green-600" />
+                <span class="text-sm text-slate-700">تایید شده</span>
+              </label>
+              <label class="flex items-center gap-2.5 border border-slate-200 rounded-xl px-4 py-2.5 cursor-pointer has-checked:border-amber-400 has-checked:bg-amber-50">
+                <input type="radio" name="status" value="در انتظار" class="accent-amber-600" />
+                <span class="text-sm text-slate-700">در انتظار</span>
+              </label>
+              <label class="flex items-center gap-2.5 border border-slate-200 rounded-xl px-4 py-2.5 cursor-pointer has-checked:border-red-400 has-checked:bg-red-50">
+                <input type="radio" name="status" value="لغو شده" class="accent-red-600" />
+                <span class="text-sm text-slate-700">لغو شده</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="flex gap-3 pt-2">
+            <button class="flex-1 border border-slate-200 text-slate-600 text-sm font-medium py-2.5 rounded-xl cursor-pointer" id="closeEditStatusModal2">انصراف</button>
+            <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl cursor-pointer">ذخیره</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="dayModal" class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
+      <div class="relative bg-white md:rounded-2xl w-full h-full md:h-fit md:max-w-sm p-6">
+        <div class="flex items-center justify-between mb-5">
+          <h2 class="font-bold text-slate-800">ویرایش ساعت کاری — <span id="dm-day">شنبه</span></h2>
+          <button id="" class="text-slate-400 hover:text-slate-600 closeDayModal cursor-pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <div class="space-y-4">
+          <!-- active/closed toggle -->
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs text-slate-500 mb-1.5">از ساعت</label>
+              <input id="dm-start" type="text" value="08:00" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400" />
+            </div>
+            <div>
+              <label class="block text-xs text-slate-500 mb-1.5">تا ساعت</label>
+              <input id="dm-end" type="text" value="16:00" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs text-slate-500 mb-1.5">مدت هر ویزیت</label>
+            <select class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none cursor-pointer">
+              <option>۱۵ دقیقه</option>
+              <option>۲۰ دقیقه</option>
+              <option selected="">۳۰ دقیقه</option>
+              <option>۴۵ دقیقه</option>
+            </select>
+          </div>
+
+          <div class="flex gap-3 pt-2">
+            <button class="flex-1 border border-slate-200 text-slate-600 text-sm font-medium py-2.5 rounded-xl closeDayModal cursor-pointer">انصراف</button>
+            <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl cursor-pointer">ذخیره</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

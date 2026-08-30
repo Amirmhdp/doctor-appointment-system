@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'home',
     'account_module',
     'doctors_module',
+    'doctor_panel',
     'django_render_partial'
 ]
 

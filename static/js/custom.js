@@ -462,27 +462,29 @@ if (bockDayBtns) {
 const bookingBtn = document.getElementById('booking-btn');
 const bookingList = document.getElementById('booking-list');
 const closeBookingList = document.getElementById('close-booking-list');
-bookingBtn.addEventListener('click', () => {
-    bookingList.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
-    bookingList.classList.add('visible', 'opacity-100', 'pointer-events-auto');
-    overlay.classList.remove('opacity-0', 'invisible');
-    overlay.classList.add('opacity-100', 'visible');
-    body.style.overflow = 'hidden'
-})
-closeBookingList.addEventListener('click', () => {
-    bookingList.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-    bookingList.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-    overlay.classList.add('opacity-0', 'invisible');
-    overlay.classList.remove('opacity-100', 'visible');
-    body.style.overflow = 'auto'
-})
-overlay.addEventListener('click', () => {
-    bookingList.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-    bookingList.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-    overlay.classList.add('opacity-0', 'invisible');
-    overlay.classList.remove('opacity-100', 'visible');
-    body.style.overflow = 'auto'
-})
+if (bookingBtn, bookingList, closeBookingList) {
+    bookingBtn.addEventListener('click', () => {
+        bookingList.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        bookingList.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+        overlay.classList.remove('opacity-0', 'invisible');
+        overlay.classList.add('opacity-100', 'visible');
+        body.style.overflow = 'hidden'
+    })
+    closeBookingList.addEventListener('click', () => {
+        bookingList.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        bookingList.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        overlay.classList.add('opacity-0', 'invisible');
+        overlay.classList.remove('opacity-100', 'visible');
+        body.style.overflow = 'auto'
+    })
+    overlay.addEventListener('click', () => {
+        bookingList.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        bookingList.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        overlay.classList.add('opacity-0', 'invisible');
+        overlay.classList.remove('opacity-100', 'visible');
+        body.style.overflow = 'auto'
+    })
+}
 
 
 // open close commentbox
@@ -519,59 +521,367 @@ if (openCommentBoxBtn, sendCommentBox, closeCommentBox) {
 
 const stars = document.querySelectorAll('.star');
 
-stars.forEach(star => {
+if (stars) {
+    stars.forEach(star => {
 
-    star.addEventListener('click', () => {
+        star.addEventListener('click', () => {
 
-        const ratingNumber = Number(star.dataset.rating);
+            const ratingNumber = Number(star.dataset.rating);
 
-        stars.forEach(item => {
+            stars.forEach(item => {
 
-            const itemRating = Number(item.dataset.rating);
+                const itemRating = Number(item.dataset.rating);
 
 
-            if (itemRating <= ratingNumber) {
-                item.classList.add('fill-primary-special');
-            } else {
-                item.classList.remove('fill-primary-special');
-            }
+                if (itemRating <= ratingNumber) {
+                    item.classList.add('fill-primary-special');
+                } else {
+                    item.classList.remove('fill-primary-special');
+                }
+
+            });
 
         });
 
     });
-
-});
+}
 
 // like dislike btn
 
 const likeDisLikeBtns = document.querySelectorAll('.like-dislike-btn');
 const likeDisLikeIcon = document.querySelectorAll('.like-dislike-icon');
 
-likeDisLikeBtns.forEach(likeDisLikeBtn => {
-    likeDisLikeBtn.addEventListener('click', () => {
-        likeDisLikeBtns.forEach(btn => {
-            btn.classList.remove('bg-primary-special', 'text-white');
-            btn.classList.add('bg-white', 'text-primary-special');
-            const icon = btn.querySelector('.like-dislike-icon');
-            icon.classList.remove('text-white');
-            icon.classList.add('text-primary-special');
+if (likeDisLikeBtns, likeDisLikeIcon) {
+    likeDisLikeBtns.forEach(likeDisLikeBtn => {
+        likeDisLikeBtn.addEventListener('click', () => {
+            likeDisLikeBtns.forEach(btn => {
+                btn.classList.remove('bg-primary-special', 'text-white');
+                btn.classList.add('bg-white', 'text-primary-special');
+                const icon = btn.querySelector('.like-dislike-icon');
+                icon.classList.remove('text-white');
+                icon.classList.add('text-primary-special');
+            })
+            likeDisLikeBtn.classList.add('bg-primary-special', 'text-white');
+            likeDisLikeBtn.classList.remove('bg-white', 'text-primary-special');
+            const icon = likeDisLikeBtn.querySelector('.like-dislike-icon');
+            icon.classList.remove('text-primary-special');
+            icon.classList.add('text-white');
         })
-        likeDisLikeBtn.classList.add('bg-primary-special', 'text-white');
-        likeDisLikeBtn.classList.remove('bg-white', 'text-primary-special');
-        const icon = likeDisLikeBtn.querySelector('.like-dislike-icon');
-        icon.classList.remove('text-primary-special');
-        icon.classList.add('text-white');
     })
-})
+}
 
 const dayAppoiments = document.querySelectorAll('.booking-appoiment-item');
-dayAppoiments.forEach(dayAppoiment => {
-    dayAppoiment.addEventListener('click', () => {
-        dayAppoiments.forEach(item => {
-            item.classList.remove('border-primary-special');
-            item.classList.add('border-light-gray');
+if (dayAppoiments) {
+    dayAppoiments.forEach(dayAppoiment => {
+        dayAppoiment.addEventListener('click', () => {
+            dayAppoiments.forEach(item => {
+                item.classList.remove('border-primary-special');
+                item.classList.add('border-light-gray');
+            })
+            dayAppoiment.classList.add('border-primary-special');
+            dayAppoiment.classList.remove('border-light-gray');
         })
-        dayAppoiment.classList.add('border-primary-special');
-        dayAppoiment.classList.remove('border-light-gray');
     })
-})
+
+}
+// active btn in doctor panel
+
+const doctorPanelBtns = document.querySelectorAll('.item-nav-panel');
+const doctorPanelInfos = document.querySelectorAll('.doctor-info-panel');
+
+if (doctorPanelBtns) {
+    doctorPanelBtns.forEach(doctorPanelBtn => {
+        doctorPanelBtn.addEventListener('click', () => {
+            doctorPanelBtns.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('text-slate-500');
+                const DocotrpanelIcon = btn.querySelector('.icon-docotr-panel');
+                DocotrpanelIcon.classList.remove('text-white');
+                DocotrpanelIcon.classList.add('text-slate-500');
+            });
+            doctorPanelBtn.classList.remove('text-slate-500');
+            doctorPanelBtn.classList.add('bg-blue-600', 'text-white');
+            const DocotrpanelIcon = doctorPanelBtn.querySelector('.icon-docotr-panel');
+            DocotrpanelIcon.classList.remove('text-slate-500');
+            DocotrpanelIcon.classList.add('text-white');
+
+            doctorPanelInfos.forEach(doctorPanelInfo => {
+                doctorPanelInfo.classList.add('hidden')
+            })
+            const getAttPanelBtn = doctorPanelBtn.dataset.panelId;
+            const datapanelId = document.getElementById(getAttPanelBtn);
+
+            datapanelId.classList.remove('hidden');
+
+        });
+    });
+}
+
+//  open close doctor today appoiment
+
+const todayAppoimentBtn = document.getElementById('open-today-appoiment');
+const openNextAppoiment = document.getElementById('open-next-appoiment');
+const todayModal = document.getElementById('todayModal');
+const upcomingModal = document.getElementById('upcomingModal');
+const closeUpcomingModal = document.getElementById('closeupcomingModal');
+const closeTodayModal = document.getElementById('closeTodayModal');
+const exceptionModal = document.getElementById('exceptionModal');
+const closeExceptionModal = document.getElementById('closeExceptionModal');
+const openExceptionModal = document.getElementById('openExceptionModal');
+const closeexceptionModal2 = document.getElementById('closeexceptionModal2');
+const patientDetailsModal = document.getElementById('patientDetailsModal');
+const closePatientDetailsModal = document.getElementById('closePatientDetailsModal');
+const closePatientDetailsModal2 = document.getElementById('closePatientDetailsModal2');
+const detailPatients = document.querySelectorAll('.detail-patient');
+const openEditStates = document.querySelectorAll('.open-edit-state');
+const editStatusModal = document.getElementById('editStatusModal');
+const closeEditStatusModal = document.getElementById('closeEditStatusModal');
+const closeEditStatusModal2 = document.getElementById('closeEditStatusModal2');
+const closeDayModal = document.querySelectorAll('.closeDayModal');
+const dayModal = document.getElementById('dayModal');
+const editAppoimentDays = document.querySelectorAll('.edit-appoiment-day');
+
+if (todayAppoimentBtn, openNextAppoiment, todayModal, upcomingModal, closeUpcomingModal, closeTodayModal, closeexceptionModal2) {
+
+    todayAppoimentBtn.addEventListener('click', () => {
+        todayModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        todayModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('visible', 'opacity-100');
+        body.style.overflow = 'hidden'
+
+    })
+    closeTodayModal.addEventListener('click', () => {
+        todayModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        todayModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+
+    })
+    overlay.addEventListener('click', () => {
+        todayModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        todayModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+
+    })
+
+    openNextAppoiment.addEventListener('click', () => {
+        upcomingModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        upcomingModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('visible', 'opacity-100');
+        body.style.overflow = 'hidden'
+
+    });
+    closeUpcomingModal.addEventListener('click', () => {
+        upcomingModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        upcomingModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+
+    });
+    overlay.addEventListener('click', () => {
+        upcomingModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        upcomingModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+
+    });
+    openExceptionModal.addEventListener('click', () => {
+        exceptionModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        exceptionModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+        overlay.classList.remove('invisible', 'opacity-0');
+        overlay.classList.add('visible', 'opacity-100');
+        body.style.overflow = 'hidden'
+
+    });
+    closeExceptionModal.addEventListener('click', () => {
+        exceptionModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        exceptionModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+
+    });
+    overlay.addEventListener('click', () => {
+        exceptionModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        exceptionModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+    });
+    closeexceptionModal2.addEventListener('click', () => {
+        exceptionModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        exceptionModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+
+    });
+
+
+    detailPatients.forEach(detailPatient => {
+
+        detailPatient.addEventListener('click', () => {
+            patientDetailsModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+            patientDetailsModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+            overlay.classList.remove('invisible', 'opacity-0');
+            overlay.classList.add('visible', 'opacity-100');
+            body.style.overflow = 'hidden'
+
+        });
+
+    });
+    closePatientDetailsModal.addEventListener('click', () => {
+        patientDetailsModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        patientDetailsModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+    });
+    closePatientDetailsModal2.addEventListener('click', () => {
+        patientDetailsModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        patientDetailsModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+    });
+    overlay.addEventListener('click', () => {
+        patientDetailsModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        patientDetailsModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+
+    });
+
+    openEditStates.forEach(openEditState => {
+        openEditState.addEventListener('click', () => {
+            editStatusModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+            editStatusModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+            overlay.classList.remove('invisible', 'opacity-0');
+            overlay.classList.add('visible', 'opacity-100');
+            body.style.overflow = 'hidden'
+
+        });
+        closeEditStatusModal.addEventListener('click', () => {
+            editStatusModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+            editStatusModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+            overlay.classList.remove('visible', 'opacity-100');
+            overlay.classList.add('invisible', 'opacity-0');
+            body.style.overflow = 'auto'
+        });
+        closeEditStatusModal2.addEventListener('click', () => {
+            editStatusModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+            editStatusModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+            overlay.classList.remove('visible', 'opacity-100');
+            overlay.classList.add('invisible', 'opacity-0');
+            body.style.overflow = 'auto';
+        });
+        overlay.addEventListener('click', () => {
+            editStatusModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+            editStatusModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+            overlay.classList.remove('visible', 'opacity-100');
+            overlay.classList.add('invisible', 'opacity-0');
+            body.style.overflow = 'auto';
+
+        });
+    })
+
+    editAppoimentDays.forEach(editAppoimentDay => {
+
+        editAppoimentDay.addEventListener('click', () => {
+            dayModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+            dayModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+            overlay.classList.remove('invisible', 'opacity-0');
+            overlay.classList.add('visible', 'opacity-100');
+            body.style.overflow = 'hidden'
+
+        });
+
+    });
+    closeDayModal.forEach(closeDay => {
+        closeDay.addEventListener('click', () => {
+            dayModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+            dayModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+            overlay.classList.remove('visible', 'opacity-100');
+            overlay.classList.add('invisible', 'opacity-0');
+            body.style.overflow = 'auto'
+        });
+    })
+    overlay.addEventListener('click', () => {
+        dayModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        dayModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
+
+    });
+
+
+};
+
+// active or inactive day appoiment
+
+const actInactAppoimentDays = document.querySelectorAll('.active-day-appoiment');
+
+if (actInactAppoimentDays) {
+    actInactAppoimentDays.forEach(actInactAppoimentDay => {
+        actInactAppoimentDay.addEventListener('click', () => {
+            const getAtt = actInactAppoimentDay.dataset.actInact;
+            if (getAtt === 'false') {
+                actInactAppoimentDay.dataset.actInact = 'true';
+                actInactAppoimentDay.classList.remove('bg-slate-300');
+                actInactAppoimentDay.classList.add('bg-blue-600');
+                const innerSpan = actInactAppoimentDay.querySelector('span');
+                innerSpan.classList.remove('right-0.5');
+                innerSpan.classList.add('left-0.5');
+                const parentBtn = actInactAppoimentDay.parentElement;
+                parentBtn.classList.remove('bg-slate-50/50');
+                parentBtn.classList.add('bg-slate-50');
+                const getSpans = parentBtn.querySelectorAll('span');
+                getSpans.forEach(getSpan => {
+                    getSpan.classList.remove('text-slate-400');
+                    getSpan.classList.add('text-slate-600');
+                })
+                const numberOfAppoiment = parentBtn.querySelector('.number-of-appoiment');
+
+                numberOfAppoiment.classList.remove('text-green-300', 'bg-green-50', 'text-slate-600');
+                numberOfAppoiment.classList.add('text-green-700', 'bg-green-50');
+
+                const editAppoimentDay = parentBtn.querySelector('.edit-appoiment-day');
+                editAppoimentDay.classList.remove('text-slate-300');
+                editAppoimentDay.classList.add('text-slate-400');
+            }
+            if (getAtt === 'true') {
+                actInactAppoimentDay.dataset.actInact = 'false';
+                actInactAppoimentDay.classList.remove('bg-blue-600');
+                actInactAppoimentDay.classList.add('bg-slate-300');
+                const innerSpan = actInactAppoimentDay.querySelector('span');
+                innerSpan.classList.remove('left-0.5');
+                innerSpan.classList.add('right-0.5');
+                const parentBtn = actInactAppoimentDay.parentElement;
+                parentBtn.classList.remove('bg-slate-50');
+                parentBtn.classList.add('bg-slate-50/50');
+                const getSpans = parentBtn.querySelectorAll('span');
+                getSpans.forEach(getSpan => {
+                    getSpan.classList.remove('text-slate-600');
+                    getSpan.classList.add('text-slate-400');
+                })
+                const numberOfAppoiment = parentBtn.querySelector('.number-of-appoiment');
+
+                numberOfAppoiment.classList.remove('text-green-700', 'bg-green-50', 'text-slate-600', 'text-slate-400');
+                numberOfAppoiment.classList.add('text-green-300', 'bg-green-50');
+
+                const editAppoimentDay = parentBtn.querySelector('.edit-appoiment-day');
+                editAppoimentDay.classList.remove('text-slate-400');
+                editAppoimentDay.classList.add('text-slate-300');
+            };
+        });
+    });
+}
