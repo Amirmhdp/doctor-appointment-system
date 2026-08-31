@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('account_module.urls')),
     path('', include('doctors_module.urls')),
     path('', include('doctor_panel.urls')),
+    path('', include('user_panel.urls')),
 ]
