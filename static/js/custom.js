@@ -892,199 +892,258 @@ if (actInactAppoimentDays) {
 
 const seeAllAppoiments = document.querySelectorAll('.see-all-appoiment');
 
-seeAllAppoiments.forEach(seeAllAppoiment => {
-    seeAllAppoiment.addEventListener('click', () => {
-        const itemNavPanels = document.querySelectorAll('.item-nav-panel');
+if (seeAllAppoiments) {
+    seeAllAppoiments.forEach(seeAllAppoiment => {
+        seeAllAppoiment.addEventListener('click', () => {
+            const itemNavPanels = document.querySelectorAll('.item-nav-panel');
 
-        itemNavPanels.forEach(itemNavPanel => {
-            itemNavPanel.classList.remove('bg-blue-600', 'text-white');
-            itemNavPanel.classList.add('text-slate-500');
-        });
-        const appoimentBtn = document.getElementById('appoiment-btn');
-        const appoimentSvg = document.getElementById('appoiment-svg');
-        appoimentBtn.classList.remove('bg-white', 'text-slate-500');
-        appoimentBtn.classList.add('bg-blue-600', 'text-white');
-        const iconDocotrPanels = document.querySelectorAll('.icon-docotr-panel');
-        iconDocotrPanels.forEach(iconDocotrPanel => {
-            iconDocotrPanel.classList.remove('text-white');
-            iconDocotrPanel.classList.add('text-slate-500');
-        });
-        appoimentSvg.classList.remove('text-slate-500');
-        appoimentSvg.classList.add('text-white');
-        const doctorInfoPanels = document.querySelectorAll('.doctor-info-panel');
-        const appoiment = document.getElementById('appoiment');
+            itemNavPanels.forEach(itemNavPanel => {
+                itemNavPanel.classList.remove('bg-blue-600', 'text-white');
+                itemNavPanel.classList.add('text-slate-500');
+            });
+            const appoimentBtn = document.getElementById('appoiment-btn');
+            const appoimentSvg = document.getElementById('appoiment-svg');
+            appoimentBtn.classList.remove('bg-white', 'text-slate-500');
+            appoimentBtn.classList.add('bg-blue-600', 'text-white');
+            const iconDocotrPanels = document.querySelectorAll('.icon-docotr-panel');
+            iconDocotrPanels.forEach(iconDocotrPanel => {
+                iconDocotrPanel.classList.remove('text-white');
+                iconDocotrPanel.classList.add('text-slate-500');
+            });
+            appoimentSvg.classList.remove('text-slate-500');
+            appoimentSvg.classList.add('text-white');
+            const doctorInfoPanels = document.querySelectorAll('.doctor-info-panel');
+            const appoiment = document.getElementById('appoiment');
 
-        doctorInfoPanels.forEach(doctorInfoPanel => {
-            doctorInfoPanel.classList.add('hidden');
-
-        });
-        appoiment.classList.remove('hidden');
-
-        const myAppoimentTaps = document.querySelectorAll('.my-appoiment-taps');
-
-        const getAttSeeAllBtn = seeAllAppoiment.dataset.getTimeAppoiment;
-
-
-
-        if (getAttSeeAllBtn == 'future-appoiment') {
-            myAppoimentTaps.forEach(item => {
-                item.classList.remove('bg-blue-600', 'text-white');
-                item.classList.add('text-slate-500');
-                if (item.dataset.timeAppoiment == 'future-appoiment') {
-                    item.classList.remove('text-slate-500');
-                    item.classList.add('bg-blue-600', 'text-white');
-
-                    const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
-                    listAppoimentTimes.forEach(listAppoimentTime => {
-                        listAppoimentTime.classList.add('hidden');
-                    });
-
-                    const getAtt = item.dataset.timeAppoiment;
-                    const timeAppoimentContent = document.getElementById(getAtt);
-                    timeAppoimentContent.classList.remove('hidden');
-                }
+            doctorInfoPanels.forEach(doctorInfoPanel => {
+                doctorInfoPanel.classList.add('hidden');
 
             });
+            appoiment.classList.remove('hidden');
 
-        }
-        if (getAttSeeAllBtn == 'past-appoiment') {
-            myAppoimentTaps.forEach(item => {
-                item.classList.remove('bg-blue-600', 'text-white');
-                item.classList.add('text-slate-500');
-                if (item.dataset.timeAppoiment == 'past-appoiment') {
-                    item.classList.remove('text-slate-500');
-                    item.classList.add('bg-blue-600', 'text-white');
+            const myAppoimentTaps = document.querySelectorAll('.my-appoiment-taps');
 
-                    const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
-                    listAppoimentTimes.forEach(listAppoimentTime => {
-                        listAppoimentTime.classList.add('hidden');
-                    });
-
-                    const getAtt = item.dataset.timeAppoiment;
-                    const timeAppoimentContent = document.getElementById(getAtt);
-                    timeAppoimentContent.classList.remove('hidden');
-                }
-
-            });
-        }
-        if (getAttSeeAllBtn == 'cancel-appoiment') {
-            myAppoimentTaps.forEach(item => {
-                item.classList.remove('bg-blue-600', 'text-white');
-                item.classList.add('text-slate-500');
-                if (item.dataset.timeAppoiment == 'cancel-appoiment') {
-                    item.classList.remove('text-slate-500');
-                    item.classList.add('bg-blue-600', 'text-white');
-
-                    const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
-                    listAppoimentTimes.forEach(listAppoimentTime => {
-                        listAppoimentTime.classList.add('hidden');
-                    });
-
-                    const getAtt = item.dataset.timeAppoiment;
-                    const timeAppoimentContent = document.getElementById(getAtt);
-                    timeAppoimentContent.classList.remove('hidden');
-                }
-
-            });
-        }
+            const getAttSeeAllBtn = seeAllAppoiment.dataset.getTimeAppoiment;
 
 
 
+            if (getAttSeeAllBtn == 'future-appoiment') {
+                myAppoimentTaps.forEach(item => {
+                    item.classList.remove('bg-blue-600', 'text-white');
+                    item.classList.add('text-slate-500');
+                    if (item.dataset.timeAppoiment == 'future-appoiment') {
+                        item.classList.remove('text-slate-500');
+                        item.classList.add('bg-blue-600', 'text-white');
+
+                        const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
+                        listAppoimentTimes.forEach(listAppoimentTime => {
+                            listAppoimentTime.classList.add('hidden');
+                        });
+
+                        const getAtt = item.dataset.timeAppoiment;
+                        const timeAppoimentContent = document.getElementById(getAtt);
+                        timeAppoimentContent.classList.remove('hidden');
+                    }
+
+                });
+
+            }
+            if (getAttSeeAllBtn == 'past-appoiment') {
+                myAppoimentTaps.forEach(item => {
+                    item.classList.remove('bg-blue-600', 'text-white');
+                    item.classList.add('text-slate-500');
+                    if (item.dataset.timeAppoiment == 'past-appoiment') {
+                        item.classList.remove('text-slate-500');
+                        item.classList.add('bg-blue-600', 'text-white');
+
+                        const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
+                        listAppoimentTimes.forEach(listAppoimentTime => {
+                            listAppoimentTime.classList.add('hidden');
+                        });
+
+                        const getAtt = item.dataset.timeAppoiment;
+                        const timeAppoimentContent = document.getElementById(getAtt);
+                        timeAppoimentContent.classList.remove('hidden');
+                    }
+
+                });
+            }
+            if (getAttSeeAllBtn == 'cancel-appoiment') {
+                myAppoimentTaps.forEach(item => {
+                    item.classList.remove('bg-blue-600', 'text-white');
+                    item.classList.add('text-slate-500');
+                    if (item.dataset.timeAppoiment == 'cancel-appoiment') {
+                        item.classList.remove('text-slate-500');
+                        item.classList.add('bg-blue-600', 'text-white');
+
+                        const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
+                        listAppoimentTimes.forEach(listAppoimentTime => {
+                            listAppoimentTime.classList.add('hidden');
+                        });
+
+                        const getAtt = item.dataset.timeAppoiment;
+                        const timeAppoimentContent = document.getElementById(getAtt);
+                        timeAppoimentContent.classList.remove('hidden');
+                    }
+
+                });
+            }
 
 
+
+
+
+        })
     })
-})
+}
 
 
 // go to intersted doctors
 
 const interstedDoctors = document.getElementById('intersted-doctors');
 
-interstedDoctors.addEventListener('click', () => {
-    const itemNavPanels = document.querySelectorAll('.item-nav-panel');
+if (interstedDoctors) {
+    interstedDoctors.addEventListener('click', () => {
+        const itemNavPanels = document.querySelectorAll('.item-nav-panel');
 
-    itemNavPanels.forEach(itemNavPanel => {
-        itemNavPanel.classList.remove('bg-blue-600', 'text-white');
-        itemNavPanel.classList.add('text-slate-500');
+        itemNavPanels.forEach(itemNavPanel => {
+            itemNavPanel.classList.remove('bg-blue-600', 'text-white');
+            itemNavPanel.classList.add('text-slate-500');
+        })
+        const iconDocotrPanels = document.querySelectorAll('.icon-docotr-panel');
+        iconDocotrPanels.forEach(iconDocotrPanel => {
+            iconDocotrPanel.classList.remove('text-white');
+            iconDocotrPanel.classList.add('text-slate-500');
+        })
+        const listDoctorsInterstedBtn = document.getElementById('list-doctors-intersted-btn');
+        listDoctorsInterstedBtn.classList.remove('bg-white', 'text-slate-500');
+        listDoctorsInterstedBtn.classList.add('bg-blue-600', 'text-white');
+
+        const interstedDoctorSvg = document.getElementById('intersted-doctor-svg');
+        interstedDoctorSvg.classList.remove('text-slate-500');
+        interstedDoctorSvg.classList.add('text-white');
+
+        const doctorInfoPanels = document.querySelectorAll('.doctor-info-panel');
+        const interstedDoctorsContent = document.getElementById('patients');
+
+        doctorInfoPanels.forEach(doctorInfoPanel => {
+            doctorInfoPanel.classList.add('hidden')
+
+        })
+        interstedDoctorsContent.classList.remove('hidden')
     })
-    const iconDocotrPanels = document.querySelectorAll('.icon-docotr-panel');
-    iconDocotrPanels.forEach(iconDocotrPanel => {
-        iconDocotrPanel.classList.remove('text-white');
-        iconDocotrPanel.classList.add('text-slate-500');
-    })
-    const listDoctorsInterstedBtn = document.getElementById('list-doctors-intersted-btn');
-    listDoctorsInterstedBtn.classList.remove('bg-white', 'text-slate-500');
-    listDoctorsInterstedBtn.classList.add('bg-blue-600', 'text-white');
-
-    const interstedDoctorSvg = document.getElementById('intersted-doctor-svg');
-    interstedDoctorSvg.classList.remove('text-slate-500');
-    interstedDoctorSvg.classList.add('text-white');
-
-    const doctorInfoPanels = document.querySelectorAll('.doctor-info-panel');
-    const interstedDoctorsContent = document.getElementById('patients');
-
-    doctorInfoPanels.forEach(doctorInfoPanel => {
-        doctorInfoPanel.classList.add('hidden')
-
-    })
-    interstedDoctorsContent.classList.remove('hidden')
-})
+}
 
 
 // active inactive appoiment taps
 
 const myAppoimentTaps = document.querySelectorAll('.my-appoiment-taps');
 
-myAppoimentTaps.forEach(myAppoimentTap => {
-    myAppoimentTap.addEventListener('click', () => {
-        myAppoimentTaps.forEach(item => {
-            item.classList.remove('bg-blue-600', 'text-white');
-            item.classList.add('text-slate-500');
+if (myAppoimentTaps) {
+    myAppoimentTaps.forEach(myAppoimentTap => {
+        myAppoimentTap.addEventListener('click', () => {
+            myAppoimentTaps.forEach(item => {
+                item.classList.remove('bg-blue-600', 'text-white');
+                item.classList.add('text-slate-500');
+            });
+            myAppoimentTap.classList.add('bg-blue-600', 'text-white');
+            myAppoimentTap.classList.remove('text-slate-500');
+
+
+            const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
+            listAppoimentTimes.forEach(listAppoimentTime => {
+                listAppoimentTime.classList.add('hidden');
+            });
+
+            const getAtt = myAppoimentTap.dataset.timeAppoiment;
+            const timeAppoimentContent = document.getElementById(getAtt);
+            timeAppoimentContent.classList.remove('hidden');
+
+
         });
-        myAppoimentTap.classList.add('bg-blue-600', 'text-white');
-        myAppoimentTap.classList.remove('text-slate-500');
-
-
-        const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
-        listAppoimentTimes.forEach(listAppoimentTime => {
-            listAppoimentTime.classList.add('hidden');
-        });
-
-        const getAtt = myAppoimentTap.dataset.timeAppoiment;
-        const timeAppoimentContent = document.getElementById(getAtt);
-        timeAppoimentContent.classList.remove('hidden');
-
-
     });
-});
+}
 
 const cancelAppoimentBtns = document.querySelectorAll('.cancel-appoiment-btn');
 const cancelModal = document.getElementById('cancelModal');
 const closeCancleModal = document.getElementById('cancelModal');
 
-cancelAppoimentBtns.forEach(cancelAppoimentBtn => {
-    cancelAppoimentBtn.addEventListener('click', () => {
-        cancelModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
-        cancelModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
-        overlay.classList.remove('invisible', 'opacity-0');
-        overlay.classList.add('visible', 'opacity-100');
-        body.style.overflow = 'hidden'
+if (cancelAppoimentBtns, cancelModal, closeCancleModal) {
+    cancelAppoimentBtns.forEach(cancelAppoimentBtn => {
+        cancelAppoimentBtn.addEventListener('click', () => {
+            cancelModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+            cancelModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+            overlay.classList.remove('invisible', 'opacity-0');
+            overlay.classList.add('visible', 'opacity-100');
+            body.style.overflow = 'hidden'
+        })
+
     })
+    closeCancleModal.addEventListener('click', () => {
+        cancelModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        cancelModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
 
-})
-closeCancleModal.addEventListener('click', () => {
-    cancelModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-    cancelModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-    overlay.classList.remove('visible', 'opacity-100');
-    overlay.classList.add('invisible', 'opacity-0');
-    body.style.overflow = 'auto'
+    })
+    overlay.addEventListener('click', () => {
+        cancelModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+        cancelModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+        overlay.classList.remove('visible', 'opacity-100');
+        overlay.classList.add('invisible', 'opacity-0');
+        body.style.overflow = 'auto'
 
-})
-overlay.addEventListener('click', () => {
-    cancelModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-    cancelModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-    overlay.classList.remove('visible', 'opacity-100');
-    overlay.classList.add('invisible', 'opacity-0');
-    body.style.overflow = 'auto'
+    })
+}
 
-})
+
+// counter
+
+const counters = document.querySelectorAll('.counter');
+
+const observer = new IntersectionObserver((entries, observer) => {
+
+    entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+
+            const counter = entry.target;
+            const target = Number(counter.dataset.target);
+            const duration = 4000;
+
+            let startTime = null;
+
+            function updateCounter(currentTime) {
+
+                if (startTime === null) {
+                    startTime = currentTime;
+                }
+
+                const progress = Math.min(
+                    (currentTime - startTime) / duration,
+                    1
+                );
+
+                const currentValue = Math.floor(progress * target);
+
+                counter.textContent = currentValue + '+';
+
+                if (progress < 1) {
+                    requestAnimationFrame(updateCounter);
+                }
+
+            }
+
+            requestAnimationFrame(updateCounter);
+
+            observer.unobserve(counter);
+        }
+
+    });
+
+});
+
+counters.forEach(counter => {
+    observer.observe(counter);
+});

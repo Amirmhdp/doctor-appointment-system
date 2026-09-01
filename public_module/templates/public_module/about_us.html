@@ -1,0 +1,147 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+  درباره ما
+{% endblock %}
+
+{% block content %}
+  <main class="px-4 py-8 md:py-12 max-w-5xl mx-auto space-y-6 md:space-y-8">
+ 
+    <!-- ============ HERO ============ -->
+    <section class="bg-white rounded-3xl p-6 md:py-3 md:p-10 flex flex-col md:flex-row-reverse items-center gap-6 md:gap-10">
+      <div class="w-full md:w-[42%] flex justify-center">
+        <img src="/static/images/doctor-blob.png" class="w-full  h-auto" alt="doctor-blob" />
+      </div>
+      <div class="w-full md:w-[58%] text-center md:text-right">
+        <span class="inline-block text-[11px] font-bold text-blue-600 bg-blue-50 px-3 py-1.5 rounded-full mb-4">درباره مدیکر</span>
+        <h1 class="text-2xl md:text-3xl font-extrabold text-custom-black leading-relaxed mb-3">
+          سلامتی شما، اولویت اول ماست
+        </h1>
+        <p class="text-[15px] text-medium-gray font-medium leading-7">
+          در مدیکر، با ترکیب فناوری و تخصص پزشکان، تجربه‌ای نوین و مطمئن برای دریافت خدمات درمانی آنلاین فراهم کرده‌ایم — از رزرو نوبت تا پیگیری سوابق پزشکی، همه‌جا کنار شما هستیم.
+        </p>
+      </div>
+    </section>
+ 
+    <!-- ============ 4 FEATURE ICONS ============ -->
+    <section class="bg-white rounded-2xl p-6 md:p-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="flex flex-col items-center justify-center gap-2 text-center">
+          <i data-lucide="headset" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12"></i>
+          <span class="text-custom-black font-bold text-sm">پشتیبانی آنلاین</span>
+          <span class="text-slate-gray text-xs font-bold">در تمامی مراحل</span>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-2 text-center">
+          <i data-lucide="calendar-check" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12"></i>
+          <span class="text-custom-black font-bold text-sm">نوبت‌دهی آسان</span>
+          <span class="text-slate-gray text-xs font-bold">رزرو در کمتر از ۱ دقیقه</span>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-2 text-center">
+          <i data-lucide="badge-check" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12"></i>
+          <span class="text-custom-black font-bold text-sm">پزشکان تاییدشده</span>
+          <span class="text-slate-gray text-xs font-bold">با مجوز نظام پزشکی</span>
+        </div>
+        <div class="flex flex-col items-center justify-center gap-2 text-center">
+          <i data-lucide="file-heart" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12"></i>
+          <span class="text-custom-black font-bold text-sm">پرونده الکترونیک</span>
+          <span class="text-slate-gray text-xs font-bold">سوابق شما، همیشه در دسترس</span>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ============ MISSION ============ -->
+    <section class="flex flex-col md:flex-row items-center gap-6 md:gap-10 bg-white shadow-[0_0_20px_#e0edfd] px-6 py-8 md:px-10 rounded-2xl">
+      <div class="shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-full bg-blue-50 flex items-center justify-center">
+        <img src="/static/images/target-and-arrow-svgrepo-com.svg" class="w-14 h-14 md:w-16 md:h-16" alt="target-icon" />
+      </div>
+      <div class="flex flex-col justify-center items-center md:items-start text-center md:text-right gap-2">
+        <h2 class="text-custom-black font-bold text-2xl">ماموریت ما</h2>
+        <p class="text-[15px] text-medium-gray font-medium leading-7">
+          ماموریت ما این است که خدمات پزشکی باکیفیت و قابل‌اعتماد ارائه دهیم و سلامت و آرامش را به زندگی شما و خانواده‌تان بیاوریم.
+        </p>
+      </div>
+    </section>
+ 
+    <!-- ============ STATS ============ -->
+    <section class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 bg-white shadow-[0_0_20px_#e0edfd] px-6 py-8 rounded-2xl">
+      <div class="flex items-center gap-3 justify-center md:justify-start">
+        <i data-lucide="star" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12 shrink-0"></i>
+        <div class="flex flex-col">
+          <span class="text-custom-black font-extrabold text-lg counter" data-target="4"="">0+</span>
+          <span class="text-slate-gray text-sm font-bold whitespace-nowrap">سال تجربه</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 justify-center md:justify-start">
+        <i data-lucide="calendar" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12 shrink-0"></i>
+        <div class="flex flex-col">
+          <span class="text-custom-black font-extrabold text-lg counter" data-target="60000">0+</span>
+          <span class="text-slate-gray text-sm font-bold whitespace-nowrap">نوبت موفق</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 justify-center md:justify-start">
+        <i data-lucide="heart" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12 shrink-0"></i>
+        <div class="flex flex-col">
+          <span class="text-custom-black font-extrabold text-lg counter" data-target="40000">0+</span>
+          <span class="text-slate-gray text-sm font-bold whitespace-nowrap">بیمار راضی</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 justify-center md:justify-start">
+        <i data-lucide="users" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12 shrink-0"></i>
+        <div class="flex flex-col">
+          <span class="text-custom-black font-extrabold text-lg counter" data-target="150">0+</span>
+          <span class="text-slate-gray text-sm font-bold whitespace-nowrap">پزشک متخصص</span>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ============ WHY MEDICARE ============ -->
+    <section class="flex flex-col md:flex-row items-center gap-6 md:gap-10 bg-white shadow-[0_0_20px_#e0edfd] px-6 py-8 md:px-10 rounded-2xl">
+      <div class="shrink-0 w-24 h-24 md:w-32 md:h-32 rounded-full bg-blue-50 flex items-center justify-center">
+        <i data-lucide="shield-plus" class="text-blue-600 w-14 h-14 md:w-16 md:h-16"></i>
+      </div>
+      <div class="flex flex-col justify-center items-center md:items-start text-center md:text-right gap-2">
+        <h2 class="text-custom-black font-bold text-2xl">چرا مدیکر؟</h2>
+        <p class="text-[15px] text-medium-gray font-medium leading-7">
+          بستری امن، سریع و آسان برای دریافت نوبت آنلاین از بهترین پزشکان فراهم کرده‌ایم. تیم پشتیبانی ما همیشه آماده پاسخگویی به شماست تا بدون اتلاف وقت، روی سلامتی خود تمرکز کنید.
+        </p>
+      </div>
+    </section>
+ 
+    <!-- ============ NEW: OUR VALUES (ارزش‌های ما) ============ -->
+    <section class="bg-white rounded-2xl p-6 md:p-8">
+      <div class="text-center mb-6">
+        <h2 class="text-custom-black font-bold text-2xl mb-2">ارزش‌های ما</h2>
+        <p class="text-sm text-medium-gray">اصولی که در هر قدم مدیکر رعایتشان می‌کنیم</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="flex flex-col items-center text-center gap-3 bg-slate-50 rounded-xl p-5">
+          <i data-lucide="lock" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12"></i>
+          <h3 class="font-bold text-custom-black text-sm">امنیت و محرمانگی</h3>
+          <p class="text-xs text-medium-gray leading-6">اطلاعات پزشکی و شخصی شما با بالاترین استانداردها محافظت می‌شود.</p>
+        </div>
+        <div class="flex flex-col items-center text-center gap-3 bg-slate-50 rounded-xl p-5">
+          <i data-lucide="gem" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12"></i>
+          <h3 class="font-bold text-custom-black text-sm">کیفیت خدمات</h3>
+          <p class="text-xs text-medium-gray leading-6">همکاری فقط با پزشکان متخصص و دارای مجوز رسمی نظام پزشکی.</p>
+        </div>
+        <div class="flex flex-col items-center text-center gap-3 bg-slate-50 rounded-xl p-5">
+          <i data-lucide="zap" class="text-blue-600 bg-blue-50 p-3 rounded-full w-12 h-12"></i>
+          <h3 class="font-bold text-custom-black text-sm">دسترسی سریع</h3>
+          <p class="text-xs text-medium-gray leading-6">رزرو نوبت، مشاوره و پیگیری، همه در چند کلیک و بدون معطلی.</p>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ============ NEW: CTA BANNER ============ -->
+    <section class="bg-gradient-to-l from-blue-50 to-blue-100/60 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-right">
+      <div>
+        <h2 class="font-bold text-custom-black text-xl mb-2">همین حالا سفر سلامتی خود را شروع کنید</h2>
+        <p class="text-sm text-medium-gray">به جمع بیش از ۲۵,۰۰۰ بیمار راضی مدیکر بپیوندید و نوبت خود را رزرو کنید.</p>
+      </div>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-6 py-3 rounded-xl whitespace-nowrap shrink-0">
+        جستجوی پزشک
+      </button>
+    </section>
+ 
+  </main>
+{% endblock %}

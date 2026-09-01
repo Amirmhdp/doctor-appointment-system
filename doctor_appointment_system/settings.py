@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'doctors_module',
     'doctor_panel',
     'user_panel',
+    'public_module',
     'django_render_partial'
 ]
 
