@@ -20,4 +20,8 @@ class ForgotPassword(View):
 class ResetPasswordView(View):
     def get(self, request):
         return render(request, 'account_module/reset_password.html')
+    
+class OTPVerification(View):
+    def get(self, request):
+        return render(request, 'account_module/otp_verification.html')
 

@@ -189,44 +189,50 @@ if (apponentDate) {
 // console.log(apponentDate.textContent);
 
 // slider for special list
+const specialList = document.getElementsByClassName('special-list');
+if (specialList.length > 0) {
 
-const swiper = new Swiper('.special-list', {
-    direction: 'horizontal',
-    loop: false,
+    const swiper = new Swiper('.special-list', {
+        direction: 'horizontal',
+        loop: false,
 
-    slidesPerView: 'auto',
-    spaceBetween: 16,
+        slidesPerView: 'auto',
+        spaceBetween: 16,
 
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
 
-    observer: true,
-    observeParents: true,
-});
+        observer: true,
+        observeParents: true,
+    });
+}
 
 
 // infinite-slider
+const infiniteSlider = document.getElementsByClassName('infinite-slider');
 
-const infiniteSlider = new Swiper('.infinite-slider', {
-    direction: 'horizontal',
-    loop: true,
-    autoplay: {
-        delay: 3000
-    },
-    slidesPerView: 'auto',
-    spaceBetween: 16,
+if (specialList.length > 0) {
+    const infiniteSlider = new Swiper('.infinite-slider', {
+        direction: 'horizontal',
+        loop: true,
+        autoplay: {
+            delay: 3000
+        },
+        slidesPerView: 'auto',
+        spaceBetween: 16,
 
-    // If we need pagination
-    pagination: {
-        el: '.swiper-pagination',
-    },
+        // If we need pagination
+        pagination: {
+            el: '.swiper-pagination',
+        },
 
-    observer: true,
-    observeParents: true,
+        observer: true,
+        observeParents: true,
 
-});
+    });
+}
 
 // open searchbox
 const searchIcon = document.getElementById('search');
@@ -1144,6 +1150,95 @@ const observer = new IntersectionObserver((entries, observer) => {
 
 });
 
-counters.forEach(counter => {
-    observer.observe(counter);
-});
+if (counters) {
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+}
+
+// focus next input
+
+
+
+const otpInputs = document.querySelectorAll('.otp-input');
+
+if (otpInputs) {
+    otpInputs.forEach((input, index) => {
+
+        input.addEventListener('input', () => {
+
+            input.value = input.value.replace(/\D/g, '');
+
+            if (input.value.length === 1) {
+                const nextInput = otpInputs[index - 1];
+
+                if (nextInput) {
+                    nextInput.focus();
+                }
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+
+            if (e.key === 'Backspace' && input.value === '') {
+                const previousInput = otpInputs[index + 1];
+
+                if (previousInput) {
+                    previousInput.focus();
+                    previousInput.value = '';
+                }
+            }
+
+        });
+
+    });
+}
+
+// otp verification counter
+
+const otpTimer = document.querySelector('#otp-timer');
+const resendCode = document.querySelector('#resend-code');
+const resendCodeBtn = document.querySelector('#resend-code-btn');
+const otpVerificationCounter = document.querySelector('#otp-verification-counter');
+
+let timeLeft = 120;
+let timer;
+
+if (otpTimer && resendCode && resendCodeBtn && otpVerificationCounter) {
+    function startOtpTimer() {
+
+        timeLeft = 120;
+
+        otpVerificationCounter.classList.remove('hidden');
+        resendCode.classList.add('hidden');
+
+        clearInterval(timer);
+
+        timer = setInterval(() => {
+
+            timeLeft--;
+
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            otpTimer.textContent =
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            if (timeLeft === 0) {
+                clearInterval(timer);
+
+                otpVerificationCounter.classList.add('hidden');
+                resendCode.classList.remove('hidden');
+            }
+
+        }, 1000);
+    }
+    startOtpTimer();
+}
+
+
+if (resendCodeBtn) {
+    resendCodeBtn.addEventListener('click', () => {
+        startOtpTimer();
+    });
+}

@@ -1,0 +1,45 @@
+{% extends "account_module/base_authentication.html" %}
+
+{% block title %}کد تایید{% endblock title %}
+
+{% block form_authentication %}
+
+
+<form class="flex flex-col justify-center items-center w-full md:w-120 md:m-auto gap-5 px-7 md:px-16">
+     <div class="flex items-center justify-center -ml-12.5 mb-2">
+      <div class="flex flex-col justify-center">
+        <h2 class="text-primary-special text-2xl text font-bold">Medi<span class="text-primary-dark-blue">Care</span></h2>
+        <span class="text-sm text-slate-gray">خدمات پزشکی آنلاین</span>
+      </div>
+      <div>
+        <img src="/static/images/logo.png" class="w-27 -mr-6.25 -mt-1.5" alt="logo" />
+      </div>
+    </div>   
+    <span class="text-[16px] text-custom-black font-bold">کد تایید</span>
+    <span class="text-sm text-slate-gray ">لطفا کد 5 رقمی ارسال شده به شماره زیر راوارد کنید</span>
+    <div class="flex items-center gap-2">
+        <span class="text-sm text-gray-700 font-bold">0996437643</span>
+        <a href="" class="text-sm text-primary-special flex items-center gap-1">
+            ویرایش
+          <i data-lucide="SquarePen" class="w-5 h-5 text-sm text-primary-special"></i>
+        </a>
+    </div>
+    <div class="flex items-center gap-2">
+        <input type="text" name="" id="" class="otp-input outline-none leading-[44px] text-center w-11 h-11 border border-light-gray rounded-lg focus:border-primary-special transition-all duration-300 ease-in-out" inputmode="numeric" maxlength="1">
+        <input type="text" name="" id="" class="otp-input outline-none leading-[44px] text-center w-11 h-11 border border-light-gray rounded-lg focus:border-primary-special transition-all duration-300 ease-in-out" inputmode="numeric" maxlength="1">
+        <input type="text" name="" id="" class="otp-input outline-none leading-[44px] text-center w-11 h-11 border border-light-gray rounded-lg focus:border-primary-special transition-all duration-300 ease-in-out" inputmode="numeric" maxlength="1">
+        <input type="text" name="" id="" class="otp-input outline-none leading-[44px] text-center w-11 h-11 border border-light-gray rounded-lg focus:border-primary-special transition-all duration-300 ease-in-out" inputmode="numeric" maxlength="1">
+        <input type="text" name="" id="" class="otp-input outline-none leading-[44px] text-center w-11 h-11 border border-light-gray rounded-lg focus:border-primary-special transition-all duration-300 ease-in-out" inputmode="numeric" maxlength="1">
+    </div>
+    <div class="flex items-center gap-2" id="otp-verification-counter">
+        <span class="text-sm text-slate-700 font-semibold" id="otp-timer">02:00</span>
+        <span class="text-sm text-slate-700 font-semibold">مانده تا ارسال مجدد کد</span>
+    </div>
+    <div class="flex items-center gap-2 hidden" id="resend-code">
+        <span class="text-sm text-slate-700 font-semibold ">کد تایید را دریافت نکرده اید؟</span>
+        <span class="text-sm text-primary-special cursor-pointer" id="resend-code-btn">ارسال مجدد کد</span>
+    </div>
+    <button class="text-sm bg-primary-special w-full text-center py-2.5 rounded-lg text-white cursor-pointer hover:bg-primary-special/75 transition-all duration-200 ease-in-out active:bg-primary-special/50">ادامه</button>
+</form>
+
+{% endblock form_authentication %}
