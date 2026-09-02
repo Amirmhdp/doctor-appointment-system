@@ -8,3 +8,6 @@ class AboutUsView(TemplateView):
     
 class ContactUsView(TemplateView):
     template_name = 'public_module/contact_us.html'
+    
+class FaqView(TemplateView):
+    template_name = 'public_module/faq.html'
