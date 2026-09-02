@@ -1,0 +1,74 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+  اطلاعات پرداخت
+{% endblock %}
+
+{% block content %}
+  <main class="mt-16 flex flex-col md:flex-row justify-center md:justify-between gap-5 px-2 md:px-5">
+    <div class="flex flex-col justify-center gap-2 w-full md:w-[60%] px-2 py-4">
+      <div class="flex flex-col justify-center gap-4 px-4 py-3.25 md:p-8 border border-light-gray rounded-lg shadow-[0_0_20px_#e0edfd]">
+        <div class="flex items-center gap-2">
+          <img class="w-15 h-15 rounded-full" src="/static/images/XJnyiiQAUbuBBpgLppsdUEX4SNU5F3v45StIP52B.jpg" alt="" />
+          <span class="text-custom-black font-bold text-[15px]">دکتر نادر اربابی</span>
+        </div>
+        <div class="flex flex-col justify-center gap-2">
+          <div class="flex items-center justify-between w-full">
+            <span class="text-[15px] text-slate-700">تخصص</span>
+            <span class="text-[15px] text-slate-gray">تخصص پوست و مو</span>
+          </div>
+          <div class="flex items-center justify-between w-full">
+            <span class="text-[15px] text-slate-700">نوع نوبت</span>
+            <span class="text-[15px] text-slate-gray">حضوری</span>
+          </div>
+          <div class="flex items-center justify-between w-full">
+            <span class="text-[15px] text-slate-700">زمان نوبت</span>
+            <span class="text-[15px] text-slate-gray">18 شهریور 1405 - 20:00</span>
+          </div>
+          <div class="flex items-center justify-between w-full gap-6">
+            <span class="text-[15px] text-slate-700">آدرس</span>
+            <span class="text-[15px] text-slate-gray">قم، خیابان شهید عراقی، کوچه شماره 9، رو به روی شهر پزشکان</span>
+          </div>
+          <div class="flex items-center justify-between w-full">
+            <span class="text-[15px] text-slate-700">نام مراجعه کننده</span>
+            <span class="text-[15px] text-slate-gray">مرتضی خدادادی</span>
+          </div>
+
+        </div>
+      </div>
+      <div class="flex flex-col justify-center-center px-4 py-3.25 gap-4 md:p-8 border border-light-gray rounded-lg shadow-[0_0_20px_#e0edfd]">
+        <span class="flex items-center gap-2 text-[16px] text-green-600">
+          <i data-lucide="BadgeCheck" class="w-5 h-5 text-green-600"></i>
+          با اطمینان خاطر نوبت خود را ثبت کنید
+        </span>
+        <span class="text-[15px] text-slate-700">بازگشت وجه درصورت عدم ویزیت</span>
+        <span class="text-[15px] text-slate-700">پشتیبانی آنلاین</span>
+        <span class="text-[15px] text-slate-700">
+          امکان لغو نوبت
+          <a href="" class="text-[15px] text-primary-special">(مشاهده شرایط)</a>
+        </span>
+      </div>
+      <div class="flex flex-col justify-center md:p-8 px-4 py-3.25 border border-light-gray rounded-lg shadow-[0_0_20px_#e0edfd] gap-4">
+        <span class="text-lg text-custom-black font-bold">ملاحظات پرداخت</span>
+        <p class="text-sm text-slate-700 leading-7">مبلغ پرداختی شما شامل هزینه‌های زیرساخت، کارمزد و ۱۰٪ مالیات بر ارزش افزوده برای رزرو نوبت است. لازم است مبلغ ویزیت به شکل کامل در مطب پرداخت شود.</p>
+      </div>
+    </div>
+    <div class="w-[95%] md:w-[40%] h-fit flex flex-col gap-4 mx-2  px-4 py-3.25 md:p-10 mt-4 border border-light-gray  rounded-lg shadow-[0_0_20px_#e0edfd]">
+      <span class="text-custom-black font-bold text-[15px]">جزئیات پرداخت</span>
+      <div class="flex items-center justify-between">
+        <span class="text-[15px] text-slate-700">هزینه کارمزد و زیرساخت</span>
+        <span class="text-[15px] text-slate-700">29,950 تومانء</span>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-[15px] text-slate-700">مبلغ قابل پرداخت</span>
+        <span class="text-[15px] text-slate-700">2,995 تومانء</span>
+      </div>
+      <div class="flex items-center justify-between mt-3">
+        <span class="text-[15px] text-slate-700">هزینه کارمزد و زیرساخت</span>
+        <span class="text-[17px] text-slate-700">32,945 تومانء</span>
+      </div>
+      <p class="text-[15px] text-slate-700">پرداخت به منزله پذیرش <a href="" class="text-primary-special">شرایط و قوانین</a> است</p>
+      <button class="text-center cursor-pointer text-white bg-primary-special rounded-lg py-2.5 hover:bg-primary-special/75 active:bg-primary-special/50">پرداخت و ثبت نوبت</button>
+    </div>
+  </main>
+{% endblock %}
