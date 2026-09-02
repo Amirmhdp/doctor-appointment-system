@@ -11,3 +11,6 @@ class ContactUsView(TemplateView):
     
 class FaqView(TemplateView):
     template_name = 'public_module/faq.html'
+    
+class TermsAndConditionsView(TemplateView):
+    template_name = 'public_module/terms_and_conditions.html'
