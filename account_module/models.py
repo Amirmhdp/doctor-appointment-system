@@ -35,6 +35,18 @@ class User(AbstractUser):
         blank=True,
         verbose_name="تاریخ ارسال کد فعال سازی"
     )
+    password_reset_token = models.CharField(
+        max_length=128,
+        null=True,
+        blank=True,
+        verbose_name='کد فعال سازی فراموشی رمز عبور'
+    )
+
+    password_reset_token_created_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name='تاریخ کد فعال سازی فراموشی رمز عبور'
+    )
     birthday = models.DateField(null=True, blank=True, verbose_name="تاریخ تولد")
     avatar = models.ImageField(upload_to='images/avatar', null=True, blank=True, verbose_name='عکس کاربر')
     gender = models.CharField(max_length=20, choices=GENDER_CHOICES, null=True, blank=True, verbose_name='جنسیت')
