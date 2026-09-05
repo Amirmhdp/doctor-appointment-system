@@ -28,7 +28,6 @@ if (iconCloseSidebar && iconSidebar && sidebar && overlay) {
 }
 
 
-
 // open close fast link in footer
 const openFastLink = document.getElementById('open-fast-link');
 const listFastLink = document.getElementById('list-fast-link');
@@ -289,8 +288,7 @@ if (searchInput && clearInputBtn && resultSearch && trendSearch) {
             clearInputBtn.classList.remove('opacity-0', 'invisible');
             clearInputBtn.classList.add('opacity-100', 'visible');
             searchedValue.textContent = searchInput.value;
-        }
-        else {
+        } else {
             clearInputBtn.classList.remove('opacity-100', 'visible');
             clearInputBtn.classList.add('opacity-0', 'invisible');
 
@@ -521,7 +519,8 @@ if (openCommentBoxBtn, sendCommentBox, closeCommentBox) {
         overlay.classList.add('invisible', 'opacity-0');
         body.style.overflow = 'auto';
     })
-};
+}
+;
 
 // rating ui for commentbox
 
@@ -830,7 +829,8 @@ if (todayAppoimentBtn, openNextAppoiment, todayModal, upcomingModal, closeUpcomi
     });
 
 
-};
+}
+;
 
 // active or inactive day appoiment
 
@@ -887,11 +887,11 @@ if (actInactAppoimentDays) {
                 const editAppoimentDay = parentBtn.querySelector('.edit-appoiment-day');
                 editAppoimentDay.classList.remove('text-slate-400');
                 editAppoimentDay.classList.add('text-slate-300');
-            };
+            }
+            ;
         });
     });
 }
-
 
 
 // go to oppoiment list
@@ -930,7 +930,6 @@ if (seeAllAppoiments) {
             const myAppoimentTaps = document.querySelectorAll('.my-appoiment-taps');
 
             const getAttSeeAllBtn = seeAllAppoiment.dataset.getTimeAppoiment;
-
 
 
             if (getAttSeeAllBtn == 'future-appoiment') {
@@ -994,9 +993,6 @@ if (seeAllAppoiments) {
 
                 });
             }
-
-
-
 
 
         })
@@ -1159,10 +1155,10 @@ if (counters) {
 // focus next input
 
 
-
 const otpInputs = document.querySelectorAll('.otp-input');
 
 if (otpInputs) {
+
     otpInputs.forEach((input, index) => {
 
         input.addEventListener('input', () => {
@@ -1170,10 +1166,29 @@ if (otpInputs) {
             input.value = input.value.replace(/\D/g, '');
 
             if (input.value.length === 1) {
-                const nextInput = otpInputs[index - 1];
+
+                const nextInput = otpInputs[index + 1];
 
                 if (nextInput) {
                     nextInput.focus();
+                }
+
+
+                if (index === otpInputs.length - 1) {
+
+                    const otpCode = [...otpInputs]
+                        .map(input => input.value)
+                        .join('');
+
+
+                    const otpCodeInput = document.querySelector('#id_otp_code');
+
+                    if (otpCodeInput) {
+                        otpCodeInput.value = otpCode;
+                    }
+
+
+                    formOtp.requestSubmit();
                 }
             }
         });
@@ -1181,7 +1196,8 @@ if (otpInputs) {
         input.addEventListener('keydown', (e) => {
 
             if (e.key === 'Backspace' && input.value === '') {
-                const previousInput = otpInputs[index + 1];
+
+                const previousInput = otpInputs[index - 1];
 
                 if (previousInput) {
                     previousInput.focus();
@@ -1195,50 +1211,134 @@ if (otpInputs) {
 }
 
 // otp verification counter
-
+const formOtp = document.querySelector('#form-otp');
 const otpTimer = document.querySelector('#otp-timer');
 const resendCode = document.querySelector('#resend-code');
 const resendCodeBtn = document.querySelector('#resend-code-btn');
 const otpVerificationCounter = document.querySelector('#otp-verification-counter');
 
-let timeLeft = 120;
 let timer;
 
-if (otpTimer && resendCode && resendCodeBtn && otpVerificationCounter) {
+if (
+    formOtp &&
+    otpTimer &&
+    resendCode &&
+    resendCodeBtn &&
+    otpVerificationCounter
+) {
+
     function startOtpTimer() {
 
-        timeLeft = 120;
+        clearInterval(timer);
 
         otpVerificationCounter.classList.remove('hidden');
         resendCode.classList.add('hidden');
 
-        clearInterval(timer);
+        const createdAt = new Date(
+            formOtp.dataset.otpCreatedAt
+        ).getTime();
 
-        timer = setInterval(() => {
+        const resendTime = createdAt + (80 * 1000);
 
-            timeLeft--;
+        function updateTimer() {
 
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
+            const remainingTime = Math.max(
+                0,
+                Math.ceil((resendTime - Date.now()) / 1000)
+            );
+
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
 
             otpTimer.textContent =
                 `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 
-            if (timeLeft === 0) {
+            if (remainingTime <= 0) {
+
                 clearInterval(timer);
 
                 otpVerificationCounter.classList.add('hidden');
                 resendCode.classList.remove('hidden');
             }
+        }
 
-        }, 1000);
+        updateTimer();
+
+        timer = setInterval(updateTimer, 1000);
     }
+
     startOtpTimer();
 }
 
 
+// resend otp code
 if (resendCodeBtn) {
-    resendCodeBtn.addEventListener('click', () => {
-        startOtpTimer();
+
+    resendCodeBtn.addEventListener('click', async () => {
+
+        try {
+
+            const csrfToken = document.querySelector(
+                '#form-otp input[name="csrfmiddlewaretoken"]'
+            ).value;
+
+            const resendUrl = resendCodeBtn.dataset.url;
+
+            const response = await fetch(resendUrl, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+
+
+                formOtp.dataset.otpCreatedAt = data.otp_created_at;
+
+
+                startOtpTimer();
+
+
+                document.querySelectorAll('.otp-input').forEach(input => {
+                    input.value = '';
+                });
+
+
+                document.querySelector('.otp-input')?.focus();
+
+            } else {
+
+                alert(data.message);
+            }
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert('خطایی در ارسال مجدد کد رخ داد.');
+        }
     });
+}
+
+// get otp verification code
+
+
+const formOTP = document.getElementById('form-otp');
+const otpInputHidden = document.getElementById('id_otp_code');
+
+if (formOTP, otpInputHidden) {
+    function updateOTP() {
+        let otp = '';
+        otpInputs.forEach(otpInput => {
+            otp += otpInput.value;
+        })
+        otpInputHidden.value = otp;
+    }
+
+    formOTP.addEventListener('submit', () => {
+        updateOTP()
+    })
 }

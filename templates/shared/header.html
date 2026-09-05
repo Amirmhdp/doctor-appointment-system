@@ -1,242 +1,269 @@
 <header class="flex flex-col justify-center shadow-[0_0_20px_#e0edfd] py-2 fixed top-0 left-0 right-0 py-1 bg-white w-full z-15">
-  <div class="flex items-center w-full justify-between mt-2">
-    <div class="flex flex-row gap-2 item-center justify-center w-50 lg:w-[20%]">
-      <button class="lg:hidden cursor-pointer" id="icon-sidebar"><i data-lucide="menu" class="w-10 h-9 border border-low-gray px-1.5 font-normal text-primary-blue-gray rounded-lg"></i></button>
-      <a href="" class="flex flex-row items-center">
-        <h2 class="text-primary-special text-2xl text font-bold">Medi<span class="text-primary-dark-blue">Care</span></h2>
-        <img src="/static/images/logo.png" class="w-12.75 -mr-2 -mt-2" alt="logo" />
-      </a>
-    </div>
-    <div class="hidden lg:flex flex-row items-center justify-between w-[38%] list-none">
-      <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-        <a href="">خانه</a>
-        <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
-      </li>
-      <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-        <a href="">پزشکان</a>
-        <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
-      </li>
-      <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-        <a href="">پروفایل</a>
-        <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
-      </li>
-      <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-        <a href="">درباره ما</a>
-        <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
-      </li>
-      <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-        <a href="">تماس با ما</a>
-        <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
-      </li>
-    </div>
-    <div class="relative flex flex-row item-center justify-center gap-2 w-[20%]">
-      <button id="search"><i data-lucide="search" class="w-10 h-10 cursor-pointer border rounded-lg border-low-gray px-1.5 font-normal text-primary-blue-gray"></i></button>
+    <div class="flex items-center w-full justify-between mt-2">
+        <div class="flex flex-row gap-2 item-center justify-center w-50 lg:w-[20%]">
+            <button class="lg:hidden cursor-pointer" id="icon-sidebar"><i data-lucide="menu"
+                                                                          class="w-10 h-9 border border-low-gray px-1.5 font-normal text-primary-blue-gray rounded-lg"></i>
+            </button>
+            <a href="" class="flex flex-row items-center">
+                <h2 class="text-primary-special text-2xl text font-bold">Medi<span
+                        class="text-primary-dark-blue">Care</span></h2>
+                <img src="/static/images/logo.png" class="w-12.75 -mr-2 -mt-2" alt="logo"/>
+            </a>
+        </div>
+        <div class="hidden lg:flex flex-row items-center justify-between w-[38%] list-none">
+            <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
+                <a href="">خانه</a>
+                <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+            </li>
+            <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
+                <a href="">پزشکان</a>
+                <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+            </li>
+            <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
+                <a href="">پروفایل</a>
+                <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+            </li>
+            <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
+                <a href="">درباره ما</a>
+                <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+            </li>
+            <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
+                <a href="">تماس با ما</a>
+                <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+            </li>
+        </div>
+        <div class="relative flex flex-row item-center justify-center gap-2 w-[20%]">
+            <button id="search"><i data-lucide="search"
+                                   class="w-10 h-10 cursor-pointer border rounded-lg border-low-gray px-1.5 font-normal text-primary-blue-gray"></i>
+            </button>
 
-      <a href="" class="hidden lg:flex items-center gap-2 bg-primary-special text-white text-sm font-bold px-3 py-2 rounded-md">
-        <i data-lucide="log-in" class="w-5 h-5"></i>
-        ثبت نام
-      </a>
-      {% comment %} <a href="" class="hidden lg:inline bg-primary-special text-white text-sm font-bold px-3 py-2 rounded-md">رزرو آنلاین نوبت</a> {% endcomment %}
-    </div>
-  </div>
 
-  {% comment %}mobile navbar{% endcomment %}
-  <div class="lg:hidden fixed z-5 bottom-0 right-0 left-0 w-full h-fit px-4 py-1.5 shadow-[0_0_20px_#e0edfd] flex items-center justify-between bg-white">
-    <div class="flex flex-col justify-center items-center gap-1">
-      <i data-lucide="home" class="w-6 h-6 text-slate-gray"></i>
-      <span class="text-slate-gray font-bold text-sm">خانه</span>
+            {% if request.user.is_authenticated %}
+                <a href="" class=" lg:inline bg-primary-special text-white text-sm font-bold px-3 py-2 rounded-md">رزرو
+                    آنلاین نوبت</a>
+            {% else %}
+                <a href="{% url 'register_page' %}"
+                   class="hidden lg:flex items-center gap-2 bg-primary-special text-white text-sm font-bold px-3 py-2 rounded-md">
+                    <i data-lucide="log-in" class="w-5 h-5"></i>
+                    ثبت نام
+                </a>
+            {% endif %}
+        </div>
     </div>
-    <span class="border-l border-light-gray h-9 w-1"></span>
-    <div class="flex flex-col justify-center items-center gap-1">
-      <i data-lucide="calendar-check" class="w-6 h-6 text-slate-gray"></i>
-      <span class="text-slate-gray font-bold text-sm">نوبت</span>
+
+    {% comment %}mobile navbar{% endcomment %}
+    <div class="lg:hidden fixed z-5 bottom-0 right-0 left-0 w-full h-fit px-4 py-1.5 shadow-[0_0_20px_#e0edfd] flex items-center justify-between bg-white">
+        <div class="flex flex-col justify-center items-center gap-1">
+            <i data-lucide="home" class="w-6 h-6 text-slate-gray"></i>
+            <span class="text-slate-gray font-bold text-sm">خانه</span>
+        </div>
+        <span class="border-l border-light-gray h-9 w-1"></span>
+        <div class="flex flex-col justify-center items-center gap-1">
+            <i data-lucide="calendar-check" class="w-6 h-6 text-slate-gray"></i>
+            <span class="text-slate-gray font-bold text-sm">نوبت</span>
+        </div>
+        <span class="border-l border-light-gray h-9 w-1"></span>
+        <div class="flex flex-col justify-center items-center gap-1">
+            <i data-lucide="stethoscope" class="w-6 h-6 text-slate-gray"></i>
+            <span class="text-slate-gray font-bold text-sm">پزشکان</span>
+        </div>
+        <span class="border-l border-light-gray h-9 w-1"></span>
+        <div class="flex flex-col justify-center items-center gap-1">
+            <i data-lucide="phone" class="w-6 h-6 text-slate-gray"></i>
+            <span class="text-slate-gray font-bold text-sm">تماس با ما</span>
+        </div>
+        <span class="border-l border-light-gray h-9 w-1"></span>
+        <div class="flex flex-col justify-center items-center gap-1">
+            <i data-lucide="circle-user-round" class="w-6 h-6 text-slate-gray"></i>
+            <span class="text-slate-gray font-bold text-sm">پروفایل</span>
+        </div>
     </div>
-    <span class="border-l border-light-gray h-9 w-1"></span>
-    <div class="flex flex-col justify-center items-center gap-1">
-      <i data-lucide="stethoscope" class="w-6 h-6 text-slate-gray"></i>
-      <span class="text-slate-gray font-bold text-sm">پزشکان</span>
-    </div>
-    <span class="border-l border-light-gray h-9 w-1"></span>
-    <div class="flex flex-col justify-center items-center gap-1">
-      <i data-lucide="phone" class="w-6 h-6 text-slate-gray"></i>
-      <span class="text-slate-gray font-bold text-sm">تماس با ما</span>
-    </div>
-    <span class="border-l border-light-gray h-9 w-1"></span>
-    <div class="flex flex-col justify-center items-center gap-1">
-      <i data-lucide="circle-user-round" class="w-6 h-6 text-slate-gray"></i>
-      <span class="text-slate-gray font-bold text-sm">پروفایل</span>
-    </div>
-  </div>
 </header>
 
-<div id="sidebar" class="translate-x-full transition-transform duration-300 ease-in-out h-screen flex flex-col justify-center gap-6 fixed top-0 right-0 w-66.5 z-50 bg-white">
-  {% comment %}site logo{% endcomment %}
-  <div class="flex flex-row justify-between items-center mt-3 px-2">
-    <div class="flex flex-row items-center">
-      <h2 class="text-primary-special text-2xl text font-bold">Medi<span class="text-primary-dark-blue">Care</span></h2>
-      <img src="/static/images/logo.png" class="w-12.75 -mr-2 -mt-2" alt="logo" />
+<div id="sidebar"
+     class="translate-x-full transition-transform duration-300 ease-in-out h-screen flex flex-col justify-center gap-6 fixed top-0 right-0 w-66.5 z-50 bg-white">
+    {% comment %}site logo{% endcomment %}
+    <div class="flex flex-row justify-between items-center mt-3 px-2">
+        <div class="flex flex-row items-center">
+            <h2 class="text-primary-special text-2xl text font-bold">Medi<span
+                    class="text-primary-dark-blue">Care</span></h2>
+            <img src="/static/images/logo.png" class="w-12.75 -mr-2 -mt-2" alt="logo"/>
+        </div>
+        <button id="close-sidebar-icon" class="cursor-pointer"><i data-lucide="x"
+                                                                  class="w-10 h-9 border border-low-gray px-1.5 font-normal text-primary-blue-gray rounded-lg"></i>
+        </button>
     </div>
-    <button id="close-sidebar-icon" class="cursor-pointer"><i data-lucide="x" class="w-10 h-9 border border-low-gray px-1.5 font-normal text-primary-blue-gray rounded-lg"></i></button>
-  </div>
 
-  {% comment %}list of sidebar items{% endcomment %}
-  <div class="flex flex-col gap-4 h-dvh px-2">
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <i data-lucide="calendar-clock" class="w-6 h-6"></i>
-        <span class="text-custom-black text-[16px] font-bold">نوبت دهی مطب</span>
-      </div>
-      <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
+    {% comment %}list of sidebar items{% endcomment %}
+    <div class="flex flex-col gap-4 h-dvh px-2">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="calendar-clock" class="w-6 h-6"></i>
+                <span class="text-custom-black text-[16px] font-bold">نوبت دهی مطب</span>
+            </div>
+            <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
+        </div>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="stethoscope" class="w-6 h-6"></i>
+                <span class="text-custom-black text-[16px] font-bold">لیست پزشکان</span>
+            </div>
+            <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
+        </div>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="user-plus" class="w-6 h-6"></i>
+                <span class="text-custom-black text-[16px] font-bold">ثبت نام پزشکان</span>
+            </div>
+            <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
+        </div>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="message-circle" class="w-6 h-6"></i>
+                <span class="text-custom-black text-[16px] font-bold">سوالات متداول</span>
+            </div>
+            <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
+        </div>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                <span class="text-custom-black text-[16px] font-bold">قوانین و مقررات</span>
+            </div>
+            <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
+        </div>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="info" class="w-6 h-6"></i>
+                <span class="text-custom-black text-[16px] font-bold">درباره ما</span>
+            </div>
+            <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
+        </div>
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i data-lucide="phone" class="w-6 h-6"></i>
+                <span class="text-custom-black text-[16px] font-bold">تماس با ما</span>
+            </div>
+            <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
+        </div>
     </div>
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <i data-lucide="stethoscope" class="w-6 h-6"></i>
-        <span class="text-custom-black text-[16px] font-bold">لیست پزشکان</span>
-      </div>
-      <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
-    </div>
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <i data-lucide="user-plus" class="w-6 h-6"></i>
-        <span class="text-custom-black text-[16px] font-bold">ثبت نام پزشکان</span>
-      </div>
-      <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
-    </div>
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <i data-lucide="message-circle" class="w-6 h-6"></i>
-        <span class="text-custom-black text-[16px] font-bold">سوالات متداول</span>
-      </div>
-      <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
-    </div>
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <i data-lucide="shield-check" class="w-6 h-6"></i>
-        <span class="text-custom-black text-[16px] font-bold">قوانین و مقررات</span>
-      </div>
-      <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
-    </div>
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <i data-lucide="info" class="w-6 h-6"></i>
-        <span class="text-custom-black text-[16px] font-bold">درباره ما</span>
-      </div>
-      <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
-    </div>
-    <div class="flex items-center justify-between">
-      <div class="flex items-center gap-2">
-        <i data-lucide="phone" class="w-6 h-6"></i>
-        <span class="text-custom-black text-[16px] font-bold">تماس با ما</span>
-      </div>
-      <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
-    </div>
-  </div>
 </div>
 
 {% comment %}search box{% endcomment %}
-<form id="searchbox" class="opacity-0 invisible pointer-events-none duration-200 ease-in fixed z-40 top-0 right-0 lg:absolute lg:left-[50%] lg:right-[32%] lg:top-11.5 lg:h-fit lg:w-118.5 lg:rounded-lg left-0 bottom-0 bg-white flex flex-col justify-start gap-2.5 items-start px-4 py-3">
-  <div class="w-full lg:hidden">
+<form id="searchbox"
+      class="opacity-0 invisible pointer-events-none duration-200 ease-in fixed z-40 top-0 right-0 lg:absolute lg:left-[50%] lg:right-[32%] lg:top-11.5 lg:h-fit lg:w-118.5 lg:rounded-lg left-0 bottom-0 bg-white flex flex-col justify-start gap-2.5 items-start px-4 py-3">
+    <div class="w-full lg:hidden">
     <span class="flex items-center gap-2 border-b pb-3 border-light-gray text-sm font-bold text-slate-gray">
-      <button type="button" id="close-searchbox"><i data-lucide="chevron-right" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i></button>
+      <button type="button" id="close-searchbox"><i data-lucide="chevron-right"
+                                                    class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i></button>
       بازگشت
     </span>
-  </div>
-  <div class="flex items-center gap-1.5 w-full border border-medium-gray rounded-lg focus-within:border-primary-special duration-200 ease-in-out px-4 py-2">
-    <i data-lucide="search" class="w-6 h-6 text-medium-gray"></i>
-    <input type="text" class="text-slate-gray text-sm placeholder:text-sm placeholder:text-medium-gray border-none outline-none w-full" placeholder="نام بیماری، تخصص، پزشک و..." name="" id="search-input" />
-    <button type="button" id="clear-input-btn" class="opacity-0 invisible cursor-pointer"><i data-lucide="circle-x" class="w-6 h-6 text-medium-gray"></i></button>
-  </div>
-  <div class="flex flex-col justify-between gap-1.5 overflow-y-auto w-full">
-    <div class="flex flex-col justify-between gap-1.5 opacity-100 visible">
-      <span class="text-sm text-slate-gray font-bold">جستجو های اخیر</span>
-      <div class="grid grid-cols-3 lg:grid-cols-4 gap-1">
-        <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
-          <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
-          <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
-        </a>
-        <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
-          <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
-          <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
-        </a>
-        <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
-          <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
-          <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
-        </a>
-        <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
-          <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
-          <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
-        </a>
-      </div>
     </div>
-    <div id="trend-search" class="flex flex-col justify-between gap-1.5 opacity-100 visible">
-      <span class="text-sm text-slate-gray font-bold">جستجو های پرطرفدار</span>
-      <div class="grid grid-cols-3 lg:grid-cols-4 gap-1">
-        <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
-          <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
-          <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
-        </a>
-        <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
-          <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
-          <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
-        </a>
-        <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
-          <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
-          <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
-        </a>
-        <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
-          <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
-          <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
-        </a>
-        <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
-          <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
-          <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
-        </a>
-      </div>
+    <div class="flex items-center gap-1.5 w-full border border-medium-gray rounded-lg focus-within:border-primary-special duration-200 ease-in-out px-4 py-2">
+        <i data-lucide="search" class="w-6 h-6 text-medium-gray"></i>
+        <input type="text"
+               class="text-slate-gray text-sm placeholder:text-sm placeholder:text-medium-gray border-none outline-none w-full"
+               placeholder="نام بیماری، تخصص، پزشک و..." name="" id="search-input"/>
+        <button type="button" id="clear-input-btn" class="opacity-0 invisible cursor-pointer"><i data-lucide="circle-x"
+                                                                                                 class="w-6 h-6 text-medium-gray"></i>
+        </button>
     </div>
-    <div id="result-search" class="hidden flex-col justify-center gap-2.5 mt-3 w-full">
-      <span class="text-sm text-slate-gray flex items-center gap-1 font-bold">جستجوی : <span id="searched-value"></span></span>
-      <div class="flex flex-col justify-center gap-2.5 w-full">
-        <a href="" class="flex items-center justify-items-start gap-1.5 border-t border-light-gray py-2 px-3 hover:rounded-lg hover:bg-light-gray duration-200 ease-in-out">
-          <div class="">
-            <i data-lucide="user" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
-          </div>
-          <div class="flex flex-col justify-center gap-2">
-            <span class="text-sm text-slate-gray font-bold">دکتر مهمدی رضایی</span>
-            <span class="text-sm text-slate-gray font-bold">متخصص ارتوپدی</span>
-          </div>
-        </a>
-        <a href="" class="flex items-center justify-items-start gap-1.5 border-t border-light-gray py-2 px-3 hover:rounded-lg hover:bg-light-gray duration-200 ease-in-out">
-          <div class="">
-            <i data-lucide="user" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
-          </div>
-          <div class="flex flex-col justify-center gap-2">
-            <span class="text-sm text-slate-gray font-bold">دکتر مهمدی رضایی</span>
-            <span class="text-sm text-slate-gray font-bold">متخصص ارتوپدی</span>
-          </div>
-        </a>
-        <a href="" class="flex items-center justify-items-start gap-1.5 border-t border-light-gray py-2 px-3 hover:rounded-lg hover:bg-light-gray duration-200 ease-in-out">
-          <div class="">
-            <i data-lucide="user" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
-          </div>
-          <div class="flex flex-col justify-center gap-2">
-            <span class="text-sm text-slate-gray font-bold">دکتر مهمدی رضایی</span>
-            <span class="text-sm text-slate-gray font-bold">متخصص ارتوپدی</span>
-          </div>
-        </a>
-        <a href="" class="flex items-center justify-items-start gap-1.5 border-t border-light-gray py-2 px-3 hover:rounded-lg hover:bg-light-gray duration-200 ease-in-out">
-          <div class="">
-            <i data-lucide="user" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
-          </div>
-          <div class="flex flex-col justify-center gap-2">
-            <span class="text-sm text-slate-gray font-bold">دکتر مهمدی رضایی</span>
-            <span class="text-sm text-slate-gray font-bold">متخصص ارتوپدی</span>
-          </div>
-        </a>
-      </div>
+    <div class="flex flex-col justify-between gap-1.5 overflow-y-auto w-full">
+        <div class="flex flex-col justify-between gap-1.5 opacity-100 visible">
+            <span class="text-sm text-slate-gray font-bold">جستجو های اخیر</span>
+            <div class="grid grid-cols-3 lg:grid-cols-4 gap-1">
+                <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                    <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
+                    <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
+                </a>
+                <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                    <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
+                    <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
+                </a>
+                <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                    <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
+                    <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
+                </a>
+                <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                    <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
+                    <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
+                </a>
+            </div>
+        </div>
+        <div id="trend-search" class="flex flex-col justify-between gap-1.5 opacity-100 visible">
+            <span class="text-sm text-slate-gray font-bold">جستجو های پرطرفدار</span>
+            <div class="grid grid-cols-3 lg:grid-cols-4 gap-1">
+                <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                    <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
+                    <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
+                </a>
+                <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                    <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
+                    <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
+                </a>
+                <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                    <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
+                    <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
+                </a>
+                <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                    <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
+                    <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
+                </a>
+                <a href="" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                    <i data-lucide="flame" class="w-5 h-5 text-slate-gray"></i>
+                    <span class="text-slate-gray text-sm font-bold">ارتوپدی</span>
+                </a>
+            </div>
+        </div>
+        <div id="result-search" class="hidden flex-col justify-center gap-2.5 mt-3 w-full">
+            <span class="text-sm text-slate-gray flex items-center gap-1 font-bold">جستجوی : <span
+                    id="searched-value"></span></span>
+            <div class="flex flex-col justify-center gap-2.5 w-full">
+                <a href=""
+                   class="flex items-center justify-items-start gap-1.5 border-t border-light-gray py-2 px-3 hover:rounded-lg hover:bg-light-gray duration-200 ease-in-out">
+                    <div class="">
+                        <i data-lucide="user" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                    </div>
+                    <div class="flex flex-col justify-center gap-2">
+                        <span class="text-sm text-slate-gray font-bold">دکتر مهمدی رضایی</span>
+                        <span class="text-sm text-slate-gray font-bold">متخصص ارتوپدی</span>
+                    </div>
+                </a>
+                <a href=""
+                   class="flex items-center justify-items-start gap-1.5 border-t border-light-gray py-2 px-3 hover:rounded-lg hover:bg-light-gray duration-200 ease-in-out">
+                    <div class="">
+                        <i data-lucide="user" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                    </div>
+                    <div class="flex flex-col justify-center gap-2">
+                        <span class="text-sm text-slate-gray font-bold">دکتر مهمدی رضایی</span>
+                        <span class="text-sm text-slate-gray font-bold">متخصص ارتوپدی</span>
+                    </div>
+                </a>
+                <a href=""
+                   class="flex items-center justify-items-start gap-1.5 border-t border-light-gray py-2 px-3 hover:rounded-lg hover:bg-light-gray duration-200 ease-in-out">
+                    <div class="">
+                        <i data-lucide="user" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                    </div>
+                    <div class="flex flex-col justify-center gap-2">
+                        <span class="text-sm text-slate-gray font-bold">دکتر مهمدی رضایی</span>
+                        <span class="text-sm text-slate-gray font-bold">متخصص ارتوپدی</span>
+                    </div>
+                </a>
+                <a href=""
+                   class="flex items-center justify-items-start gap-1.5 border-t border-light-gray py-2 px-3 hover:rounded-lg hover:bg-light-gray duration-200 ease-in-out">
+                    <div class="">
+                        <i data-lucide="user" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                    </div>
+                    <div class="flex flex-col justify-center gap-2">
+                        <span class="text-sm text-slate-gray font-bold">دکتر مهمدی رضایی</span>
+                        <span class="text-sm text-slate-gray font-bold">متخصص ارتوپدی</span>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
 </form>
 
 {% comment %}overlay{% endcomment %}
 
-<div class="w-full fixed inset-0 bg-overlay-gray/50 z-30 opacity-0 invisible transition-all duration-300" id="overlay"></div>
+<div class="w-full fixed inset-0 bg-overlay-gray/50 z-30 opacity-0 invisible transition-all duration-300"
+     id="overlay"></div>

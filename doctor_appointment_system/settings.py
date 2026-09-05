@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-=q8bsw@gy#)7odzxzrzr_v2g!gzykkco$t*zra9&1(_1u!po@-
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+KAVENEGAR_API_KEY = config("KAVENEGAR_API_KEY")
+KAVENEGAR_SENDER = config("KAVENEGAR_SENDER")
 
 # Application definition
 
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # internal apps
     'home',
     'account_module',
     'doctors_module',
@@ -44,7 +46,10 @@ INSTALLED_APPS = [
     'user_panel',
     'public_module',
     'payment_module',
-    'django_render_partial'
+
+    #external apps
+    'django_render_partial',
+
 ]
 
 MIDDLEWARE = [
@@ -89,7 +94,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+AUTH_USER_MODEL = 'account_module.User'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -130,6 +135,9 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+MEDIA_URL = '/medias/'
+MEDIA_ROOT = 'files'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
