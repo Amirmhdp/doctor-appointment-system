@@ -9,6 +9,7 @@ from .forms import RegisterForm, OTPForm, LoginForm, ForgotPasswordForm, ResetPa
 from .models import User
 import secrets
 from .services.sms_service import send_sms
+from .tasks import send_sms_task
 # Create your views here.
 
 
@@ -32,7 +33,7 @@ class RegisterView(View):
             phone_number = request.POST.get('phone_number')
             password = request.POST.get('password')
 
-            user: User = User.objects.filter(phone_number=phone_number).exists()
+            user = User.objects.filter(phone_number=phone_number).exists()
             if user:
                 register_form.add_error('phone_number', 'شماره وارد شده تکراری می باشد')
             else:
@@ -41,7 +42,7 @@ class RegisterView(View):
                 new_user.set_password(password)
                 new_user.save()
                 request.session['verification_user_id'] = new_user.id
-                send_sms(
+                send_sms_task.delay(
                     phone_number,
                     f"کد فعال سازی حساب کاربری مدیکر: {new_user.verification_code}"
                 )
@@ -208,7 +209,7 @@ class ResendOTP(View):
                 'verification_code_created_at'
             ]
         )
-        send_sms(
+        send_sms_task.delay(
             user.phone_number,
             f"کد فعال سازی حساب کاربری مدیکر : {otp}"
         )
@@ -278,7 +279,7 @@ class ForgotPassword(View):
                             args=[user.password_reset_token]
                         )
                     )
-                    send_sms(
+                    send_sms_task.delay(
                         phone_number,
                         f"برای تغییر رمز عبور روی لینک زیر کلیک کنید \n"
                         f"{reset_url}"
