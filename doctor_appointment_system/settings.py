@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'user_panel',
     'public_module',
     'payment_module',
+    'patient',
 
     #external apps
     'django_render_partial',
