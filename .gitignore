@@ -1,7 +1,10 @@
 # Python
 venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# Environment variables
 .env
 
 # Django
@@ -15,3 +18,10 @@ node_modules/
 # Editor
 .idea/
 .vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
