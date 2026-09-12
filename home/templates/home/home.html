@@ -1,536 +1,434 @@
 {% extends 'shared/base.html' %}
 
 {% block title %}
-  صفحه اصلی
+    صفحه اصلی
 {% endblock %}
 
 {% block content %}
-  <main class="px-3 py-1 flex flex-col justify-center animate-slide-up mt-10">
-    {% comment %}hero header{% endcomment %}
-    <div class="flex flex-col lg:flex-row gap-3 justify-center items-center mt-2">
-      <div class="w-full flex items-center justify-center lg:w-[60%]">
-        <img src="/static/images/doctor-blob.png" class="w-full md:w-[70%] lg:w-full" alt="doctor-blob" />
-      </div>
-      <div class="flex flex-col justify-center gap-4 lg:w-[50%]">
-        <div class="hidden lg:flex items-center gap-1.5 px-3 text-center rounded-xl bg-light-blue w-fit">
-          <i data-lucide="shield-check" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
-          <span class="text-sm text-primary-special font-bold">مورد اعتماد بیش از 10000 بیمار</span>
-        </div>
-        <div class="w-full flex flex-col justify-center gap-2">
-          <h2 class="text-2xl lg:text-[40px] font-bold text-custom-black text-center leading-10 sm:leading-16">بهترین <span class="text-primary-special">دکتر</span> رو برای <span class="text-primary-special">سلامت</span> خودت پیدا کن</h2>
-          <p class="text-[15px] font-light text-[#7f869c]">شما میتوانید در هر زمان و هر مکان با پزشکان و متخصصان بسیار ماهر ارتباط برقرار کنید. ما مراقبت های بهداشتی را برای همه ساده و دردسترس و قابل اعتماد می کنیم</p>
-        </div>
-        <div class="flex items-center justify-center gap-3 w-full">
-          <a href="" class="flex items-center font-light gap-1.5 border-2 border-primary-special text-primary-special bg-white text-[17px] px-4 py-1.5 rounded-lg hover:text-white hover:bg-primary-special duration-150 ease-in active:bg-primary-special/50 active:border-primary-special/50">
-            <i data-lucide="stethoscope" class="w-5 h-5"></i>
-            دکترت رو پیدا کن
-          </a>
-          <a href="" class="flex items-center font-light gap-1.5 bg-primary-special text-white text-[17px] px-4 py-1.5 rounded-lg active:bg-primary-special/50">
-            <i data-lucide="calendar-clock" class="w-5 h-5"></i>
-            رزرو نوبت
-          </a>
-        </div>
-      </div>
-    </div>
-    {% comment %}end hero header{% endcomment %}
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 shadow-lg shadow-light-blue">
-      <div class="flex flex-col justify-center items-center gap-3 border-2 border-white border-l-light-blue hover:border-light-blue hover:-translate-y-2 hover:rounded-lg duration-300 ease-in-out px-2 py-2">
-        <i data-lucide="heart-pulse" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
-        <span class="text-sm lg:text-[16px] text-custom-black font-bold text-center">سلامت شما اولویت ماست</span>
-        <span class="text-xs lg:text-sm text-medium-gray text-center">با ما سلامت خود را آسان تر مدیریت کنید</span>
-      </div>
-      <div class="flex flex-col justify-center items-center gap-3 px-2 py-2 border-2 border-white md:border-l-light-blue hover:border-light-blue hover:-translate-y-2 hover:rounded-lg duration-300 ease-in-out">
-        <i data-lucide="clock" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
-        <span class="text-sm lg:text-[16px] text-custom-black font-bold text-center">پشتیبانی 24 ساعته</span>
-        <span class="text-xs lg:text-sm text-medium-gray text-center">ما هر زمان که نیاز داشته باشید در کنار شما هستم</span>
-      </div>
-      <div class="flex flex-col justify-center items-center px-2 py-2 gap-3 border-2 border-white border-l-light-blue hover:border-light-blue hover:-translate-y-2 hover:rounded-lg duration-300 ease-in-out">
-        <i data-lucide="shield-check" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
-        <span class="text-sm lg:text-[16px] text-custom-black font-bold text-center">مراقبت مطمئن</span>
-        <span class="text-xs lg:text-sm text-medium-gray text-center">خدمات درمانی ایمن, قابل اعتماد و با کیفیت</span>
-      </div>
-      <div class="flex flex-col justify-center items-center gap-3 px-2 py-2 border-2 border-white hover:border-light-blue hover:-translate-y-2 hover:rounded-lg duration-300 ease-in-out">
-        <i data-lucide="stethoscope" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
-        <span class="text-sm lg:text-[16px] text-custom-black font-bold text-center">پزشکان متخصص</span>
-        <span class="text-xs lg:text-sm text-medium-gray text-center">پزشکان تایید شده و با تجربه در کنار شما</span>
-      </div>
-    </div>
-
-    {% comment %}search favorite doctor{% endcomment %}
-
-    <div class="flex flex-col justify-center gap-4 shadow-[0_0_20px_#e0edfd] mt-4 px-4 py-4 rounded-lg">
-      <div class="flex flex-col justify-center gap-3">
-        <h2 class="text-lg text-custom-black font-bold">نوبت خود را رزرو کنید</h2>
-        <span class="text-sm text-medium-gray text-bold">به راحتی پزشک مورد نظر خود را پیدا کنید</span>
-      </div>
-      <form method="get" class="grid grid-cols-2 md:grid-cols-4 gap-2">
-        <div class="relative dropdown">
-          <button type="button" class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
-            <div class="flex items-center gap-1">
-              <i data-lucide="stethoscope" class="w-5 h-5 text-slate-gray"></i>
-              <span class="selected-text whitespace-nowrap text-sm text-slate-gray font-bold">انتخاب تخصص</span>
+    <main class="px-3 py-1 flex flex-col justify-center animate-slide-up mt-10">
+        {% comment %}hero header{% endcomment %}
+        <div class="flex flex-col lg:flex-row gap-3 justify-center items-center mt-2">
+            <div class="w-full flex items-center justify-center lg:w-[60%]">
+                <img src="/static/images/doctor-blob.png" class="w-full md:w-[70%] lg:w-full" alt="doctor-blob"/>
             </div>
-            <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
-          </button>
-          <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item mt-7">پزشک عمومی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">قلب و عروق</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">مغز و اعصاب</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">دندان‌پزشکی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">ارتوپدی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">ارتوپدی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">ارتوپدی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">ارتوپدی</li>
-          </div>
-        </div>
-        <div class="relative dropdown">
-          <button type="button" class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
-            <div class="flex items-center gap-1">
-              <i data-lucide="user-round" class="w-5 h-5 text-slate-gray"></i>
-              <span class="selected-text whitespace-nowrap text-sm text-slate-gray font-bold">انتخاب پزشک</span>
+            <div class="flex flex-col justify-center gap-4 lg:w-[50%]">
+                <div class="hidden lg:flex items-center gap-1.5 px-3 text-center rounded-xl bg-light-blue w-fit">
+                    <i data-lucide="shield-check"
+                       class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                    <span class="text-sm text-primary-special font-bold">مورد اعتماد بیش از 10000 بیمار</span>
+                </div>
+                <div class="w-full flex flex-col justify-center gap-2">
+                    <h2 class="text-2xl lg:text-[40px] font-bold text-custom-black text-center leading-10 sm:leading-16">
+                        بهترین <span class="text-primary-special">دکتر</span> رو برای <span
+                            class="text-primary-special">سلامت</span> خودت پیدا کن</h2>
+                    <p class="text-[15px] font-light text-[#7f869c]">شما میتوانید در هر زمان و هر مکان با پزشکان و
+                        متخصصان بسیار ماهر ارتباط برقرار کنید. ما مراقبت های بهداشتی را برای همه ساده و دردسترس و قابل
+                        اعتماد می کنیم</p>
+                </div>
+                <div class="flex items-center justify-center gap-3 w-full">
+                    <a href="{% url 'doctors_list_page' %}"
+                       class="flex items-center font-light gap-1.5 border-2 border-primary-special text-primary-special bg-white text-[17px] px-4 py-1.5 rounded-lg hover:text-white hover:bg-primary-special duration-150 ease-in active:bg-primary-special/50 active:border-primary-special/50">
+                        <i data-lucide="stethoscope" class="w-5 h-5"></i>
+                        دکترت رو پیدا کن
+                    </a>
+                    <a href="{% url 'doctors_list_page' %}"
+                       class="flex items-center font-light gap-1.5 bg-primary-special text-white text-[17px] px-4 py-1.5 rounded-lg active:bg-primary-special/50">
+                        <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+                        رزرو نوبت
+                    </a>
+                </div>
             </div>
-            <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
-          </button>
-          <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">دکتر محمد رضایی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">دکتر علی احمدی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">دکتر علی احمدی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">دکتر علی احمدی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">دکتر امیر حسینی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">دکتر سارا محمدی</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">دکتر مهدی مرادی</li>
-          </div>
         </div>
-        <div class="relative dropdown">
-          <button type="button" class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
-            <div class="flex items-center gap-1">
-              <i data-lucide="user-round" class="w-5 h-5 text-slate-gray"></i>
-              <span class="selected-text whitespace-nowrap text-sm text-slate-gray font-bold">انتخاب مکان</span>
+        {% comment %}end hero header{% endcomment %}
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4 shadow-lg shadow-light-blue">
+            <div class="flex flex-col justify-center items-center gap-3 border-2 border-white border-l-light-blue hover:border-light-blue hover:-translate-y-2 hover:rounded-lg duration-300 ease-in-out px-2 py-2">
+                <i data-lucide="heart-pulse" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                <span class="text-sm lg:text-[16px] text-custom-black font-bold text-center">سلامت شما اولویت ماست</span>
+                <span class="text-xs lg:text-sm text-medium-gray text-center">با ما سلامت خود را آسان تر مدیریت کنید</span>
             </div>
-            <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
-          </button>
-          <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">تهران</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">قم</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">مشهد</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">تبریز</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">ایلام</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">شیراز</li>
-            <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">اراک</li>
-          </div>
+            <div class="flex flex-col justify-center items-center gap-3 px-2 py-2 border-2 border-white md:border-l-light-blue hover:border-light-blue hover:-translate-y-2 hover:rounded-lg duration-300 ease-in-out">
+                <i data-lucide="clock" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                <span class="text-sm lg:text-[16px] text-custom-black font-bold text-center">پشتیبانی 24 ساعته</span>
+                <span class="text-xs lg:text-sm text-medium-gray text-center">ما هر زمان که نیاز داشته باشید در کنار شما هستم</span>
+            </div>
+            <div class="flex flex-col justify-center items-center px-2 py-2 gap-3 border-2 border-white border-l-light-blue hover:border-light-blue hover:-translate-y-2 hover:rounded-lg duration-300 ease-in-out">
+                <i data-lucide="shield-check" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                <span class="text-sm lg:text-[16px] text-custom-black font-bold text-center">مراقبت مطمئن</span>
+                <span class="text-xs lg:text-sm text-medium-gray text-center">خدمات درمانی ایمن, قابل اعتماد و با کیفیت</span>
+            </div>
+            <div class="flex flex-col justify-center items-center gap-3 px-2 py-2 border-2 border-white hover:border-light-blue hover:-translate-y-2 hover:rounded-lg duration-300 ease-in-out">
+                <i data-lucide="stethoscope" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                <span class="text-sm lg:text-[16px] text-custom-black font-bold text-center">پزشکان متخصص</span>
+                <span class="text-xs lg:text-sm text-medium-gray text-center">پزشکان تایید شده و با تجربه در کنار شما</span>
+            </div>
         </div>
-        {% comment %} <div class="relative flex items-center justify-between gap-3 border border-light-gray rounded-lg px-5 py-2 w-full lg:py-3 cursor-pointer">
+
+        {% comment %}search favorite doctor{% endcomment %}
+
+        <div class="flex flex-col justify-center gap-4 shadow-[0_0_20px_#e0edfd] mt-4 px-4 py-4 rounded-lg">
+            <div class="flex flex-col justify-center gap-3">
+                <h2 class="text-lg text-custom-black font-bold">نوبت خود را رزرو کنید</h2>
+                <span class="text-sm text-medium-gray text-bold">به راحتی پزشک مورد نظر خود را پیدا کنید</span>
+            </div>
+            <form method="get" class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                <div class="relative dropdown">
+                    <button type="button"
+                            class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
+                        <div class="flex items-center gap-1">
+                            <i data-lucide="stethoscope" class="w-5 h-5 text-slate-gray"></i>
+                            <span class="selected-text whitespace-nowrap text-sm text-slate-gray font-bold">انتخاب تخصص</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
+                    </button>
+                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item mt-7">
+                            پزشک عمومی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            قلب و عروق
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            مغز و اعصاب
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            دندان‌پزشکی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            ارتوپدی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            ارتوپدی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            ارتوپدی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            ارتوپدی
+                        </li>
+                    </div>
+                </div>
+                <div class="relative dropdown">
+                    <button type="button"
+                            class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
+                        <div class="flex items-center gap-1">
+                            <i data-lucide="user-round" class="w-5 h-5 text-slate-gray"></i>
+                            <span class="selected-text whitespace-nowrap text-sm text-slate-gray font-bold">انتخاب پزشک</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
+                    </button>
+                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            دکتر محمد رضایی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            دکتر علی احمدی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            دکتر علی احمدی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            دکتر علی احمدی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            دکتر امیر حسینی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            دکتر سارا محمدی
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            دکتر مهدی مرادی
+                        </li>
+                    </div>
+                </div>
+                <div class="relative dropdown">
+                    <button type="button"
+                            class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
+                        <div class="flex items-center gap-1">
+                            <i data-lucide="user-round" class="w-5 h-5 text-slate-gray"></i>
+                            <span class="selected-text whitespace-nowrap text-sm text-slate-gray font-bold">انتخاب مکان</span>
+                        </div>
+                        <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
+                    </button>
+                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            تهران
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            قم
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            مشهد
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            تبریز
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            ایلام
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            شیراز
+                        </li>
+                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            اراک
+                        </li>
+                    </div>
+                </div>
+                {% comment %} <div class="relative flex items-center justify-between gap-3 border border-light-gray rounded-lg px-5 py-2 w-full lg:py-3 cursor-pointer">
           <label for="appointment-date" id="btn-date-calendar" class="cursor-pointer dropdown-button"><i data-lucide="calendar-days" class="w-5 h-5 text-slate-gray"></i></label>
           <input type="text" id="appointment-date" name="date" readonly placeholder="انتخاب تاریخ" class="w-full bg-transparent focus:outline-none focus:ring-0 border-none text-sm text-slate-gray cursor-pointer" />
           <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
         </div> {% endcomment %}
-        <button class="flex items-center cursor-pointer justify-center gap-1 text-white bg-primary-special px-5 py-2 w-full rounded-lg lg:py-3">
-          <i data-lucide="search" class="w-5 h-5 text-white"></i>
-          جستجو
-        </button>
-      </form>
-    </div>
+                <button class="flex items-center cursor-pointer justify-center gap-1 text-white bg-primary-special px-5 py-2 w-full rounded-lg lg:py-3">
+                    <i data-lucide="search" class="w-5 h-5 text-white"></i>
+                    جستجو
+                </button>
+            </form>
+        </div>
 
-    {% comment %}end search favorite doctor{% endcomment %}
+        {% comment %}end search favorite doctor{% endcomment %}
 
-    {% comment %}special list{% endcomment %}
+        {% comment %}special list{% endcomment %}
 
-    <div class="flex flex-col justify-center gap-0.5 lg:gap-2 px-3 py-3 shadow-[0_0_20px_#e0edfd] mt-4">
-      <div class="mt-4 px-2 flex items-center justify-between">
-        <h2 class="text-lg text-custom-black font-black">محبوب ترین تخصص ها</h2>
-        <span class="text-sm text-primary-special flex items-center gap-1">
+        <div class="flex flex-col justify-center gap-0.5 lg:gap-2 px-3 py-3 shadow-[0_0_20px_#e0edfd] mt-4">
+            <div class="mt-4 px-2 flex items-center justify-between">
+                <h2 class="text-lg text-custom-black font-black">محبوب ترین تخصص ها</h2>
+                <span class="text-sm text-primary-special flex items-center gap-1">
           مشاهده همه
           <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special"></i>
         </span>
-      </div>
-      <!-- Slider main container -->
-      <div class="swiper special-list w-full h-fit mt-5">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper flex! items-center!">
-          <!-- Slides -->
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/cardiologist.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="cardiologist" />
-            <span class="text-sm text-slate-gray">قلب و عروق</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/general-surgeon.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="general-surgeon" />
-            <span class="text-sm text-slate-gray">مغز و اعصاب</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/primary-care-physician.webp" class="w-24 lg:w-28! lg:h-28! h-22.5! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="general-surgeon" />
-            <span class="text-sm text-slate-gray">عمومی</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/orthopedist.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="orthopedist" />
+            </div>
+            <!-- Slider main container -->
+            <div class="swiper special-list w-full h-fit mt-5">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper flex! items-center!">
+                    <!-- Slides -->
+                    {% for specialty in specialties %}
+                        <a href="{% url 'doctors_list_page' %}"
+                           class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
+                            <img src="{{ specialty.image.url }}"
+                                 class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg"
+                                 alt="cardiologist"/>
+                            <span class="text-sm text-slate-gray">{{ specialty.name }}</span>
+                        </a>
+                    {% endfor %}
 
-            <span class="text-sm text-slate-gray">ارتوپدی</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/eye.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="eye" />
-            <span class="text-sm text-slate-gray">چشم‌پزشکی</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/skin.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="skin" />
-            <span class="text-sm text-slate-gray">پوست و مو</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/ent.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="ent" />
-            <span class="text-sm text-slate-gray">گوش و حلق و بینی</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/kids.webp" class="w-24 lg:w-28! lg:h-28! h-22.5! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="kids" />
-            <span class="text-sm text-slate-gray">اطفال</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/psychology.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="psychology" />
-            <span class="text-sm text-slate-gray">روان‌پزشکی</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/nephrologist.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="nephrologist" />
-            <span class="text-sm text-slate-gray">کلیه و مجاری ادراری</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/dentist.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="dentist" />
-            <span class="text-sm text-slate-gray">دندان پزشکی</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/endocrinologist.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="endocrinologist" />
-            <span class="text-sm text-slate-gray">غدد</span>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
-            <img src="/static/images/gastroenterologist.webp" class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg" alt="gastroenterologist" />
-            <span class="text-sm text-slate-gray">گوارش و کبد</span>
-          </a>
+
+                </div>
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
+                <div class="swiper-button-next text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
+            </div>
         </div>
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
-        <div class="swiper-button-next text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
-      </div>
-    </div>
 
-    {% comment %}end special list{% endcomment %}
+        {% comment %}end special list{% endcomment %}
 
-    {% comment %}list of doctor{% endcomment %}
+        {% comment %}list of doctor{% endcomment %}
 
-    <div class="flex flex-col justify-center gap-0.5 lg:gap-2 px-3 py-3 shadow-[0_0_20px_#e0edfd] mt-4">
-      <div class="mt-4 px-2 flex items-center justify-between">
-        <h2 class="text-lg text-custom-black font-black">محبوب ترین پزشکان</h2>
-        <span class="text-sm text-primary-special flex items-center gap-1">
+        <div class="flex flex-col justify-center gap-0.5 lg:gap-2 px-3 py-3 shadow-[0_0_20px_#e0edfd] mt-4">
+            <div class="mt-4 px-2 flex items-center justify-between">
+                <h2 class="text-lg text-custom-black font-black">محبوب ترین پزشکان</h2>
+                <span class="text-sm text-primary-special flex items-center gap-1">
           مشاهده همه
           <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special"></i>
         </span>
-      </div>
-      <!-- Slider main container -->
-      <div class="swiper special-list w-full h-fit mt-5">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper flex! items-center!">
-          <!-- Slides -->
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <img src="/static/images/doctor-2.png" class="p-3.75 lg:p-3.25 w-38 h-33.75" alt="img-doctor" />
             </div>
-            <div class="flex flex-col justify-center items-center w-full gap-2">
-              <h2 class="text-custom-black text-sm">دکتر مهدی رضایی</h2>
-              <span class="text-sm text-slate-gray">متخصص ارتوپدی</span>
-              <div class="flex items-center justify-between w-full">
-                <span class="flex items-center gap-1 text-sm text-slate-gray">
-                  <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
-                  تهران
-                </span>
-                <span class="flex items-center gap-1 text-slate-gray text-sm">
-                  4.8
-                  <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5 mb-1" alt="star" />
-                </span>
-              </div>
-              <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">رزرو نوبت</button>
+            <!-- Slider main container -->
+            <div class="swiper special-list w-full h-fit mt-5">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper flex! items-center!">
+                    <!-- Slides -->
+                    {% for doctor in doctors %}
+                        <a href="{% url 'profile_page' url_title=doctor.url_title %}"
+                           class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
+                            <div class="">
+                                <img src="{{ doctor.image.url }}" class="p-3.75 lg:p-3.25 w-38 h-33.75"
+                                     alt="img-doctor"/>
+                            </div>
+                            <div class="flex flex-col justify-center items-center w-full gap-2">
+                                <h2 class="text-custom-black text-sm">دکتر {{ doctor.user }}</h2>
+                                {% for specialty in doctor.specialties.all %}
+                                    <span class="text-sm text-slate-gray">متخصص {{ specialty }}</span>
+                                {% endfor %}
+
+                                <div class="flex items-center justify-between w-full">
+                                    <span class="flex items-center gap-1 text-sm text-slate-gray">
+                                      <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
+                                      تهران
+                                    </span>
+                                    <span class="flex items-center gap-1 text-slate-gray text-sm">
+                                      4.8
+                                      <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5 mb-1" alt="star"/>
+                                    </span>
+                                </div>
+                                <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">
+                                    رزرو نوبت
+                                </button>
+                            </div>
+                        </a>
+                    {% endfor %}
+
+
+                </div>
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
+                <div class="swiper-button-next text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
             </div>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <img src="/static/images/doctor-1.png" class="p-3.75 lg:p-3.25 w-38 h-33.75" alt="img-doctor" />
-            </div>
-            <div class="flex flex-col justify-center items-center w-full gap-2">
-              <h2 class="text-custom-black text-sm">دکتر نرگس موسوی</h2>
-              <span class="text-sm text-slate-gray">متخصص کودکان</span>
-              <div class="flex items-center justify-between w-full">
-                <span class="flex items-center gap-1 text-sm text-slate-gray">
-                  <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
-                  قم
-                </span>
-                <span class="flex items-center gap-1 text-slate-gray text-sm">
-                  4.8
-                  <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5 mb-1" alt="star" />
-                </span>
-              </div>
-              <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">رزرو نوبت</button>
-            </div>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <img src="/static/images/doctor-3.png" class="p-3.75 lg:p-3.25 w-38 h-33.75" alt="img-doctor" />
-            </div>
-            <div class="flex flex-col justify-center items-center w-full gap-2">
-              <h2 class="text-custom-black text-sm">دکتر علیرضا محمدی</h2>
-              <span class="text-sm text-slate-gray">متخصص قلب و عروق</span>
-              <div class="flex items-center justify-between w-full">
-                <span class="flex items-center gap-1 text-sm text-slate-gray">
-                  <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
-                  تهران
-                </span>
-                <span class="flex items-center gap-1 text-slate-gray text-sm">
-                  4.8
-                  <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5 mb-1" alt="star" />
-                </span>
-              </div>
-              <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">رزرو نوبت</button>
-            </div>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <img src="/static/images/doctor-4.png" class="p-3.75 lg:p-3.25 w-38 h-33.75" alt="img-doctor" />
-            </div>
-            <div class="flex flex-col justify-center items-center w-full gap-2">
-              <h2 class="text-custom-black text-sm">دکتر سارا احمدی</h2>
-              <span class="text-sm text-slate-gray">متخصص پوست و مو</span>
-              <div class="flex items-center justify-between w-full">
-                <span class="flex items-center gap-1 text-sm text-slate-gray">
-                  <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
-                  تبریز
-                </span>
-                <span class="flex items-center gap-1 text-slate-gray text-sm">
-                  4.8
-                  <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5 mb-1" alt="star" />
-                </span>
-              </div>
-              <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">رزرو نوبت</button>
-            </div>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <img src="/static/images/doctor-2.png" class="p-3.75 lg:p-3.25 w-38 h-33.75" alt="img-doctor" />
-            </div>
-            <div class="flex flex-col justify-center items-center w-full gap-2">
-              <h2 class="text-custom-black text-sm">دکتر مهدی رضایی</h2>
-              <span class="text-sm text-slate-gray">متخصص ارتوپدی</span>
-              <div class="flex items-center justify-between w-full">
-                <span class="flex items-center gap-1 text-sm text-slate-gray">
-                  <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
-                  تهران
-                </span>
-                <span class="flex items-center gap-1 text-slate-gray text-sm">
-                  4.8
-                  <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5 mb-1" alt="star" />
-                </span>
-              </div>
-              <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">رزرو نوبت</button>
-            </div>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <img src="/static/images/doctor-1.png" class="p-3.75 lg:p-3.25 w-38 h-33.75" alt="img-doctor" />
-            </div>
-            <div class="flex flex-col justify-center items-center w-full gap-2">
-              <h2 class="text-custom-black text-sm">دکتر نرگس موسوی</h2>
-              <span class="text-sm text-slate-gray">متخصص کودکان</span>
-              <div class="flex items-center justify-between w-full">
-                <span class="flex items-center gap-1 text-sm text-slate-gray">
-                  <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
-                  قم
-                </span>
-                <span class="flex items-center gap-1 text-slate-gray text-sm">
-                  4.8
-                  <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5 mb-1" alt="star" />
-                </span>
-              </div>
-              <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">رزرو نوبت</button>
-            </div>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <img src="/static/images/doctor-3.png" class="p-3.75 lg:p-3.25 w-38 h-33.75" alt="img-doctor" />
-            </div>
-            <div class="flex flex-col justify-center items-center w-full gap-2">
-              <h2 class="text-custom-black text-sm">دکتر علیرضا محمدی</h2>
-              <span class="text-sm text-slate-gray">متخصص قلب و عروق</span>
-              <div class="flex items-center justify-between w-full">
-                <span class="flex items-center gap-1 text-sm text-slate-gray">
-                  <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
-                  تهران
-                </span>
-                <span class="flex items-center gap-1 text-slate-gray text-sm">
-                  4.8
-                  <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5 mb-1" alt="star" />
-                </span>
-              </div>
-              <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">رزرو نوبت</button>
-            </div>
-          </a>
-          <a href="" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <img src="/static/images/doctor-4.png" class="p-3.75 lg:p-3.25 w-38 h-33.75" alt="img-doctor" />
-            </div>
-            <div class="flex flex-col justify-center items-center w-full gap-2">
-              <h2 class="text-custom-black text-sm">دکتر سارا احمدی</h2>
-              <span class="text-sm text-slate-gray">متخصص پوست و مو</span>
-              <div class="flex items-center justify-between w-full">
-                <span class="flex items-center gap-1 text-sm text-slate-gray">
-                  <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
-                  تبریز
-                </span>
-                <span class="flex items-center gap-1 text-slate-gray text-sm">
-                  4.8
-                  <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5 mb-1" alt="star" />
-                </span>
-              </div>
-              <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">رزرو نوبت</button>
-            </div>
-          </a>
         </div>
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
-        <div class="swiper-button-next text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
-      </div>
-    </div>
 
-    {% comment %}end list of doctor{% endcomment %}
+        {% comment %}end list of doctor{% endcomment %}
 
-    {% comment %}comments of users{% endcomment %}
+        {% comment %}comments of users{% endcomment %}
 
-    <div class="flex flex-col justify-center gap-0.5 lg:gap-2 px-3 py-3 shadow-[0_0_20px_#e0edfd] mt-4">
-      <div class="mt-4 px-2 flex items-center justify-between">
-        <h2 class="text-lg text-custom-black font-black">مدیکر از نگاه کاربران</h2>
-      </div>
-      <!-- Slider main container -->
-      <div class="swiper infinite-slider w-full h-fit mt-5">
-        <!-- Additional required wrapper -->
-        <div class="swiper-wrapper flex! items-center!">
-          <!-- Slides -->
-          <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+        <div class="flex flex-col justify-center gap-0.5 lg:gap-2 px-3 py-3 shadow-[0_0_20px_#e0edfd] mt-4">
+            <div class="mt-4 px-2 flex items-center justify-between">
+                <h2 class="text-lg text-custom-black font-black">مدیکر از نگاه کاربران</h2>
             </div>
-            <div class="flex items-center justify-center gap-1">
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
+            <!-- Slider main container -->
+            <div class="swiper infinite-slider w-full h-fit mt-5">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper flex! items-center!">
+                    <!-- Slides -->
+                    <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
+                        <div class="">
+                            <i data-lucide="user"
+                               class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                        </div>
+                        <div class="flex items-center justify-center gap-1">
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                        </div>
+                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
+                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
+                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
+                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
+                        <div class="">
+                            <i data-lucide="user"
+                               class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                        </div>
+                        <div class="flex items-center justify-center gap-1">
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                        </div>
+                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
+                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
+                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
+                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
+                        <div class="">
+                            <i data-lucide="user"
+                               class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                        </div>
+                        <div class="flex items-center justify-center gap-1">
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                        </div>
+                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
+                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
+                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
+                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
+                        <div class="">
+                            <i data-lucide="user"
+                               class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                        </div>
+                        <div class="flex items-center justify-center gap-1">
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                        </div>
+                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
+                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
+                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
+                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
+                        <div class="">
+                            <i data-lucide="user"
+                               class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                        </div>
+                        <div class="flex items-center justify-center gap-1">
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                        </div>
+                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
+                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
+                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
+                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
+                        <div class="">
+                            <i data-lucide="user"
+                               class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                        </div>
+                        <div class="flex items-center justify-center gap-1">
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                        </div>
+                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
+                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
+                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
+                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                        </div>
+                    </div>
+                    <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
+                        <div class="">
+                            <i data-lucide="user"
+                               class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                        </div>
+                        <div class="flex items-center justify-center gap-1">
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                        </div>
+                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
+                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
+                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
+                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination top-63!"></div>
+                ّ
             </div>
-            <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
-            <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-              <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-              <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
-            </div>
-          </div>
-          <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
-            </div>
-            <div class="flex items-center justify-center gap-1">
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-            </div>
-            <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
-            <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-              <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-              <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
-            </div>
-          </div>
-          <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
-            </div>
-            <div class="flex items-center justify-center gap-1">
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-            </div>
-            <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
-            <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-              <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-              <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
-            </div>
-          </div>
-          <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
-            </div>
-            <div class="flex items-center justify-center gap-1">
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-            </div>
-            <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
-            <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-              <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-              <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
-            </div>
-          </div>
-          <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
-            </div>
-            <div class="flex items-center justify-center gap-1">
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-            </div>
-            <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
-            <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-              <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-              <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
-            </div>
-          </div>
-          <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
-            </div>
-            <div class="flex items-center justify-center gap-1">
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-            </div>
-            <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
-            <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-              <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-              <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
-            </div>
-          </div>
-          <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
-            <div class="">
-              <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
-            </div>
-            <div class="flex items-center justify-center gap-1">
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-              <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star" />
-            </div>
-            <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
-            <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-              <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-              <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
-            </div>
-          </div>
         </div>
-        <!-- If we need pagination -->
-        <div class="swiper-pagination top-63!"></div>ّ
-      </div>
-    </div>
 
-    {% comment %}end comments of users{% endcomment %}
-  </main>
+        {% comment %}end comments of users{% endcomment %}
+    </main>
 {% endblock %}

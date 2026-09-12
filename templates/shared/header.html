@@ -39,7 +39,7 @@
 
 
             {% if request.user.is_authenticated %}
-                <a href="" class=" lg:inline bg-primary-special text-white text-sm font-bold px-3 py-2 rounded-md">رزرو
+                <a href="" class="hidden lg:inline bg-primary-special text-white text-sm font-bold px-3 py-2 rounded-md">رزرو
                     آنلاین نوبت</a>
             {% else %}
                 <a href="{% url 'register_page' %}"

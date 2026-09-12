@@ -370,51 +370,68 @@ if (answerFaq && faqDropdowns) {
 
 
 const navItems = document.querySelectorAll('.nav-item');
-const doctorContent = document.querySelectorAll('.content-doctor');
 
 
 // navigation info doctor page
-if (doctorContent && navItems) {
-    navItems.forEach(navItem => {
+document.addEventListener('click', (event) => {
 
-        navItem.addEventListener('click', () => {
+    // پیدا کردن nav-item که روی آن کلیک شده
+    const navItem = event.target.closest('.nav-item');
 
-            navItems.forEach(item => {
+    // اگر کلیک مربوط به nav-item نبود، کاری نکن
+    if (!navItem) return;
 
-                item.classList.remove('text-primary-special');
+    // گرفتن nav-item های فعلی صفحه
+    const navItems = document.querySelectorAll('.nav-item');
 
-                const border = item.querySelector('.nav-item-border');
-
-                border.classList.remove('w-full');
-                border.classList.add('w-0');
-
-            });
-
-            // فعال کردن آیتم کلیک شده
-            navItem.classList.add('text-primary-special');
-
-            const border = navItem.querySelector('.nav-item-border');
-
-            border.classList.remove('w-0');
-            border.classList.add('w-full');
-
-            const getContent = navItem.dataset.content;
-
-            const content = document.getElementById(getContent);
-            console.log(content);
+    // گرفتن محتواهای مربوط به هر nav
 
 
-            doctorContent.forEach(con => {
-                con.classList.add('hidden');
-                con.classList.remove('flex');
-            })
-            content.classList.remove('hidden');
-            content.classList.add('flex');
+    // غیرفعال کردن همه nav ها
+    navItems.forEach(item => {
 
-        });
+        item.classList.remove('text-primary-special');
 
+        const border = item.querySelector('.nav-item-border');
+
+        if (border) {
+            border.classList.remove('w-full');
+            border.classList.add('w-0');
+        }
     });
-}
+
+
+    navItem.classList.add('text-primary-special');
+
+    const border = navItem.querySelector('.nav-item-border');
+
+    if (border) {
+        border.classList.remove('w-0');
+        border.classList.add('w-full');
+    }
+
+
+    const getContent = navItem.dataset.content;
+
+    const content = document.getElementById(getContent);
+
+    if (!content) return;
+
+    const doctorContent = document.querySelectorAll('.content-doctor');
+
+
+    // مخفی کردن همه محتواها
+    doctorContent.forEach(con => {
+        con.classList.add('hidden');
+        con.classList.remove('flex');
+    });
+
+
+    // نمایش محتوای انتخاب شده
+    content.classList.remove('hidden');
+    content.classList.add('flex');
+
+});
 
 // appoiment booking
 
@@ -493,72 +510,82 @@ if (bookingBtn, bookingList, closeBookingList) {
 
 // open close commentbox
 
-const openCommentBoxBtn = document.getElementById('open-comment-box-btn');
+// ===== المنت‌های ثابت (هیچ‌وقت با AJAX جایگزین نمی‌شن) =====
 const sendCommentBox = document.getElementById('send-comment-box');
 const closeCommentBox = document.getElementById('close-commentbox');
 
-if (openCommentBoxBtn, sendCommentBox, closeCommentBox) {
-    openCommentBoxBtn.addEventListener('click', () => {
+if (sendCommentBox && closeCommentBox && overlay) {
+
+    document.addEventListener('click', (e) => {
+        const openBtn = e.target.closest('#open-comment-box-btn');
+        if (!openBtn) return;
+
         sendCommentBox.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
         sendCommentBox.classList.add('visible', 'opacity-100', 'pointer-events-auto', 'flex');
         overlay.classList.add('visible', 'opacity-100');
         overlay.classList.remove('invisible', 'opacity-0');
         body.style.overflow = 'hidden';
     });
+
     closeCommentBox.addEventListener('click', () => {
         sendCommentBox.classList.remove('visible', 'opacity-100', 'pointer-events-auto', 'flex');
         sendCommentBox.classList.add('invisible', 'opacity-0', 'pointer-events-none');
         overlay.classList.remove('visible', 'opacity-100');
         overlay.classList.add('invisible', 'opacity-0');
         body.style.overflow = 'auto';
-    })
+    });
+
     overlay.addEventListener('click', () => {
         sendCommentBox.classList.remove('visible', 'opacity-100', 'pointer-events-auto', 'flex');
         sendCommentBox.classList.add('invisible', 'opacity-0', 'pointer-events-none');
         overlay.classList.remove('visible', 'opacity-100');
         overlay.classList.add('invisible', 'opacity-0');
         body.style.overflow = 'auto';
-    })
+    });
 }
-;
 
 // rating ui for commentbox
 
-const stars = document.querySelectorAll('.star');
+document.addEventListener('DOMContentLoaded', () => {
+    const ratingStars = document.getElementById('rating-stars');
+    const ratingInput = document.getElementById('rating-input');
 
-if (stars) {
-    stars.forEach(star => {
+    if (ratingStars && ratingInput) {
 
-        star.addEventListener('click', () => {
+        ratingStars.addEventListener('click', (event) => {
+
+            const star = event.target.closest('.star');
+
+            if (!star) return;
 
             const ratingNumber = Number(star.dataset.rating);
 
+            ratingInput.value = ratingNumber;
+
+            const stars = ratingStars.querySelectorAll('.star');
+
             stars.forEach(item => {
-
                 const itemRating = Number(item.dataset.rating);
-
 
                 if (itemRating <= ratingNumber) {
                     item.classList.add('fill-primary-special');
                 } else {
                     item.classList.remove('fill-primary-special');
                 }
-
             });
-
         });
-
-    });
-}
+    }
+});
 
 // like dislike btn
 
 const likeDisLikeBtns = document.querySelectorAll('.like-dislike-btn');
 const likeDisLikeIcon = document.querySelectorAll('.like-dislike-icon');
-
+const isLikeInput = document.getElementById('is-like');
 if (likeDisLikeBtns, likeDisLikeIcon) {
     likeDisLikeBtns.forEach(likeDisLikeBtn => {
         likeDisLikeBtn.addEventListener('click', () => {
+            isLikeInput.value = likeDisLikeBtn.dataset.isLike;
             likeDisLikeBtns.forEach(btn => {
                 btn.classList.remove('bg-primary-special', 'text-white');
                 btn.classList.add('bg-white', 'text-primary-special');
@@ -1342,3 +1369,448 @@ if (formOTP, otpInputHidden) {
         updateOTP()
     })
 }
+
+
+// filter doctor
+
+const doctorInput = document.getElementById('doctor-input');
+const specialtyInput = document.getElementById('specialty-input');
+const cityInput = document.getElementById('city-input');
+const specialtyItems = document.querySelectorAll('.specialty-item');
+const doctorItems = document.querySelectorAll('.doctor-item');
+const cityItems = document.querySelectorAll('.city-item');
+const doctorsList = document.getElementById('doctors-list');
+const filterBtn = document.getElementById('filter-btn');
+const removeFilterBtn = document.getElementById('remove-filter-btn');
+if (doctorInput, specialtyInput, cityInput, specialtyItems, doctorItems, cityItems, doctorsList, filterBtn) {
+    specialtyItems.forEach(specialtyItem => {
+        specialtyItem.addEventListener('click', () => {
+            specialtyInput.value = specialtyItem.textContent.trim();
+        })
+    })
+    doctorItems.forEach(doctorItem => {
+        doctorItem.addEventListener('click', () => {
+            doctorInput.value = doctorItem.textContent.trim();
+        })
+    })
+    cityItems.forEach(cityItem => {
+        cityItem.addEventListener('click', () => {
+            cityInput.value = cityItem.textContent.trim();
+        })
+    })
+
+    async function loadDoctorAjax() {
+
+        const params = new URLSearchParams()
+
+        if (doctorInput.value) {
+            params.set('doctor', doctorInput.value);
+        }
+        if (specialtyInput.value) {
+            params.set('specialty', specialtyInput.value);
+        }
+        if (cityInput.value) {
+            params.set('city', cityInput.value);
+        }
+
+        const url = `/doctors-list?${params.toString()}`;
+        const response = await fetch(url, {
+            headers: {
+                "X-Requested-With": "XMLHttpRequest"
+            }
+        });
+        const html = await response.text();
+        history.pushState({}, "", url)
+
+        doctorsList.innerHTML = html;
+
+
+    }
+
+    removeFilterBtn.addEventListener('click', () => {
+
+        doctorInput.value = '';
+        specialtyInput.value = '';
+        cityInput.value = '';
+
+        loadDoctorAjax();
+    });
+    if (filterBtn) {
+        filterBtn.addEventListener('click', () => {
+            loadDoctorAjax()
+        })
+    }
+}
+
+
+// send comment with ajax
+function getCookie(name) {
+    let cookieValue = null;
+
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(
+                    cookie.substring(name.length + 1)
+                );
+                break;
+            }
+        }
+    }
+
+    return cookieValue;
+}
+
+document.addEventListener('click', (event) => {
+    const replyComment = event.target.closest('.reply-comment');
+
+    if (!replyComment) return;
+
+    const commentParent = document.getElementById('id_comment_parent');
+    const commentId = replyComment.querySelector('.comment-id');
+
+    if (!commentParent || !commentId) return;
+
+    commentParent.value = commentId.value;
+
+    const sendCommentBox = document.getElementById('send-comment-box');
+
+    sendCommentBox.classList.remove(
+        'invisible', 'opacity-0', 'pointer-events-none'
+    );
+
+    sendCommentBox.classList.add(
+        'visible', 'opacity-100', 'pointer-events-auto', 'flex'
+    );
+
+    overlay.classList.remove(
+        'invisible', 'opacity-0'
+    );
+
+    overlay.classList.add(
+        'visible', 'opacity-100'
+    );
+
+    body.style.overflow = 'hidden';
+});
+
+
+async function sendCommentAjax() {
+    const url = window.location.href;
+
+    const formData = new FormData(sendCommentBox);
+
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: formData,
+    });
+    const html = await response.json();
+
+
+    const commentContainer = document.getElementById('comment-container');
+    const navigationDetailDoctor = document.getElementById('navigation-detail-doctor');
+    const ratingContainer = document.getElementById('rating-container');
+    const commentCountBox = document.getElementById('comment-count-box');
+    commentContainer.innerHTML = html.comments_html;
+    navigationDetailDoctor.innerHTML = html.navigation;
+    ratingContainer.innerHTML = html.rating;
+    commentCountBox.innerHTML = html.count_comment;
+
+    const navItems = document.querySelectorAll('.nav-item');
+
+    navItems.forEach(navItem => {
+
+        navItem.classList.remove('text-primary-special');
+        navItem.classList.add('text-custom-black');
+
+        const border = navItem.querySelector('.nav-item-border');
+
+        if (border) {
+            border.classList.remove('w-full');
+            border.classList.add('w-0');
+        }
+    });
+
+
+    const commentNav = document.querySelector(
+        '.nav-item[data-content="comments"]'
+    );
+
+    if (commentNav) {
+
+        commentNav.classList.add('text-primary-special');
+        commentNav.classList.remove('text-custom-black');
+
+        const borderComment = commentNav.querySelector('.nav-item-border');
+
+        if (borderComment) {
+            borderComment.classList.add('w-0');
+            borderComment.classList.add('w-full');
+        }
+    }
+
+
+    lucide.createIcons();
+    sendCommentBox.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+    sendCommentBox.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+    overlay.classList.remove('visible', 'opacity-100');
+    overlay.classList.add('invisible', 'opacity-0');
+    body.style.overflow = 'auto'
+    const parentId = document.querySelector('#id_comment_parent').value;
+    console.log(parentId)
+
+    if (parentId) {
+        const parentComment = document.getElementById(`comment-${parentId}`);
+
+        if (parentComment) {
+            const replies = parentComment.querySelectorAll('.single-reply');
+            const newReply = replies[replies.length - 1];
+
+            if (newReply) {
+                newReply.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }
+        }
+    } else {
+        const comments = commentContainer.querySelectorAll('.comment-item');
+        const newComment = comments[0];
+
+        if (newComment) {
+            newComment.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+        }
+    }
+    const commentParent = document.getElementById('id_comment_parent');
+    commentParent.value = ""
+}
+
+const sendCommentBtn = document.getElementById('send-comment-btn');
+if (sendCommentBtn) {
+    sendCommentBtn.addEventListener('click', () => {
+        sendCommentAjax();
+    });
+}
+
+
+const loadMoreBtn = document.getElementById('load-more-comment-btn');
+const commentContainer = document.getElementById('comment-container');
+
+if (loadMoreBtn) {
+
+    loadMoreBtn.addEventListener('click', function () {
+
+        const pageUrl = this.dataset.page;
+
+        fetch(pageUrl, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                // اضافه کردن کامنت‌های جدید
+                commentContainer.insertAdjacentHTML(
+                    'beforeend',
+                    data.comments_html
+                );
+                lucide.createIcons();
+
+                // اگر صفحه بعدی وجود دارد
+                if (data.has_next) {
+
+                    this.dataset.page = `?page=${data.next_page}`;
+
+                } else {
+
+                    // اگر دیگر کامنتی نمانده
+                    this.remove();
+                }
+
+            })
+            .catch(error => {
+                console.error(error);
+            });
+
+    });
+}
+const startTime = document.getElementById('start-time');
+const endTime = document.getElementById('end-time');
+if (startTime && endTime) {
+    flatpickr(startTime, {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        allowInput: false,
+    });
+    flatpickr(endTime, {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        allowInput: false,
+    });
+}
+
+
+// set time for doctor available management
+
+document.addEventListener('click', function (event) {
+
+    const slot = event.target.closest('.booking-appoiment-item');
+
+    if (!slot) {
+        return;
+    }
+
+    document.querySelectorAll('.booking-appoiment-item').forEach(item => {
+        item.classList.remove(
+            'bg-primary-special',
+            'border-primary-special'
+        );
+
+        item.querySelector('span')?.classList.remove('text-white');
+    });
+
+
+    slot.classList.add(
+        'bg-primary-special',
+        'border-primary-special'
+    );
+
+    slot.querySelector('span')?.classList.add('text-white');
+
+    // دریافت شناسه Slot
+    const slotId = slot.dataset.slotId;
+
+    // انتقال به صفحه پرداخت
+    window.location.href = `/payment/${slotId}`;
+});
+
+// payment
+const paymentBtn = document.getElementById('payment-btn');
+
+if (paymentBtn) {
+    paymentBtn.addEventListener('click', function () {
+
+        const slotId = this.dataset.slotId;
+        const csrftoken = getCookie('csrftoken');
+
+        fetch(`/payment/start/${slotId}/`, {
+            method: 'POST',
+
+            headers: {
+                'X-CSRFToken': csrftoken,
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                if (!data.success) {
+                    alert(data.message);
+                    return;
+                }
+
+                console.log('Payment ID:', data.payment_id);
+            })
+            .catch(error => {
+                console.error(error);
+                alert('خطایی رخ داد.');
+            });
+    });
+}
+
+
+
+if (paymentBtn) {
+    paymentBtn.addEventListener('click', function () {
+
+        const button = this;
+        const slotId = button.dataset.slotId;
+
+        button.disabled = true;
+
+        fetch(`/payment/start/${slotId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                if (!data.success) {
+                    alert(
+                        `${data.message}\nکد خطا: ${data.error_code ?? 'نامشخص'}`
+                    );
+
+                    button.disabled = false;
+                    return;
+                }
+
+                window.location.href = data.payment_url;
+            })
+            .catch(error => {
+
+                console.error(error);
+
+                alert('خطایی رخ داد.');
+
+                button.disabled = false;
+            });
+
+    });
+}
+
+// تأیید لغو
+// const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
+// let selectedAppointment = null;
+// confirmCancelBtn.addEventListener('click', function () {
+//
+//     if (!selectedAppointment) return;
+//
+//     confirmCancelBtn.disabled = true;
+//     confirmCancelBtn.textContent = 'در حال لغو...';
+//
+//     fetch(selectedAppointment.url, {
+//         method: 'POST',
+//         headers: {
+//             'X-CSRFToken': getCookie('csrftoken'),
+//             'X-Requested-With': 'XMLHttpRequest',
+//         },
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//
+//             if (data.success) {
+//                 window.location.reload();
+//                 return;
+//             }
+//
+//             alert(data.message);
+//
+//             confirmCancelBtn.disabled = false;
+//             confirmCancelBtn.textContent = 'بله، لغو کن';
+//         })
+//         .catch(() => {
+//
+//             alert('خطایی در لغو نوبت رخ داد.');
+//
+//             confirmCancelBtn.disabled = false;
+//             confirmCancelBtn.textContent = 'بله، لغو کن';
+//         });
+// });

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'public_module',
     'payment_module',
     'patient',
+    'polls',
 
     #external apps
     'django_render_partial',
@@ -123,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa-ir'
 
 TIME_ZONE = 'UTC'
 
@@ -152,3 +153,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = config('REDIS_URL')
 CELERY_RESULT_BACKEND = config('REDIS_URL')
+
+ZARINPAL_MERCHANT_ID = config('ZARINPAL_MERCHANT_ID')
+ZARINPAL_SANDBOX = config(
+    'ZARINPAL_SANDBOX',
+    cast=bool,
+    default=True
+)

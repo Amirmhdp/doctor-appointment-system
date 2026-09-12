@@ -38,14 +38,14 @@ class RegisterView(View):
                 register_form.add_error('phone_number', 'شماره وارد شده تکراری می باشد')
             else:
                 new_user = User(phone_number=phone_number, is_active=False, verification_code_created_at=timezone.now(),
-                                verification_code=generate_otp())
+                                verification_code=generate_otp(), username=phone_number)
                 new_user.set_password(password)
                 new_user.save()
                 request.session['verification_user_id'] = new_user.id
-                send_sms_task.delay(
-                    phone_number,
-                    f"کد فعال سازی حساب کاربری مدیکر: {new_user.verification_code}"
-                )
+                # send_sms_task.delay(
+                #     phone_number,
+                #     f"کد فعال سازی حساب کاربری مدیکر: {new_user.verification_code}"
+                # )
                 return redirect(reverse('otp_verification_page'))
         context = {
             'register_form': register_form

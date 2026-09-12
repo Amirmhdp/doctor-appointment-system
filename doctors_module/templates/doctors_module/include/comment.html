@@ -1,0 +1,78 @@
+{% load poll_extras %}
+{% for comment in comments %}
+    <div id="comment-{{ comment.id }}" class="comment-item w-full flex flex-col justify-center items-start gap-3 border border-light-gray px-3 py-2 rounded-lg">
+        <div class="flex items-center gap-2 w-full">
+            <i data-lucide="user" class="w-11.25 h-10 p-2 bg-light-blue rounded-full text-primary-special"></i>
+            <div class="flex items-start justify-between w-full">
+                <div class="flex flex-col justify-center items-start gap-2">
+                    <span class="text-sm text-custom-black font-bold">{{ comment.user }}</span>
+                    <div class="flex items-center gap-1">
+                        {% if comment.rating %}
+                            {% for star in comment.rating|times %}
+                                <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <span class="text-sm text-custom-black font-bold">{{ comment.created_at|to_jalali }}</span>
+            </div>
+        </div>
+        <div class="flex items-center justify-between w-full ">
+
+            <div class="">
+                {% if comment.user.doctor_profile %}
+                    <span class="flex items-center gap-2 text-slate-gray text-sm">
+                          <i data-lucide="user-round-check" class="w-5 h-5 text-green-600"></i>
+                          این نظر توسط یک پزشک نوشته شده
+                    </span>
+                {% elif comment.user.is_superuser %}
+                    <span class="flex items-center gap-2 text-slate-gray text-sm">
+                          <i data-lucide="headset" class="w-5 h-5 text-orange-500"></i>
+                          این نظر توسط پشتیبان سایت نوشته شده است
+                    </span>
+                {% else %}
+                    {% if comment.is_like %}
+                        <span class="flex items-center gap-2 text-slate-gray text-sm">
+                          <i data-lucide="thumbs-up" class="w-5 h-5 text-green-600"></i>
+                          این پزشک را پیشنهاد میکنم
+                        </span>
+                    {% else %}
+                        <span class="flex items-center gap-2 text-slate-gray text-sm">
+                          <i data-lucide="thumbs-down" class="w-5 h-5 text-red-500"></i>
+                          این پزشک را پیشنهاد نمی کنم
+                        </span>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            {% if is_doctor or request.user.is_superuser %}
+                <div id=""
+                     class="cursor-pointer reply-comment flex items-center text-sm gap-1 px-3 py-1 bg-primary-special hover:bg-primary-special/75 active:bg-primary-special/50 rounded-lg text-white ">
+                    <i class="text-white w-5 h-5" data-lucide="reply"></i>
+                    پاسخ
+                    <input type="hidden" name="" id="" class="comment-id" value="{{ comment.id }}">
+                </div>
+            {% endif %}
+        </div>
+        <p class="text-sm text-custom-black font-bold w-full leading-6">{{ comment.text }}</p>
+
+        {% if comment.comment_set.all %}
+            {% for subComment in comment.comment_set.all %}
+                <div class="single-reply w-full flex flex-col justify-center items-start gap-3 border border-light-gray px-3 py-2 rounded-lg">
+                    <div class="flex items-center gap-2 w-full">
+                        <i data-lucide="user"
+                           class="w-11.25 h-10 p-2 bg-light-blue rounded-full text-primary-special"></i>
+                        <div class="flex items-start justify-between w-full">
+                            <div class="flex flex-col justify-center items-start gap-2">
+                                <span class="text-sm text-custom-black font-bold">{{ subComment.user }}</span>
+                            </div>
+                            <span class="text-sm text-custom-black font-bold">{{ subComment.created_at|to_jalali }}</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-custom-black font-bold w-full leading-6">{{ subComment.text }}</p>
+                </div>
+            {% endfor %}
+
+        {% endif %}
+    </div>
+{% endfor %}

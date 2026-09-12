@@ -10,8 +10,6 @@ class User(AbstractUser):
         ('male', 'مرد'),
         ('female', 'زن'),
     ]
-    name = models.CharField(max_length=50, verbose_name='نام')
-    family = models.CharField(max_length=50, verbose_name='نام خانوداگی')
     national_code = models.CharField(max_length=10, unique=True, null=True, blank=True, verbose_name="کد ملی")
     phone_number = models.CharField(
         max_length=11,
@@ -50,5 +48,14 @@ class User(AbstractUser):
     birthday = models.DateField(null=True, blank=True, verbose_name="تاریخ تولد")
     avatar = models.ImageField(upload_to='images/avatar', null=True, blank=True, verbose_name='عکس کاربر')
     gender = models.CharField(max_length=20, choices=GENDER_CHOICES, null=True, blank=True, verbose_name='جنسیت')
+    USERNAME_FIELD = 'phone_number'
+    REQUIRED_FIELDS = []
+    def __str__(self):
+        if self.get_full_name():
+            return self.get_full_name()
+        else:
+            return 'کاربر مدیکر'
 
-
+    class Meta:
+        verbose_name = "کاربر"
+        verbose_name_plural = "کاربران"

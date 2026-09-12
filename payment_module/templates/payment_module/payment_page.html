@@ -1,5 +1,5 @@
 {% extends 'shared/base.html' %}
-
+{% load poll_extras %}
 {% block title %}
   اطلاعات پرداخت
 {% endblock %}
@@ -10,12 +10,15 @@
       <div class="flex flex-col justify-center gap-4 px-4 py-3.25 md:p-8 border border-light-gray rounded-lg shadow-[0_0_20px_#e0edfd]">
         <div class="flex items-center gap-2">
           <img class="w-15 h-15 rounded-full" src="/static/images/XJnyiiQAUbuBBpgLppsdUEX4SNU5F3v45StIP52B.jpg" alt="" />
-          <span class="text-custom-black font-bold text-[15px]">دکتر نادر اربابی</span>
+          <span class="text-custom-black font-bold text-[15px]">دکتر {{ slot.doctor }}</span>
         </div>
         <div class="flex flex-col justify-center gap-2">
           <div class="flex items-center justify-between w-full">
             <span class="text-[15px] text-slate-700">تخصص</span>
-            <span class="text-[15px] text-slate-gray">تخصص پوست و مو</span>
+            {% for special in slot.doctor.specialties.all %}
+                <span class="text-[15px] text-slate-gray">تخصص {{ special }}</span>
+            {% endfor %}
+
           </div>
           <div class="flex items-center justify-between w-full">
             <span class="text-[15px] text-slate-700">نوع نوبت</span>
@@ -23,15 +26,19 @@
           </div>
           <div class="flex items-center justify-between w-full">
             <span class="text-[15px] text-slate-700">زمان نوبت</span>
-            <span class="text-[15px] text-slate-gray">18 شهریور 1405 - 20:00</span>
+            <span class="text-[15px] text-slate-gray">{{ slot.date|to_jalali }} - {{ slot.start_time }}</span>
           </div>
           <div class="flex items-center justify-between w-full gap-6">
             <span class="text-[15px] text-slate-700">آدرس</span>
-            <span class="text-[15px] text-slate-gray">قم، خیابان شهید عراقی، کوچه شماره 9، رو به روی شهر پزشکان</span>
+
+            {% for clinic in slot.doctor.clinics.all %}
+                <span class="text-[15px] text-slate-gray">{{ clinic.address }}</span>
+            {% endfor %}
+
           </div>
           <div class="flex items-center justify-between w-full">
             <span class="text-[15px] text-slate-700">نام مراجعه کننده</span>
-            <span class="text-[15px] text-slate-gray">مرتضی خدادادی</span>
+            <span class="text-[15px] text-slate-gray">{{ patient.user.get_full_name }}</span>
           </div>
 
         </div>
@@ -56,19 +63,26 @@
     <div class="w-[95%] md:w-[40%] h-fit flex flex-col gap-4 mx-2  px-4 py-3.25 md:p-10 mt-4 border border-light-gray  rounded-lg shadow-[0_0_20px_#e0edfd]">
       <span class="text-custom-black font-bold text-[15px]">جزئیات پرداخت</span>
       <div class="flex items-center justify-between">
-        <span class="text-[15px] text-slate-700">هزینه کارمزد و زیرساخت</span>
-        <span class="text-[15px] text-slate-700">29,950 تومانء</span>
+        <span class="text-[15px] text-slate-700">هزینه ویزیت</span>
+        <span class="text-[15px] text-slate-700">{{ visit_price }} تومانء</span>
       </div>
       <div class="flex items-center justify-between">
-        <span class="text-[15px] text-slate-700">مبلغ قابل پرداخت</span>
-        <span class="text-[15px] text-slate-700">2,995 تومانء</span>
+        <span class="text-[15px] text-slate-700">۱۰٪ مالیات بر ارزش افزوده</span>
+        <span class="text-[15px] text-slate-700">{{ tax }} تومانء</span>
       </div>
       <div class="flex items-center justify-between mt-3">
-        <span class="text-[15px] text-slate-700">هزینه کارمزد و زیرساخت</span>
-        <span class="text-[17px] text-slate-700">32,945 تومانء</span>
+        <span class="text-[15px] text-slate-700">مبلغ قابل پرداخت</span>
+        <span class="text-[17px] text-slate-700">{{ total_price }} تومانء</span>
       </div>
       <p class="text-[15px] text-slate-700">پرداخت به منزله پذیرش <a href="" class="text-primary-special">شرایط و قوانین</a> است</p>
-      <button class="text-center cursor-pointer text-white bg-primary-special rounded-lg py-2.5 hover:bg-primary-special/75 active:bg-primary-special/50">پرداخت و ثبت نوبت</button>
+      <button
+    type="button"
+    id="payment-btn"
+    data-slot-id="{{ slot.id }}"
+    class="text-center cursor-pointer text-white bg-primary-special rounded-lg py-2.5 hover:bg-primary-special/75 active:bg-primary-special/50"
+>
+    پرداخت و ثبت نوبت
+</button>
     </div>
   </main>
 {% endblock %}

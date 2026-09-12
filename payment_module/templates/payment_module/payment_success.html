@@ -1,0 +1,96 @@
+{% extends 'shared/base.html' %}
+{% load poll_extras %}
+{% block content %}
+
+<div class="min-h-[70vh] flex items-center justify-center px-4 mt-25">
+
+    <div class="w-full max-w-xl bg-white rounded-2xl border border-light-gray p-8 text-center">
+
+        <!-- Success Icon -->
+        <div class="flex justify-center mb-5">
+            <div class="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+                <i
+                    data-lucide="circle-check"
+                    class="w-12 h-12 text-green-600"
+                ></i>
+            </div>
+        </div>
+
+        <h1 class="text-2xl font-bold text-custom-black mb-2">
+            پرداخت با موفقیت انجام شد
+        </h1>
+
+        <p class="text-sm text-primary-blue-gray mb-8">
+            نوبت شما با موفقیت ثبت شد.
+        </p>
+
+        <!-- Appointment Info -->
+        <div class="text-right space-y-4 border border-light-gray rounded-xl p-5">
+
+            <div class="flex justify-between">
+                <span class="text-sm text-primary-blue-gray">
+                    پزشک
+                </span>
+
+                <span class="text-sm font-bold text-custom-black">
+                    {{ appointment.doctor.user.get_full_name }}
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-sm text-primary-blue-gray">
+                    تاریخ
+                </span>
+
+                <span class="text-sm font-bold text-custom-black">
+                    {{ appointment.available_slot.date|to_jalali }}
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-sm text-primary-blue-gray">
+                    ساعت
+                </span>
+
+                <span class="text-sm font-bold text-custom-black">
+                    {{ appointment.available_slot.start_time|time:"H:i" }}
+                    -
+                    {{ appointment.available_slot.end_time|time:"H:i" }}
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-sm text-primary-blue-gray">
+                    مبلغ پرداختی
+                </span>
+
+                <span class="text-sm font-bold text-custom-black">
+                    {{ payment.amount }} ریال
+                </span>
+            </div>
+
+            <div class="flex justify-between">
+                <span class="text-sm text-primary-blue-gray">
+                    کد پیگیری
+                </span>
+
+                <span class="text-sm font-bold text-custom-black">
+                    {{ payment.ref_id }}
+                </span>
+            </div>
+
+        </div>
+
+        <!-- Button -->
+        <a
+            href="{% url 'user_panel_page' %}"
+            class="mt-6 w-full flex items-center justify-center bg-primary-special text-white rounded-xl py-3 font-bold"
+        >
+            مشاهده نوبت‌های من
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

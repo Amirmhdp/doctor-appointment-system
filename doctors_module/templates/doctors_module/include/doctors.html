@@ -1,0 +1,59 @@
+{% if doctors %}
+    <div class="flex flex-col w-full justify-center md:grid md:grid-cols-4 gap-2 shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+        {% for doctor in doctors %}
+            <a href=""
+               class="w-auto! h-fit flex! flex-row md:flex-col! justify-center md:justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2! hover:-translate-y-3 ease-in-out duration-300">
+                <div class="w-[43%] sm:w-[23%] md:w-full flex items-center justify-center">
+                    <img src="{{ doctor.image.url }}" class="p-3.75 lg:p-3.25 w-38 h-33.75"
+                         alt="img-doctor"/>
+                </div>
+                <div class="flex flex-col w-[57%] md:w-full justify-center items-center gap-2">
+                    <h2 class="text-custom-black text-sm">دکتر {{ doctor }}</h2>
+                    {% for specialty in doctor.specialties.all %}
+                        <span class="text-sm text-slate-gray">متخصص {{ specialty }}</span>
+                    {% endfor %}
+
+                    <div class="flex items-center justify-between w-full">
+              <span class="flex items-center gap-1 text-sm text-slate-gray">
+                <i data-lucide="map-pin" class="w-5 h-5 text-slate-gray"></i>
+                تهران
+              </span>
+                        <span class="flex items-center gap-1 text-slate-gray text-sm">
+                4.8
+                <img src="/static/images/star-svgrepo-com%20(2).svg" class="w-5 h-5 mb-1" alt="star"/>
+              </span>
+                    </div>
+                    <button class="w-full px-4 py-2 bg-white text-primary-special text-sm border border-primary-special hover:bg-primary-special hover:text-white duration-200 ease-in-out rounded-lg cursor-pointer">
+                        رزرو نوبت
+                    </button>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+    {% comment %} paginiation {% endcomment %}
+    {% if doctors %}
+        <div class="flex justify-center items-center gap-2 mt-4">
+            <a href=""><i data-lucide="chevron-right"
+                          class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2"></i></a>
+            <a href=""
+               class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2 text-center">1</a>
+            <a href=""
+               class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2 text-center">2</a>
+            <a href=""
+               class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2 text-center">3</a>
+            <a href=""><i data-lucide="chevron-left"
+                          class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2"></i></a>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+        <img class="w-[70%] md:w-[40%] lg:w-[35%]" src="/static/images/not_found.webp" alt="not-found">
+        <p class="text-lg text-custom-black font-bold lg:text-[21px]">پزشکی با این مشخصات یافت نشد</p>
+        <p class="text-center text-sm lg:text-[16px] text-slate-700">متاسفانه دکتری که به دنبال آن هستید در سیستم ما
+            وجود ندارد</p>
+        <p class="text-center text-sm lg:text-[16px] text-slate-700">ممکن است اطلاعات وارد شده نادرست باشد یا دکتر مورد
+            نظر شما حذف شده باشد</p>
+        <a href="{% url 'home' %}" class="px-3 py-2.5 text-white rounded-lg text-sm lg:text-[16px] bg-primary-special">بازگشت
+            به صفحه اصلی</a>
+    </div>
+{% endif %}
