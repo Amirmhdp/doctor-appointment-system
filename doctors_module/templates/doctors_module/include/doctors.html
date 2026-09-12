@@ -1,7 +1,7 @@
 {% if doctors %}
     <div class="flex flex-col w-full justify-center md:grid md:grid-cols-4 gap-2 shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
-        {% for doctor in doctors %}
-            <a href=""
+        {% for doctor in page_obj %}
+            <a href="{% url 'profile_page' url_title=doctor.url_title %}"
                class="w-auto! h-fit flex! flex-row md:flex-col! justify-center md:justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2! hover:-translate-y-3 ease-in-out duration-300">
                 <div class="w-[43%] sm:w-[23%] md:w-full flex items-center justify-center">
                     <img src="{{ doctor.image.url }}" class="p-3.75 lg:p-3.25 w-38 h-33.75"
@@ -19,7 +19,7 @@
                 تهران
               </span>
                         <span class="flex items-center gap-1 text-slate-gray text-sm">
-                4.8
+                {{ doctor.avg_rating|default:"0"|floatformat:1 }}
                 <img src="/static/images/star-svgrepo-com%20(2).svg" class="w-5 h-5 mb-1" alt="star"/>
               </span>
                     </div>
@@ -33,16 +33,18 @@
     {% comment %} paginiation {% endcomment %}
     {% if doctors %}
         <div class="flex justify-center items-center gap-2 mt-4">
-            <a href=""><i data-lucide="chevron-right"
-                          class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2"></i></a>
-            <a href=""
-               class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2 text-center">1</a>
-            <a href=""
-               class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2 text-center">2</a>
-            <a href=""
-               class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2 text-center">3</a>
-            <a href=""><i data-lucide="chevron-left"
-                          class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2"></i></a>
+            {% if page_obj.has_previous %}
+                <button id="previous-btn-page" data-page-previous="{{ page_obj.previous_page_number }}"><i data-lucide="chevron-right" class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2"></i></button>
+            {% endif %}
+            {% for page in page_obj.paginator.page_range %}
+                <button data-page="{{ page }}" class="page-item w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2 text-center">
+                    {{ page }}
+                </button>
+            {% endfor %}
+            <input type="hidden" name="" id="page-input">
+            {% if page_obj.has_next %}
+                <button id="next-btn-page" data-page-next="{{ page_obj.next_page_number  }}"><i data-lucide="chevron-left" class="w-9.5 h-9.5 text-sm text-slate-gray border border-light-gray rounded-full hover:text-primary-special hover:border-primary-special transition-all duration-300 ease-in-out p-2"></i></button>
+            {% endif %}
         </div>
     {% endif %}
 {% else %}

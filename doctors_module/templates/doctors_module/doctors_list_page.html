@@ -10,9 +10,9 @@
             <div class="flex flex-col justify-center gap-2.5">
                 <h1 class="text-custom-black text-lg md:text-2xl font-bold">پزشکان ما</h1>
                 <div class="flex items-center gap-1.5">
-                    <a href="" class="text-sm text-slate-gray font-bold">خانه</a>
+                    <a href="{% url 'home' %}" class="text-sm text-slate-gray font-bold">خانه</a>
                     <i data-lucide="chevron-left" class="w-5 h-5 text-slate-gray"></i>
-                    <a href="" class="text-sm text-slate-gray font-bold">پزشکان</a>
+                    <a href="{% url 'doctors_list_page' %}" class="text-sm text-slate-gray font-bold">پزشکان</a>
                 </div>
                 {% comment %} <a class="text-xs text-slate-gray md:hidden font-bold">پزشکان</a> {% endcomment %}
             </div>
@@ -72,29 +72,15 @@
                     </div>
                     <i data-lucide="chevron-down" class="w-5 h-5 text-slate-gray"></i>
                 </button>
-                <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
-                    <li class="whitespace-nowrap city-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                        تهران
-                    </li>
-                    <li class="whitespace-nowrap city-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                        قم
-                    </li>
-                    <li class="whitespace-nowrap city-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                        مشهد
-                    </li>
-                    <li class="whitespace-nowrap city-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                        تبریز
-                    </li>
-                    <li class="whitespace-nowrap city-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                        ایلام
-                    </li>
-                    <li class="whitespace-nowrap city-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                        شیراز
-                    </li>
-                    <li class="whitespace-nowrap city-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                        اراک
-                    </li>
-                    <input type="hidden" name="city" id="city-input">
+                <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col  gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
+                    {% for province in provinces %}
+                        <li class="whitespace-nowrap province-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                            {{ province.name }}
+                        </li>
+                    {% endfor %}
+
+
+                    <input type="hidden" name="province" id="province-input">
                 </div>
             </div>
             <button id="filter-btn" type="button"
@@ -114,57 +100,37 @@
                     <button type="button"
                             class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
                         <div class="flex items-center gap-1">
-                            <i data-lucide="stethoscope" class="w-5 h-5 text-slate-gray"></i>
-                            <span class="selected-text whitespace-nowrap text-sm text-slate-gray font-bold">انتخاب امتیاز</span>
-                        </div>
-                        <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
-                    </button>
-                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            1
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            2
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            3
-                        </li>
-                    </div>
-                </div>
-                <div class="relative dropdown">
-                    <button type="button"
-                            class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
-                        <div class="flex items-center gap-1">
                             <i data-lucide="user-round" class="w-5 h-5 text-slate-gray"></i>
                             <span class="selected-text whitespace-nowrap text-sm text-slate-gray font-bold">مرتب سازی</span>
                         </div>
                         <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
                     </button>
                     <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                        <li data-order-by="high-star" class="whitespace-nowrap order-by-filter text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
                             بر اساس بیشترین امتیاز
                         </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                        <li data-order-by="low-star" class="whitespace-nowrap order-by-filter text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
                             بر اساس کمترین امتیاز
                         </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                        <li data-order-by="year-experience" class="whitespace-nowrap order-by-filter text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
                             سابقه کار
                         </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                        <li data-order-by="newest-doctors" class="whitespace-nowrap order-by-filter text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
                             بر اساس جدید ترین پزشکان
                         </li>
-
+                        <input type="hidden" name="" id="order-by-input">
                     </div>
                 </div>
                 <div class="flex flex-col justify-center gap-2.5">
                     <span class="text-sm text-custom-black font-bold mt-2">جنسیت پزشک</span>
                     <div class="flex items-center gap-4">
-                        <label class="flex items-center gap-1.5 cursor-pointer text-sm text-slate-gray"><input
+                        <label class="flex items-center gap-1.5 gender-item cursor-pointer text-sm text-slate-gray"><input
                                 type="radio" name="gender" class="cursor-pointer" value="all"/>همه</label>
-                        <label class="flex items-center gap-1.5 cursor-pointer text-sm text-slate-gray"><input
+                        <label class="flex items-center gap-1.5 gender-item cursor-pointer text-sm text-slate-gray"><input
                                 type="radio" name="gender" class="cursor-pointer" value="male"/>آقا</label>
-                        <label class="flex items-center gap-1.5 cursor-pointer text-sm text-slate-gray"><input
+                        <label class="flex items-center gap-1.5 gender-item cursor-pointer text-sm text-slate-gray"><input
                                 type="radio" name="gender" class="cursor-pointer" value="female"/>خانم</label>
+                        <input type="hidden" name="" id="gender-input">
                     </div>
                 </div>
                 <div class="flex flex-col justify-center gap-2.5">
@@ -182,7 +148,7 @@
                                 type="checkbox" name="time" class="cursor-pointer" value="night"/>شب (20 تا 24)</label>
                     </div>
                 </div>
-                <button class="flex items-center mt-2 cursor-pointer justify-center gap-1 text-white bg-primary-special hover:bg-primary-special/75 active:bg-primary-special/50 duration-200 ease-in-out px-5 py-2 w-full rounded-lg lg:py-3">
+                <button type="button" id="filter-btn-2" class="flex items-center mt-2 cursor-pointer justify-center gap-1 text-white bg-primary-special hover:bg-primary-special/75 active:bg-primary-special/50 duration-200 ease-in-out px-5 py-2 w-full rounded-lg lg:py-3">
                     <i data-lucide="search" class="w-5 h-5 text-white"></i>
                     جستجو
                 </button>

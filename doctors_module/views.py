@@ -1,15 +1,15 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction
-from django.db.models import Value, Avg
+from django.db.models import Value, Avg, Q
+from datetime import time
 from django.db.models.functions import Concat
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 
 from doctors_module.forms import CommentForm
-from doctors_module.models import Doctor, Specialty, Comment, FAQ, AvailableSlot, Appointment
-
+from doctors_module.models import Doctor, Specialty, Comment, FAQ, AvailableSlot, Appointment, Province
 
 # Create your views here.
 from doctors_module.service import book_appointment, SlotNotAvailableError
@@ -17,17 +17,24 @@ from patient.models import Patient
 
 
 def doctor_list(request):
-    doctors = Doctor.objects.filter(
-        is_active=True
-    ).select_related(
-        'user'
-    ).prefetch_related(
-        'specialties'
-    )
+    doctors = Doctor.objects.filter(is_active=True).select_related('user').prefetch_related('specialties').annotate(avg_rating=Avg('comments__rating'))
     specialties = Specialty.objects.filter(is_active=True)
+    provinces = Province.objects.filter(is_active=True)
     doctor = request.GET.get('doctor')
     specialty = request.GET.get('specialty')
-    city = request.GET.get('city')
+    province = request.GET.get('province')
+    order_by = request.GET.get('order-by')
+    gender = request.GET.get('gender')
+    times = request.GET.getlist('time')
+    if order_by:
+        if order_by == 'high-star':
+            doctors = doctors.annotate(avg_rating=Avg('comments__rating')).order_by('-avg_rating')
+        elif order_by == 'low-star':
+            doctors = doctors.annotate(avg_rating=Avg('comments__rating')).order_by('avg_rating')
+        elif order_by == 'year-experience':
+            doctors = doctors.order_by('-years_of_experience')
+        elif order_by == 'newest-doctors':
+            doctors = doctors.order_by('-created_at')
     if doctor:
         doctors = doctors.annotate(
             full_name=Concat(
@@ -35,16 +42,45 @@ def doctor_list(request):
                 Value(' '),
                 'user__last_name'
             )
-        ).filter(
-            full_name__icontains=doctor
-        )
+        ).filter(full_name__icontains=doctor)
     if specialty:
         doctors = doctors.filter(specialties__name__iexact=specialty)
-    # if city:
-    #     doctors = doctors.filter(city=city)
+    if gender and gender != 'all':
+        doctors = doctors.filter(gender=gender)
+    if province:
+        doctors = doctors.filter(clinics__province__name=province)
+    if times:
+        time_ranges = {
+            'morning': (time(8, 0), time(12, 0)),
+            'noon': (time(12, 0), time(16, 0)),
+            'afternoon': (time(16, 0), time(20, 0)),
+            'night': (time(20, 0), time(23, 59, 59, 999999)),
+        }
+        if times:
+            time_filter = Q()
+
+            for selected_time in times:
+                if selected_time in time_ranges:
+                    start, end = time_ranges[selected_time]
+
+                    time_filter |= Q(
+                        weekly_schedules__is_active=True,
+                        weekly_schedules__periods__start_time__lt=end,
+                        weekly_schedules__periods__end_time__gt=start,
+                    )
+
+            doctors = doctors.filter(time_filter).distinct()
+    paginator = Paginator(doctors, 12)
+
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
     context = {
         'doctors': doctors,
-        'specialties': specialties
+        'specialties': specialties,
+        'provinces': provinces,
+        'page_obj': page_obj,
+
     }
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return render(request, 'doctors_module/include/doctors.html', context)

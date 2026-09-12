@@ -16,5 +16,6 @@ admin.site.register(models.Comment)
 admin.site.register(models.Education)
 admin.site.register(models.FAQ)
 admin.site.register(models.Rule)
+admin.site.register(models.Province)
 
 

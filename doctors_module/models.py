@@ -26,6 +26,11 @@ class Specialty(models.Model):
         verbose_name_plural = 'تخصص ها'
 
 class Doctor(models.Model):
+    GENDER = [
+        ('male', 'مرد'),
+        ('female', 'خانم'),
+        ('prefer not to say', 'ترجیح میدم نگویم'),
+    ]
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -63,6 +68,7 @@ class Doctor(models.Model):
         null=True,
         verbose_name='تصویر'
     )
+    gender = models.CharField(max_length=50, choices=GENDER, null=True, blank=True, verbose_name='جنسیت')
 
     created_at = models.DateTimeField(
         auto_now_add=True,
@@ -89,31 +95,13 @@ class Doctor(models.Model):
         verbose_name_plural = 'پزشکان'
 
 class Clinic(models.Model):
-    doctor = models.ForeignKey(
-        Doctor,
-        on_delete=models.CASCADE,
-        related_name='clinics',
-        verbose_name='پزشک'
-    )
-    name = models.CharField(
-        max_length=100,
-        verbose_name='نام مطب'
-    )
-    address = models.TextField(
-        verbose_name='آدرس'
-    )
-    email = models.EmailField(
-        null=True,
-        blank=True,
-        verbose_name='ایمیل',
-    )
-    phone_number = models.CharField(
-        verbose_name='شماره تماس',
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='تاریخ ایجاد'
-    )
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, related_name='clinics', verbose_name='پزشک')
+    province = models.ForeignKey('Province', on_delete=models.PROTECT, null=True, blank=True, related_name='clinics', verbose_name='استان')
+    name = models.CharField(max_length=100, verbose_name='نام مطب')
+    address = models.TextField(verbose_name='آدرس')
+    email = models.EmailField(null=True, blank=True, verbose_name='ایمیل',)
+    phone_number = models.CharField(verbose_name='شماره تماس',)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')
 
     def __str__(self):
         return self.name
@@ -438,4 +426,16 @@ class Rule(models.Model):
         ordering = ['order', '-created_at']
         verbose_name = 'قانون'
         verbose_name_plural = 'قوانین'
+
+class Province(models.Model):
+    name = models.CharField(max_length=100, unique=True, verbose_name='نام استان')
+    is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال')
+
+    class Meta:
+        verbose_name = 'استان'
+        verbose_name_plural = 'استان‌ها'
+        ordering = ['name']
+
+    def __str__(self):
+        return self.name
 

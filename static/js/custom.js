@@ -1375,14 +1375,23 @@ if (formOTP, otpInputHidden) {
 
 const doctorInput = document.getElementById('doctor-input');
 const specialtyInput = document.getElementById('specialty-input');
-const cityInput = document.getElementById('city-input');
+const provinceInput = document.getElementById('province-input');
 const specialtyItems = document.querySelectorAll('.specialty-item');
 const doctorItems = document.querySelectorAll('.doctor-item');
-const cityItems = document.querySelectorAll('.city-item');
+const provinceItems = document.querySelectorAll('.province-item');
+const orderByItems = document.querySelectorAll('.order-by-filter');
+const orderByInput = document.getElementById('order-by-input');
 const doctorsList = document.getElementById('doctors-list');
 const filterBtn = document.getElementById('filter-btn');
+const filterBtn2 = document.getElementById('filter-btn-2');
 const removeFilterBtn = document.getElementById('remove-filter-btn');
-if (doctorInput, specialtyInput, cityInput, specialtyItems, doctorItems, cityItems, doctorsList, filterBtn) {
+const genderItems = document.querySelectorAll('.gender-item');
+const genderInput = document.getElementById('gender-input');
+const timeItems = document.querySelectorAll('input[name="time"]');
+const pageItems = document.querySelectorAll('.page-item');
+const pageInput = document.getElementById('page-input');
+
+if (doctorInput && specialtyInput && provinceInput && specialtyItems && doctorItems && provinceItems && doctorsList && filterBtn) {
     specialtyItems.forEach(specialtyItem => {
         specialtyItem.addEventListener('click', () => {
             specialtyInput.value = specialtyItem.textContent.trim();
@@ -1393,11 +1402,52 @@ if (doctorInput, specialtyInput, cityInput, specialtyItems, doctorItems, cityIte
             doctorInput.value = doctorItem.textContent.trim();
         })
     })
-    cityItems.forEach(cityItem => {
-        cityItem.addEventListener('click', () => {
-            cityInput.value = cityItem.textContent.trim();
+    provinceItems.forEach(provinceItem => {
+        provinceItem.addEventListener('click', () => {
+            provinceInput.value = provinceItem.textContent.trim();
         })
     })
+    orderByItems.forEach(orderByItem => {
+        orderByItem.addEventListener('click', () => {
+            orderByInput.value = orderByItem.dataset.orderBy;
+        })
+    })
+    genderItems.forEach(genderItem => {
+        genderItem.addEventListener('click', () => {
+            genderInput.value = genderItem.querySelector('input').value;
+        })
+    })
+    document.addEventListener('click', (event) => {
+        const pageItem = event.target.closest('.page-item');
+
+        if (!pageItem) {
+            return;
+        }
+
+        pageInput.value = pageItem.dataset.page;
+        loadDoctorAjax()
+    });
+    document.addEventListener('click', (event) => {
+        const pageItem = event.target.closest('#previous-btn-page');
+
+        if (!pageItem) {
+            return;
+        }
+
+        pageInput.value = pageItem.dataset.pagePrevious;
+        loadDoctorAjax()
+    });
+    document.addEventListener('click', (event) => {
+        const pageItem = event.target.closest('#next-btn-page');
+
+        if (!pageItem) {
+            return;
+        }
+
+        pageInput.value = pageItem.dataset.pageNext;
+        loadDoctorAjax()
+    });
+
 
     async function loadDoctorAjax() {
 
@@ -1409,9 +1459,29 @@ if (doctorInput, specialtyInput, cityInput, specialtyItems, doctorItems, cityIte
         if (specialtyInput.value) {
             params.set('specialty', specialtyInput.value);
         }
-        if (cityInput.value) {
-            params.set('city', cityInput.value);
+        if (provinceInput.value) {
+            params.set('province', provinceInput.value);
         }
+        if (orderByInput.value) {
+            params.set('order-by', orderByInput.value);
+        }
+        if (genderInput.value) {
+            params.set('gender', genderInput.value);
+        }
+        if (pageInput.value) {
+            params.set('page', pageInput.value);
+        }
+        const selectedTimes = [];
+
+        timeItems.forEach(timeItem => {
+            if (timeItem.checked) {
+                selectedTimes.push(timeItem.value);
+            }
+        });
+
+        selectedTimes.forEach(time => {
+            params.append('time', time);
+        });
 
         const url = `/doctors-list?${params.toString()}`;
         const response = await fetch(url, {
@@ -1423,6 +1493,8 @@ if (doctorInput, specialtyInput, cityInput, specialtyItems, doctorItems, cityIte
         history.pushState({}, "", url)
 
         doctorsList.innerHTML = html;
+        lucide.createIcons();
+
 
 
     }
@@ -1431,12 +1503,22 @@ if (doctorInput, specialtyInput, cityInput, specialtyItems, doctorItems, cityIte
 
         doctorInput.value = '';
         specialtyInput.value = '';
-        cityInput.value = '';
-
+        provinceInput.value = '';
+        orderByInput.value = '';
+        genderInput.value = '';
+        pageInput.value = '';
+        timeItems.forEach(timeItem => {
+            timeItem.checked = false;
+        });
         loadDoctorAjax();
     });
     if (filterBtn) {
         filterBtn.addEventListener('click', () => {
+            loadDoctorAjax()
+        })
+    }
+    if (filterBtn2) {
+        filterBtn2.addEventListener('click', () => {
             loadDoctorAjax()
         })
     }
