@@ -1,0 +1,16 @@
+<button type="button"
+        class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
+    <div class="flex items-center gap-1">
+        <i data-lucide="user-round" class="w-5 h-5 text-slate-gray"></i>
+        <span class="selected-text whitespace-nowrap text-sm text-slate-gray font-bold">انتخاب پزشک</span>
+    </div>
+    <i data-lucide="chevron-down" class="w-5 h-5 text-slate-gray"></i>
+</button>
+<div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
+    {% for doctor in doctors %}
+        <li class="whitespace-nowrap doctor-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+            {{ doctor }}
+        </li>
+    {% endfor %}
+    <input type="hidden" name="doctor" value="" id="doctor-input">
+</div>

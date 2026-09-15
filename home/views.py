@@ -6,7 +6,7 @@ from django.shortcuts import render
 # header render partial
 from django.views.generic import TemplateView
 
-from doctors_module.models import Specialty, Doctor
+from doctors_module.models import Specialty, Doctor, Province
 
 
 def header_component(request):
@@ -21,10 +21,13 @@ class Home(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(Home, self).get_context_data()
+        provinces = Province.objects.all()
         specialties = Specialty.objects.filter(is_active=True)
         doctors = Doctor.objects.filter(is_active=True)[:12]
         context['specialties'] = specialties
         context['doctors'] = doctors
+        context['provinces'] = provinces
         return context
+
 
 

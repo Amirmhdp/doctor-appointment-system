@@ -149,6 +149,12 @@ class SchedulePeriod(models.Model):
     class Meta:
         verbose_name = 'بازه زمانی برنامه'
         verbose_name_plural = 'بازه‌های زمانی برنامه'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['schedule', 'start_time', 'end_time'],
+                name='unique_schedule_period'
+            )
+        ]
 
 class ScheduleException(models.Model):
     doctor = models.ForeignKey(

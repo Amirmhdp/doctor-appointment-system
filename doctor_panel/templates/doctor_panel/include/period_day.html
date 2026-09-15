@@ -1,0 +1,12 @@
+{% for period in schedule_work.periods.all %}
+    <span class="text-xs {% if schedule_work.is_active %}text-slate-600{% else %}text-slate-400{% endif %} flex-1 whitespace-nowrap">{{ period.start_time }} - {{ period.end_time }}</span>
+    <!-- ===== AFTER ===== -->
+    <button data-period="{{ period.id }}"
+            data-day-id="{{ schedule_work.id }}"
+            class=" {% if schedule_work.is_active %}text-slate-400{% else %}text-slate-300{% endif %} edit-appoiment-day cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
+        </svg>
+    </button>
+{% endfor %}

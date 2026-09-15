@@ -145,6 +145,9 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/medias/'
 MEDIA_ROOT = 'files'
 
+# login url
+LOGIN_URL = 'login_page'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

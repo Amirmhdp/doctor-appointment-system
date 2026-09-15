@@ -1,0 +1,18 @@
+{% load poll_extras %}
+{% if exception_work %}
+    {% for excetion in exception_work %}
+        <div class="flex items-center justify-between  px-3 py-2 hover:bg-slate-50 rounded-lg transition-all duration-300 ease-in-out">
+            <div class="flex items-center gap-4">
+                <span class="text-custom-black text-sm">{{ excetion.date|weekday_fa }}</span>
+                <span class="text-custom-black text-sm">{{ excetion.date|to_jalali }}</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <svg viewBox="0 0 24 24" class="delete-exception-icon w-6.75 h-6.75 p-1 rounded-full bg-red-50 text-red-400 hover:bg-red-100 cursor-pointer hover:text-red-500 transition-all duration-300 ease-in-out" data-exception-id="{{ excetion.id }}" xmlns="http://www.w3.org/2000/svg" fill="none"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path stroke="#fb2c36" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12 6 6m6 6 6 6m-6-6 6-6m-6 6-6 6"></path></g></svg>
+            </div>
+        </div>
+    {% endfor %}
+    {% else %}
+    <div class="flex items-center justify-center ">
+        <span class="text-primary-special w-full bg-blue-100 font-bold text-sm py-2 text-center">شما هیچ بازه ای برای روز های استثنا تعریف نکردید</span>
+    </div>
+{% endif %}

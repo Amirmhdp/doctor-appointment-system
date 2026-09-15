@@ -71,7 +71,7 @@
                 <h2 class="text-lg text-custom-black font-bold">نوبت خود را رزرو کنید</h2>
                 <span class="text-sm text-medium-gray text-bold">به راحتی پزشک مورد نظر خود را پیدا کنید</span>
             </div>
-            <form method="get" class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <form method="get" action="{% url 'doctors_list_page' %}" class="grid grid-cols-2 md:grid-cols-4 gap-2">
                 <div class="relative dropdown">
                     <button type="button"
                             class="lg:py-3 cursor-pointer dropdown-button flex items-center justify-between border border-light-gray rounded-lg px-5 py-2 w-full">
@@ -81,31 +81,13 @@
                         </div>
                         <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
                     </button>
-                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item mt-7">
-                            پزشک عمومی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            قلب و عروق
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            مغز و اعصاب
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            دندان‌پزشکی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            ارتوپدی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            ارتوپدی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            ارتوپدی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            ارتوپدی
-                        </li>
+                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col  gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
+                        {% for specialty in specialties %}
+                            <li class="whitespace-nowrap specialty-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                                {{ specialty.name }}
+                            </li>
+                        {% endfor %}
+                        <input type="hidden" name="specialty" value="" id="specialty-input">
                     </div>
                 </div>
                 <div class="relative dropdown">
@@ -117,28 +99,13 @@
                         </div>
                         <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
                     </button>
-                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            دکتر محمد رضایی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            دکتر علی احمدی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            دکتر علی احمدی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            دکتر علی احمدی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            دکتر امیر حسینی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            دکتر سارا محمدی
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            دکتر مهدی مرادی
-                        </li>
+                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
+                        {% for doctor in doctors %}
+                            <li class="whitespace-nowrap doctor-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                                {{ doctor.user.get_full_name }}
+                            </li>
+                        {% endfor %}
+                        <input type="hidden" name="doctor" id="doctor-input">
                     </div>
                 </div>
                 <div class="relative dropdown">
@@ -150,28 +117,14 @@
                         </div>
                         <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
                     </button>
-                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col justify-center gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            تهران
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            قم
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            مشهد
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            تبریز
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            ایلام
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            شیراز
-                        </li>
-                        <li class="whitespace-nowrap text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
-                            اراک
-                        </li>
+                    <div class="dropdown-list h-62.5 overflow-y-auto absolute z-20 bg-white top-9.5 flex flex-col gap-2 list-none border border-light-gray px-3 py-2 rounded-lg mt-1 w-full opacity-0 invisible duration-200 ease-in-out">
+                        {% for province in provinces %}
+                            <li class="whitespace-nowrap province-item text-sm text-custom-black font-bold hover:bg-gray-400/25 px-3 py-2.5 duration-150 ease-in-out cursor-pointer dropdown-item">
+                                {{ province.name }}
+                            </li>
+                        {% endfor %}
+                        <input type="hidden" name="province" id="province-input">
+
                     </div>
                 </div>
                 {% comment %} <div class="relative flex items-center justify-between gap-3 border border-light-gray rounded-lg px-5 py-2 w-full lg:py-3 cursor-pointer">
@@ -204,7 +157,7 @@
                 <div class="swiper-wrapper flex! items-center!">
                     <!-- Slides -->
                     {% for specialty in specialties %}
-                        <a href="{% url 'doctors_list_page' %}"
+                        <a href="{% url 'doctors_list_page' %}?specialty={{ specialty.name|urlencode }}"
                            class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2!">
                             <img src="{{ specialty.image.url }}"
                                  class="w-24 h-24 lg:w-28! lg:h-28! p-4 shadow-[0_0px_30px_#e0edfd] rounded-lg"

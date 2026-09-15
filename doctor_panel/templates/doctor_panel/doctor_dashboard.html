@@ -1,5 +1,5 @@
 {% extends 'shared/base.html' %}
-
+{% load poll_extras %}
 {% block title %}
     داشبورد پزشک
 {% endblock %}
@@ -13,8 +13,11 @@
                     <img src="https://i.pravatar.cc/160?img=68"
                          class="w-12 h-12 rounded-full p-0.5 border-2 border-white object-cover" alt="doctor-image"/>
                     <div class="flex flex-col justify-center gap-1 w-full">
-                        <h1 class="text-sm text-white font-bold">دکتر علی محمدی</h1>
-                        <h3 class="text-xs text-white font-bold opacity-90">ارتوپدی</h3>
+                        <h1 class="text-sm text-white font-bold">دکتر {{ doctor.user.get_full_name }}</h1>
+                        {% for specialty in doctor.specialties.all %}
+                            <h3 class="text-xs text-white font-bold opacity-90">{{ specialty.name }}</h3>
+                        {% endfor %}
+
                     </div>
                 </div>
 
@@ -72,7 +75,7 @@
                         پروفایل
                     </button>
                     <!-- Logout -->
-                    <a href="#" style="margin-top: 0px;"
+                    <a href="{% url 'logout_page' %}" style="margin-top: 0px;"
                        class="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-slate-500 hover:bg-red-50 hover:text-red-600 text-sm md:mt-4">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2">
@@ -589,279 +592,55 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                    <!-- Weekly working hours: takes 2 columns -->
-                    <div class="lg:col-span-2 bg-white rounded-2xl p-1">
-                        <div class="flex items-center justify-between mb-5">
-                            <h2 class="font-bold text-slate-800">ساعات کاری هفتگی</h2>
-                            <button id="openExceptionModal"
-                                    class="text-blue-600 text-xs font-medium border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer">
-                                افزودن بازه استثنا
-                            </button>
-                        </div>
-
-                        <div class="space-y-2.5 overflow-x-auto">
-                            <!-- day row: active -->
-                            <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
-                                <button data-act-inact="false"
-                                        class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer">
-                                    <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span>
-                                </button>
-                                <span class="w-16 text-sm font-medium text-slate-400">شنبه</span>
-                                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۶:۰۰</span>
-                                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۶ نوبت</span>
-                                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
-                                <button data-act-inact="false"
-                                        class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer">
-                                    <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span>
-                                </button>
-                                <span class="w-16 text-sm font-medium text-slate-400">یکشنبه</span>
-                                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۶:۰۰</span>
-                                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۶ نوبت</span>
-                                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
-                                <button data-act-inact="false"
-                                        class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer">
-                                    <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span>
-                                </button>
-                                <span class="w-16 text-sm font-medium text-slate-400">دوشنبه</span>
-                                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۴:۰۰</span>
-                                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۲ نوبت</span>
-                                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
-                                <button data-act-inact="false"
-                                        class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer">
-                                    <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span>
-                                </button>
-                                <span class="w-16 text-sm font-medium text-slate-400">سه‌شنبه</span>
-                                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۶:۰۰</span>
-                                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۶ نوبت</span>
-                                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
-                                <button data-act-inact="false"
-                                        class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer">
-                                    <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span>
-                                </button>
-                                <span class="w-16 text-sm font-medium text-slate-400">چهارشنبه</span>
-                                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۶:۰۰</span>
-                                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment">۱۶ نوبت</span>
-                                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
-                                <button data-act-inact="false"
-                                        class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer">
-                                    <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span>
-                                </button>
-                                <span class="w-16 text-sm font-medium text-slate-400">پنجشنبه</span>
-                                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">۰۸:۰۰ - ۱۲:۰۰</span>
-                                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment"
-                                      id="">۸ نوبت</span>
-                                <button class="text-slate-300 edit-appoiment-day cursor-pointer" id="">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <!-- day row: inactive (closed) -->
-                            <div class="flex items-center gap-4 bg-slate-50/50 rounded-xl px-4 py-3">
-                                <button data-act-inact="false"
-                                        class="active-day-appoiment w-10 h-5 rounded-full bg-slate-300 relative shrink-0 cursor-pointer">
-                                    <span class="absolute top-0.5 right-0.5 w-4 h-4 bg-white rounded-full"></span>
-                                </button>
-                                <span class="w-16 text-sm font-medium text-slate-400">جمعه</span>
-                                <span class="text-xs text-slate-400 flex-1 whitespace-nowrap">تعطیل</span>
-                                <span class="text-xs text-green-300 bg-green-50 px-2.5 py-1 rounded-full number-of-appoiment w-0 h-0"
-                                      id=""></span>
-                                <button class="text-slate-300 edit-appoiment-day cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
+                    <div id="list-management-working" class="lg:col-span-2 bg-white rounded-2xl p-1">
+                        {% include 'doctor_panel/include/list_management_working.html' with exception_work=exception_work %}
                     </div>
-
-                    <!-- Right column: general settings + summary -->
 
                     <div class="flex flex-col gap-4">
                         <form method="post" id="management-hours-work-form" class="bg-white rounded-2xl">
                             {% csrf_token %}
                             <h2 class="font-bold text-slate-800 mb-4">تنظیمات کلی</h2>
                             <div class="space-y-4">
+                                <div>
+                                    <label class="block text-xs text-slate-500 mb-1.5">انتخاب روز هفته</label>
+                                    {{ weekday_form.weekday }}
+
+                                </div>
                                 <div class="w-full">
                                     <label class="block text-xs text-slate-500 mb-1.5">ساعت شروع</label>
-                                    <input
-                                            class="w-full placeholder:text-custom-black text-sm  placeholder:text-sm px-3 py-2.5 border border-light-gray rounded-xl"
-                                            type="text"
-                                            id="start-time"
-                                            name="start_time"
-                                            placeholder="لطفا ساعت شروع را انتخاب کنید">
+                                    {{ weekday_form.start_time }}
                                 </div>
                                 <div class="w-full">
                                     <label class="block text-xs text-slate-500 mb-1.5">ساعت پایان</label>
-                                    <input
-                                            class="w-full placeholder:text-custom-black text-sm  placeholder:text-sm px-3 py-2.5 border border-light-gray rounded-xl"
-                                            type="text"
-                                            id="end-time"
-                                            name="start_time"
-                                            placeholder="لطفا ساعت پایان را انتخاب کنید">
+                                    {{ weekday_form.end_time }}
                                 </div>
                                 <div>
                                     <label class="block text-xs text-slate-500 mb-1.5">مدت هر ویزیت</label>
-                                    <select class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none cursor-pointer">
-                                        <option>۱۵ دقیقه</option>
-                                        <option>۲۰ دقیقه</option>
-                                        <option selected>۳۰ دقیقه</option>
-                                        <option>۴۵ دقیقه</option>
-                                    </select>
+
+                                    {{ weekday_form.duration }}
+
                                 </div>
-                                <div>
-                                    <label class="block text-xs text-slate-500 mb-1.5">استراحت بین نوبت‌ها</label>
-                                    <select class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none cursor-pointer">
-                                        <option>بدون استراحت</option>
-                                        <option selected>۱۰ دقیقه</option>
-                                        <option>۱۵ دقیقه</option>
-                                    </select>
-                                </div>
-                                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl mt-1 cursor-pointer">
+                                <button type="button" id="send-management-hours"
+                                        class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl mt-1 cursor-pointer">
                                     ذخیره تنظیمات
                                 </button>
                             </div>
                         </form>
-                        <div class="bg-white rounded-2xl">
-                            <h2 class="font-bold text-slate-800 mb-4">خلاصه هفته</h2>
-                            <div class="space-y-3">
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-slate-500">روزهای کاری</span>
-                                    <span class="font-medium text-slate-700">۶ روز</span>
-                                </div>
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-slate-500">مجموع نوبت‌های هفته</span>
-                                    <span class="font-medium text-slate-700">۸۴ نوبت</span>
-                                </div>
-                                <div class="flex items-center justify-between text-sm">
-                                    <span class="text-slate-500">میانگین ساعات کاری روزانه</span>
-                                    <span class="font-medium text-slate-700">۷ ساعت</span>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
+                <div class="lg:w-[65%] w-full">
+                    <div class="flex items-center justify-between mb-5 mt-5">
+                        <h2 class="font-bold text-slate-800">برنامه روز های استثنا</h2>
+                    </div>
+                    <div class="flex flex-col justify-center gap-3" id="exception-day-container">
+                        {% include 'doctor_panel/include/exception_day.html' with exception_work=exception_work %}
+                    </div>
+                </div>
+
             </div>
             <div id="doctor-profile" class="doctor-info-panel flex-1 space-y-5 hidden px-3 py-3.5 mt-4 rounded-lg">
-                <div>
-                    <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                        پروفایل
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400" viewBox="0 0 24 24"
-                             fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="7" r="4"/>
-                            <path d="M5.5 21a6.5 6.5 0 0 1 13 0"/>
-                        </svg>
-                    </h1>
-                    <p class="text-sm text-slate-500 mt-1">اطلاعات حساب کاربری و پروفایل شما</p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                    <!-- Profile summary card -->
-                    <div class="bg-white rounded-2xl p-1">
-                        <h2 class="font-bold text-slate-800 mb-5">اطلاعات پروفایل</h2>
-                        <div class="flex flex-col items-center text-center mb-5">
-                            <div class="relative">
-                                <img src="https://i.pravatar.cc/160?img=68" class="w-24 h-24 rounded-full object-cover"
-                                     alt=""/>
-                                <button class="absolute bottom-0 left-0 w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white border-2 border-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                                        <circle cx="12" cy="13" r="4"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="font-bold text-slate-800 mt-3">دکتر علی محمدی</div>
-                            <div class="text-xs text-slate-400 mt-1">متخصص قلب و عروق</div>
-                        </div>
-
-                        <div class="space-y-3 border-t border-slate-100 pt-4 text-sm">
-                            <div class="flex justify-between">
-                                <span class="text-slate-400 text-xs">شماره نظام پزشکی:</span>
-                                <span class="text-slate-700 text-xs">۱۲۳۴۵</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-400 text-xs">مطب:</span>
-                                <span class="text-slate-700 text-xs">تهران، سعادت‌آباد</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-slate-400 text-xs">عضو از:</span>
-                                <span class="text-slate-700 text-xs">فروردین ۱۴۰۰</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Edit form: takes 2 columns -->
-                    <div class="lg:col-span-2 bg-white rounded-2xl p-1">
-                        <h2 class="font-bold text-slate-800 mb-5">تغییر اطلاعات</h2>
-
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs text-slate-500 mb-1.5">نام و نام خانوادگی</label>
-                                <input type="text" value="دکتر علی محمدی"
-                                       class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-500 mb-1.5">تخصص</label>
-                                <input type="text" value="متخصص قلب و عروق"
-                                       class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-500 mb-1.5">شماره تماس</label>
-                                <input type="text" value="0912-345-6789"
-                                       class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>
-                            </div>
-                            <div>
-                                <label class="block text-xs text-slate-500 mb-1.5">ایمیل</label>
-                                <input type="email" value="ali.mohammadi@medicare.com"
-                                       class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>
-                            </div>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl mt-2 cursor-pointer">
-                                ذخیره تغییرات
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                {% include 'doctor_panel/include/profile.html' %}
             </div>
-
-
 
         </div>
         {% comment %}modals{% endcomment %}
@@ -1019,12 +798,13 @@
                 </div>
             </div>
         </div>
-        <div id="exceptionModal"
-             class="fixed inset-0 z-50 flex items-center justify-center invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 md:top-10 ease-in-out">
+        <form method="post" id="exceptionModal"
+              class="fixed inset-0 z-50 flex items-center justify-center invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 md:top-10 ease-in-out">
+            {% csrf_token %}
             <div class="bg-white md:rounded-2xl w-full h-full md:h-fit md:max-w-md p-6">
                 <div class="flex items-center justify-between mb-5">
                     <h2 class="font-bold text-slate-800">افزودن بازه استثنا</h2>
-                    <button id="closeExceptionModal" class="text-slate-400 hover:text-slate-600 cursor-pointer">
+                    <button type="button" id="closeExceptionModal" class="text-slate-400 hover:text-slate-600 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -1036,50 +816,53 @@
                 <div class="space-y-4">
                     <div>
                         <label class="block text-xs text-slate-500 mb-1.5">تاریخ</label>
-                        <input type="text" placeholder="۱۴۰۳/۰۳/۱۵"
-                               class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>
+
+                        <input type="text"
+                               class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"
+                               id="id_date">
+                        {{ exeption_form.date_hidden }}
+                        {{ exeption_form.errors }}
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs text-slate-500 mb-1.5">از ساعت</label>
-                            <input type="text" placeholder="۰۸:۰۰"
-                                   class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>
+                            {{ exeption_form.exception_start_time }}
+                            {{ exeption_form.errors }}
+
                         </div>
                         <div>
                             <label class="block text-xs text-slate-500 mb-1.5">تا ساعت</label>
-                            <input type="text" placeholder="۱۶:۰۰"
-                                   class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>
+                            {{ exeption_form.exception_end_time }}
+                            {{ exeption_form.errors }}
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs text-slate-500 mb-1.5">نوع بازه</label>
-                        <select class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none cursor-pointer">
-                            <option class="cursor-pointer">مرخصی / تعطیل کامل روز</option>
-                            <option class="cursor-pointer">تغییر ساعت کاری</option>
-                            <option class="cursor-pointer">افزودن ساعت کاری اضافه</option>
-                        </select>
+                        <label class="block text-xs text-slate-500 mb-1.5">مدت زمان هر ویزیت</label>
+                        {{ exeption_form.duration }}
+                        {{ exeption_form.errors }}
                     </div>
 
                     <div>
-                        <label class="block text-xs text-slate-500 mb-1.5">توضیحات (اختیاری)</label>
-                        <textarea rows="3" placeholder="مثلا: مرخصی استعلاجی"
-                                  class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 resize-none"></textarea>
+                        <label class="block text-xs text-slate-500 mb-1.5">توضیحات (اجباری)</label>
+                        {{ exeption_form.reason }}
+                        {{ exeption_form.errors }}
                     </div>
 
                     <div class="flex gap-3 pt-2">
-                        <button id="closeexceptionModal2"
+                        <button type="button" id="closeexceptionModal2"
                                 class="flex-1 border border-slate-200 text-slate-600 text-sm font-medium py-2.5 rounded-xl cursor-pointer">
                             انصراف
                         </button>
-                        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl cursor-pointer">
+                        <button type="button" id="save-exception-day-btn"
+                                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl cursor-pointer">
                             ذخیره بازه
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
         <div id="patientDetailsModal"
              class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
             <div class="relative bg-white md:rounded-2xl w-full h-full md:h-fit md:max-w-md p-6">
@@ -1180,8 +963,9 @@
                 </div>
             </div>
         </div>
-        <div id="dayModal"
-             class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
+        <form method="post" id="dayModal"
+              class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
+            {% csrf_token %}
             <div class="relative bg-white md:rounded-2xl w-full h-full md:h-fit md:max-w-sm p-6">
                 <div class="flex items-center justify-between mb-5">
                     <h2 class="font-bold text-slate-800">ویرایش ساعت کاری — <span id="dm-day">شنبه</span></h2>
@@ -1200,36 +984,30 @@
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs text-slate-500 mb-1.5">از ساعت</label>
-                            <input id="dm-start" type="text" value="08:00"
-                                   class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>
+                            {{ period_form.edit_start_time }}
                         </div>
                         <div>
                             <label class="block text-xs text-slate-500 mb-1.5">تا ساعت</label>
-                            <input id="dm-end" type="text" value="16:00"
-                                   class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>
+                            {{ period_form.edit_end_time }}
                         </div>
                     </div>
-
                     <div>
                         <label class="block text-xs text-slate-500 mb-1.5">مدت هر ویزیت</label>
-                        <select class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none cursor-pointer">
-                            <option>۱۵ دقیقه</option>
-                            <option>۲۰ دقیقه</option>
-                            <option selected="">۳۰ دقیقه</option>
-                            <option>۴۵ دقیقه</option>
-                        </select>
+                        {{ period_form.edit_duration }}
                     </div>
 
                     <div class="flex gap-3 pt-2">
-                        <button class="flex-1 border border-slate-200 text-slate-600 text-sm font-medium py-2.5 rounded-xl closeDayModal cursor-pointer">
+                        <button type="button"
+                                class="flex-1 border border-slate-200 text-slate-600 text-sm font-medium py-2.5 rounded-xl closeDayModal cursor-pointer">
                             انصراف
                         </button>
-                        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl cursor-pointer">
+                        <button type="button" id="edit-period-btn"
+                                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl cursor-pointer">
                             ذخیره
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </main>
 {% endblock %}

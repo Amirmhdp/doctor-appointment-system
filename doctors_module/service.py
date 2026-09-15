@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta, date
 from django.db import IntegrityError
 from django.db import transaction
+from django.db.models import OuterRef, Exists
+
 from .models import WeeklySchedule,ScheduleException,AvailableSlot,Appointment
 
 
@@ -69,6 +71,30 @@ def generate_slots_for_days(doctor, days=30):
 
         generate_slots_for_date(doctor=doctor, date=target_date)
 
+def regenerate_slots_for_doctor(doctor, days=30):
+
+    today = date.today()
+
+    booked_slots = Appointment.objects.filter(
+        available_slot=OuterRef('pk')
+    )
+
+    AvailableSlot.objects.filter(
+        doctor=doctor,
+        date__gte=today
+    ).annotate(
+        has_appointment=Exists(booked_slots)
+    ).filter(
+        has_appointment=False
+    ).delete()
+
+    for i in range(days):
+        target_date = today + timedelta(days=i)
+
+        generate_slots_for_date(
+            doctor=doctor,
+            date=target_date
+        )
 def book_appointment(patient, slot_id):
 
     with transaction.atomic():

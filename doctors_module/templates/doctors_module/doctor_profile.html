@@ -94,48 +94,18 @@
                 <div class="flex md:w-[50%] lg:w-full flex-col justify-center gap-2 mt-3 rounded-lg px-3 py-3 shadow-[0_0_20px_#e0edfd]">
                     <span class="flex items-center gap-2 text-[16px] text-custom-black font-bold"><i data-lucide="clock"
                                                                                                      class="w-9 h-9 p-2 bg-light-blue rounded-full text-primary-special"></i>ساعات حضور</span>
-                    <div class="flex items-center justify-between">
+                    {% for weekly_schedule in weekly_schedules %}
+                        <div class="flex items-center justify-between">
                         <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img
                                 src="/static/images/circle-svgrepo-com.svg"
-                                class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle"/>شنبه</span>
-                        <span class="text-sm text-slate-gray font-bold">8:00 - 14:00</span>
+                                class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle"/>{{ weekly_schedule.get_weekday_display }}</span>
+                        {% for period in weekly_schedule.periods.all %}
+                            <span class="text-sm text-slate-gray font-bold">{{ period.start_time }} - {{ period.end_time }}</span>
+                        {% endfor %}
+
                     </div>
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img
-                                src="/static/images/circle-svgrepo-com.svg"
-                                class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle"/>یکشنبه</span>
-                        <span class="text-sm text-slate-gray font-bold">16:00 - 20:00</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img
-                                src="/static/images/circle-svgrepo-com.svg"
-                                class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle"/>دوشنبه</span>
-                        <span class="text-sm text-slate-gray font-bold">12:00 - 16:00</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img
-                                src="/static/images/circle-svgrepo-com.svg"
-                                class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle"/>سه شنبه</span>
-                        <span class="text-sm text-slate-gray font-bold">8:00 - 14:00</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img
-                                src="/static/images/circle-svgrepo-com.svg"
-                                class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle"/>چهارشنبه</span>
-                        <span class="text-sm text-slate-gray font-bold">16:00 - 20:00</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img
-                                src="/static/images/circle-svgrepo-com.svg"
-                                class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle"/>پنج شنبه</span>
-                        <span class="text-sm text-slate-gray font-bold">12:00 - 16:00</span>
-                    </div>
-                    <div class="flex items-center justify-between">
-                        <span class="flex items-center gap-0.5 text-sm text-slate-gray font-bold"><img
-                                src="/static/images/circle-svgrepo-com.svg"
-                                class="w-6 h-6 p-2 rounded-full text-primary-special" alt="circle"/>جمعه</span>
-                        <span class="text-sm text-slate-gray font-bold">تعطیل</span>
-                    </div>
+                    {% endfor %}
+
                 </div>
             </div>
             <div class="flex flex-col justify-center gap-3 mt-3 w-full">
@@ -293,7 +263,7 @@
             </div>
         </div>
         <div id="booking-list"
-             class="invisible opacity-0 transition-all duration-200 ease-in pointer-events-none fixed z-40 top-0 bottom-0 left-0 right-0 md:top-14 md:left-1/2 md:-translate-x-1/2 md:bottom-auto md:rounded-lg md:px-5 bg-white flex flex-col items-center gap-6.25 px-3 py-2 md:w-fit lg:py-5 lg:px-6.25">
+             class="invisible opacity-0 transition-all duration-200 ease-in pointer-events-none fixed z-40 top-0 bottom-0 left-0 right-0 md:top-14 md:left-1/2 md:-translate-x-1/2 md:bottom-auto md:rounded-lg md:px-5 bg-white flex flex-col items-center gap-6.25 px-3 py-2  lg:py-5 lg:px-6.25 md:w-[50%]">
             <div class="w-full">
         <span class="flex items-center gap-2 border-b pb-3 border-light-gray text-sm font-bold text-slate-gray">
           <button type="button" class="cursor-pointer" id="close-booking-list"><i data-lucide="chevron-right"
@@ -311,142 +281,62 @@
             </div>
 
             <!-- Slider main container -->
+            {% regroup available_slots by date as slots_by_date %}
+
             <div class="swiper special-list w-full h-fit mt-5">
-                <!-- Additional required wrapper -->
+
                 <div class="swiper-wrapper flex! items-center!">
-                    <!-- Slides -->
 
-                    <div data-booking-id="booking-appoiment-1"
-                         class="cursor-pointer group bock-day-btn flex! flex-col! w-fit! justify-center items-center border swiper-slide border-primary-special border-light-gray rounded-lg gap-2 px-3 py-2 hover:border-primary-special duration-200 ease-in-out">
-                        <span class="text-xs text-primary-special text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">شنبه</span>
-                        <span class="text-sm text-primary-special text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">7 شهریور</span>
-                        <span class="text-xs text-primary-special text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">35 نوبت</span>
-                    </div>
-                    <div data-booking-id="booking-appoiment-2"
-                         class="cursor-pointer group bock-day-btn flex! flex-col! w-fit! justify-center items-center border swiper-slide border-light-gray rounded-lg gap-2 px-3 py-2 hover:border-primary-special duration-200 ease-in-out">
-                        <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">سه شنبه</span>
-                        <span class="text-sm text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">4 مهر</span>
-                        <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">35 نوبت</span>
-                    </div>
-                    <div data-booking-id="booking-appoiment-3"
-                         class="cursor-pointer group bock-day-btn flex! flex-col! w-fit! justify-center items-center border swiper-slide border-light-gray rounded-lg gap-2 px-3 py-2 hover:border-primary-special duration-200 ease-in-out">
-                        <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">دوشنبه</span>
-                        <span class="text-sm text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">9 آبان</span>
-                        <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">35 نوبت</span>
-                    </div>
-                    <div data-booking-id="booking-appoiment-4"
-                         class="cursor-pointer group bock-day-btn flex! flex-col! w-fit! justify-center items-center border swiper-slide border-light-gray rounded-lg gap-2 px-3 py-2 hover:border-primary-special duration-200 ease-in-out">
-                        <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">پنج شنبه</span>
-                        <span class="text-sm text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">7 آذر</span>
-                        <span class="text-xs text-custom-black content-boock-day-btn font-bold group-hover:text-primary-special ease-in-out duration-200">35 نوبت</span>
-                    </div>
+                    {% for group in slots_by_date %}
+
+                        <div data-booking-id="booking-appoiment-{{ forloop.counter }}" class="swiper-slide cursor-pointer group bock-day-btn flex! flex-col! w-[90px]! h-[90px] justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
+
+                            <span class="text-xs text-custom-black font-bold">
+                                {{ group.grouper|weekday_fa }}
+                            </span>
+
+                            <span class="text-sm text-custom-black font-bold">
+                                {{ group.grouper|to_jalali }}
+                            </span>
+
+                            <span class="text-xs text-custom-black font-bold">
+                                {{ group.list|length }} نوبت
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
                 </div>
-                <!-- If we need navigation buttons -->
-                <div class="swiper-button-prev text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
-                <div class="swiper-button-next text-sm! text-slate-gray! bg-white! rounded-full! p-2! w-8.25! h-8.25! shadow-[0_0px_30px_#e0edfd]"></div>
             </div>
-
-            {% comment %} <div class="grid grid-cols-4 w-full gap-2">
-        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
-          <span class="text-xs text-custom-black font-bold">شنبه</span>
-          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
-          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
-        </div>
-        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
-          <span class="text-xs text-custom-black font-bold">شنبه</span>
-          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
-          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
-        </div>
-        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
-          <span class="text-xs text-custom-black font-bold">شنبه</span>
-          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
-          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
-        </div>
-        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
-          <span class="text-xs text-custom-black font-bold">شنبه</span>
-          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
-          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
-        </div>
-        <div class="flex flex-col justify-center items-center border border-light-gray rounded-lg gap-2 px-3 py-2">
-          <span class="text-xs text-custom-black font-bold">شنبه</span>
-          <span class="text-sm text-custom-black font-bold">7 شهریور</span>
-          <span class="text-xs text-custom-black font-bold">35 نوبت</span>
-        </div>
-      </div> {% endcomment %}
-
             <div class="flex flex-col justify-center gap-3 w-full">
-                <div class="grid grid-cols-4 w-full gap-2 booking-appoiment" id="booking-appoiment-1">
-                {% for slot in available_slots %}
+
+                {% for group in slots_by_date %}
+
                     <div
-                        class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg"
-                        data-slot-id="{{ slot.id }}">
-                        <span class="text-sm text-custom-black font-bold">
-                            {{ slot.start_time|time:"H:i" }}
-                        </span>
+                        class="{% if not forloop.first %}hidden {% endif %}grid grid-cols-4 w-full gap-2 booking-appoiment"
+                        id="booking-appoiment-{{ forloop.counter }}"
+                    >
+
+                        {% for slot in group.list %}
+
+                            <div
+                                class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg"
+                                data-slot-id="{{ slot.id }}"
+                            >
+                                <span class="text-sm text-custom-black font-bold">
+                                    {{ slot.start_time|time:"H:i" }}
+                                </span>
+                            </div>
+
+                        {% endfor %}
+
                     </div>
+
                 {% endfor %}
-                </div>
-                <div class="hidden grid-cols-4 w-full gap-2 booking-appoiment" id="booking-appoiment-2">
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">17:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">18:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">19:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">20:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">21:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">22:20</span>
-                    </div>
-                </div>
-                <div class="hidden grid-cols-4 w-full gap-2 booking-appoiment" id="booking-appoiment-3">
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                </div>
-                <div class="hidden grid-cols-4 w-full gap-2 booking-appoiment" id="booking-appoiment-4">
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                    <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg">
-                        <span class="text-sm text-custom-black font-bold">16:20</span>
-                    </div>
-                </div>
+
             </div>
+
         </div>
     </main>
 {% endblock %}

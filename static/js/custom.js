@@ -85,92 +85,92 @@ if (togglePasswords) {
 
 
 // dropdown search
-const dropdowns = document.querySelectorAll('.dropdown');
+document.addEventListener('click', (event) => {
 
-if (dropdowns) {
-    dropdowns.forEach(dropdown => {
+    const dropdown = event.target.closest('.dropdown');
 
-        const button = dropdown.querySelector('.dropdown-button');
+    // اگر کلیک مربوط به هیچ Dropdownی نیست
+    if (!dropdown) {
+        document.querySelectorAll('.dropdown-list').forEach(list => {
+            list.classList.remove('opacity-100', 'visible');
+            list.classList.add('opacity-0', 'invisible');
+        });
+
+        return;
+    }
+
+
+    // دکمه Dropdown
+    const button = event.target.closest('.dropdown-button');
+
+    if (button) {
+
+        event.stopPropagation();
+
         const list = dropdown.querySelector('.dropdown-list');
 
-        if (button && list) {
-            button.addEventListener('click', (event) => {
+        // بستن Dropdownهای دیگر
+        document.querySelectorAll('.dropdown').forEach(otherDropdown => {
 
-                event.stopPropagation();
+            if (otherDropdown !== dropdown) {
 
-                // بستن Dropdownهای دیگر
-                dropdowns.forEach(otherDropdown => {
+                const otherList =
+                    otherDropdown.querySelector('.dropdown-list');
 
-                    if (otherDropdown !== dropdown) {
-
-                        const otherList =
-                            otherDropdown.querySelector('.dropdown-list');
-
-                        otherList.classList.remove(
-                            'opacity-100',
-                            'visible'
-                        );
-
-                        otherList.classList.add(
-                            'opacity-0',
-                            'invisible'
-                        );
-                    }
-
-                });
-
-                // باز و بسته کردن Dropdown فعلی
-                list.classList.toggle('opacity-0');
-                list.classList.toggle('invisible');
-
-                list.classList.toggle('opacity-100');
-                list.classList.toggle('visible');
-            });
-        }
-        const selectedText = dropdown.querySelector('.selected-text');
-        const items = dropdown.querySelectorAll('.dropdown-item');
-        if (selectedText && items) {
-            items.forEach(item => {
-
-                item.addEventListener('click', () => {
-
-
-                    selectedText.textContent = item.textContent;
-
-                    list.classList.remove(
+                if (otherList) {
+                    otherList.classList.remove(
                         'opacity-100',
                         'visible'
                     );
 
-                    list.classList.add(
+                    otherList.classList.add(
                         'opacity-0',
                         'invisible'
                     );
-                });
+                }
+            }
+        });
 
-            });
+        // باز / بسته کردن Dropdown فعلی
+        list.classList.toggle('opacity-0');
+        list.classList.toggle('invisible');
+
+        list.classList.toggle('opacity-100');
+        list.classList.toggle('visible');
+
+        return;
+    }
+
+
+    // آیتم Dropdown
+    const item = event.target.closest('.dropdown-item');
+
+    if (item) {
+
+        const selectedText =
+            dropdown.querySelector('.selected-text');
+
+        const list =
+            dropdown.querySelector('.dropdown-list');
+
+        if (selectedText) {
+            selectedText.textContent = item.textContent.trim();
         }
 
+        if (list) {
+            list.classList.remove(
+                'opacity-100',
+                'visible'
+            );
 
-    });
-}
-document.addEventListener('click', () => {
+            list.classList.add(
+                'opacity-0',
+                'invisible'
+            );
+        }
 
-    dropdowns.forEach(dropdown => {
-
-        const list = dropdown.querySelector('.dropdown-list');
-
-        list.classList.remove(
-            'opacity-100',
-            'visible'
-        );
-
-        list.classList.add(
-            'opacity-0',
-            'invisible'
-        );
-
-    });
+        return;
+    }
 
 });
 
@@ -178,12 +178,28 @@ document.addEventListener('click', () => {
 // apponent date 
 const apponentDate = document.getElementById('appointment-date');
 const apponentBtnDate = document.getElementById('btn-date-calendar');
+const idDate = document.getElementById('id_date');
 
 if (apponentDate) {
     $('#appointment-date').persianDatepicker({
         format: 'YYYY/MM/DD',
         minDate: new persianDate().valueOf(),
     });
+}
+if(idDate){
+    $('#id_date').persianDatepicker({
+    format: 'YYYY/MM/DD',
+    minDate: new persianDate().valueOf(),
+    onSelect: function(unix) {
+        const date = new persianDate(unix);
+
+        const gregorianDate = date
+            .toCalendar('gregorian')
+            .format('YYYY-MM-DD');
+
+        document.getElementById('id_date_hidden').value = gregorianDate;
+    }
+});
 }
 // console.log(apponentDate.textContent);
 
@@ -673,252 +689,298 @@ const closeDayModal = document.querySelectorAll('.closeDayModal');
 const dayModal = document.getElementById('dayModal');
 const editAppoimentDays = document.querySelectorAll('.edit-appoiment-day');
 
-if (todayAppoimentBtn, openNextAppoiment, todayModal, upcomingModal, closeUpcomingModal, closeTodayModal, closeexceptionModal2) {
+if (
+    todayModal &&
+    upcomingModal &&
+    exceptionModal &&
+    patientDetailsModal &&
+    editStatusModal &&
+    dayModal
+) {
 
-    todayAppoimentBtn.addEventListener('click', () => {
-        todayModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
-        todayModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
+    function openModal(modal) {
+        modal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
+        modal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
         overlay.classList.remove('invisible', 'opacity-0');
         overlay.classList.add('visible', 'opacity-100');
-        body.style.overflow = 'hidden'
+        body.style.overflow = 'hidden';
+    }
 
-    })
-    closeTodayModal.addEventListener('click', () => {
-        todayModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        todayModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+    function closeModal(modal) {
+        if (!modal) return;
+
+        modal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+
+        modal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+
         overlay.classList.remove('visible', 'opacity-100');
+
         overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
 
-    })
-    overlay.addEventListener('click', () => {
-        todayModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        todayModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-
-    })
-
-    openNextAppoiment.addEventListener('click', () => {
-        upcomingModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
-        upcomingModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
-        overlay.classList.remove('invisible', 'opacity-0');
-        overlay.classList.add('visible', 'opacity-100');
-        body.style.overflow = 'hidden'
-
-    });
-    closeUpcomingModal.addEventListener('click', () => {
-        upcomingModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        upcomingModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-
-    });
-    overlay.addEventListener('click', () => {
-        upcomingModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        upcomingModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-
-    });
-    openExceptionModal.addEventListener('click', () => {
-        exceptionModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
-        exceptionModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
-        overlay.classList.remove('invisible', 'opacity-0');
-        overlay.classList.add('visible', 'opacity-100');
-        body.style.overflow = 'hidden'
-
-    });
-    closeExceptionModal.addEventListener('click', () => {
-        exceptionModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        exceptionModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-
-    });
-    overlay.addEventListener('click', () => {
-        exceptionModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        exceptionModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-    });
-    closeexceptionModal2.addEventListener('click', () => {
-        exceptionModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        exceptionModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-
-    });
+        body.style.overflow = 'auto';
+    }
 
 
-    detailPatients.forEach(detailPatient => {
+    document.addEventListener('click', (event) => {
 
-        detailPatient.addEventListener('click', () => {
-            patientDetailsModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
-            patientDetailsModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
-            overlay.classList.remove('invisible', 'opacity-0');
-            overlay.classList.add('visible', 'opacity-100');
-            body.style.overflow = 'hidden'
+        if (event.target.closest('#open-today-appoiment')) {
+            openModal(todayModal);
+        }
 
-        });
+        if (event.target.closest('#open-next-appoiment')) {
+            openModal(upcomingModal);
+        }
+
+        if (event.target.closest('#openExceptionModal')) {
+            openModal(exceptionModal);
+        }
+
+        if (event.target.closest('.detail-patient')) {
+            openModal(patientDetailsModal);
+        }
+
+        if (event.target.closest('.open-edit-state')) {
+            openModal(editStatusModal);
+        }
+
+        if (event.target.closest('.edit-appoiment-day')) {
+            openModal(dayModal);
+        }
+
+        if (event.target.closest('#closeTodayModal')) {
+            closeModal(todayModal);
+        }
+
+        if (event.target.closest('#closeupcomingModal')) {
+            closeModal(upcomingModal);
+        }
+
+        if (
+            event.target.closest('#closeExceptionModal') ||
+            event.target.closest('#closeexceptionModal2')
+        ) {
+            closeModal(exceptionModal);
+        }
+
+        if (
+            event.target.closest('#closePatientDetailsModal') ||
+            event.target.closest('#closePatientDetailsModal2')
+        ) {
+            closeModal(patientDetailsModal);
+        }
+
+        if (
+            event.target.closest('#closeEditStatusModal') ||
+            event.target.closest('#closeEditStatusModal2')
+        ) {
+            closeModal(editStatusModal);
+        }
+
+
+        // بستن مودال ویرایش روز
+        if (event.target.closest('.closeDayModal')) {
+            closeModal(dayModal);
+        }
+
+
+        // بستن مودال با کلیک روی Overlay
+        if (event.target === overlay) {
+            closeModal(todayModal);
+            closeModal(upcomingModal);
+            closeModal(exceptionModal);
+            closeModal(patientDetailsModal);
+            closeModal(editStatusModal);
+            closeModal(dayModal);
+        }
 
     });
-    closePatientDetailsModal.addEventListener('click', () => {
-        patientDetailsModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        patientDetailsModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-    });
-    closePatientDetailsModal2.addEventListener('click', () => {
-        patientDetailsModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        patientDetailsModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-    });
-    overlay.addEventListener('click', () => {
-        patientDetailsModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        patientDetailsModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-
-    });
-
-    openEditStates.forEach(openEditState => {
-        openEditState.addEventListener('click', () => {
-            editStatusModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
-            editStatusModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
-            overlay.classList.remove('invisible', 'opacity-0');
-            overlay.classList.add('visible', 'opacity-100');
-            body.style.overflow = 'hidden'
-
-        });
-        closeEditStatusModal.addEventListener('click', () => {
-            editStatusModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-            editStatusModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-            overlay.classList.remove('visible', 'opacity-100');
-            overlay.classList.add('invisible', 'opacity-0');
-            body.style.overflow = 'auto'
-        });
-        closeEditStatusModal2.addEventListener('click', () => {
-            editStatusModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-            editStatusModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-            overlay.classList.remove('visible', 'opacity-100');
-            overlay.classList.add('invisible', 'opacity-0');
-            body.style.overflow = 'auto';
-        });
-        overlay.addEventListener('click', () => {
-            editStatusModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-            editStatusModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-            overlay.classList.remove('visible', 'opacity-100');
-            overlay.classList.add('invisible', 'opacity-0');
-            body.style.overflow = 'auto';
-
-        });
-    })
-
-    editAppoimentDays.forEach(editAppoimentDay => {
-
-        editAppoimentDay.addEventListener('click', () => {
-            dayModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
-            dayModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
-            overlay.classList.remove('invisible', 'opacity-0');
-            overlay.classList.add('visible', 'opacity-100');
-            body.style.overflow = 'hidden'
-
-        });
-
-    });
-    closeDayModal.forEach(closeDay => {
-        closeDay.addEventListener('click', () => {
-            dayModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-            dayModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-            overlay.classList.remove('visible', 'opacity-100');
-            overlay.classList.add('invisible', 'opacity-0');
-            body.style.overflow = 'auto'
-        });
-    })
-    overlay.addEventListener('click', () => {
-        dayModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        dayModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
-
-    });
-
 
 }
-;
 
 // active or inactive day appoiment
 
-const actInactAppoimentDays = document.querySelectorAll('.active-day-appoiment');
+document.addEventListener('click', async (event) => {
 
-if (actInactAppoimentDays) {
-    actInactAppoimentDays.forEach(actInactAppoimentDay => {
-        actInactAppoimentDay.addEventListener('click', () => {
-            const getAtt = actInactAppoimentDay.dataset.actInact;
-            if (getAtt === 'false') {
-                actInactAppoimentDay.dataset.actInact = 'true';
-                actInactAppoimentDay.classList.remove('bg-slate-300');
-                actInactAppoimentDay.classList.add('bg-blue-600');
-                const innerSpan = actInactAppoimentDay.querySelector('span');
-                innerSpan.classList.remove('right-0.5');
-                innerSpan.classList.add('left-0.5');
-                const parentBtn = actInactAppoimentDay.parentElement;
-                parentBtn.classList.remove('bg-slate-50/50');
-                parentBtn.classList.add('bg-slate-50');
-                const getSpans = parentBtn.querySelectorAll('span');
-                getSpans.forEach(getSpan => {
-                    getSpan.classList.remove('text-slate-400');
-                    getSpan.classList.add('text-slate-600');
-                })
-                const numberOfAppoiment = parentBtn.querySelector('.number-of-appoiment');
+    const actInactAppoimentDay =
+        event.target.closest('.active-day-appoiment');
 
-                numberOfAppoiment.classList.remove('text-green-300', 'bg-green-50', 'text-slate-600');
-                numberOfAppoiment.classList.add('text-green-700', 'bg-green-50');
+    if (!actInactAppoimentDay) return;
 
-                const editAppoimentDay = parentBtn.querySelector('.edit-appoiment-day');
-                editAppoimentDay.classList.remove('text-slate-300');
-                editAppoimentDay.classList.add('text-slate-400');
+    const editAppointmentDayContainer =
+        actInactAppoimentDay.closest(
+            '.edit-appoiment-day-container'
+        );
+
+    const dayId =
+        editAppointmentDayContainer.dataset.dayId;
+
+    try {
+
+        const response = await fetch(
+            '/active-inactive-appointment-day/' + dayId,
+            {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
             }
-            if (getAtt === 'true') {
-                actInactAppoimentDay.dataset.actInact = 'false';
-                actInactAppoimentDay.classList.remove('bg-blue-600');
-                actInactAppoimentDay.classList.add('bg-slate-300');
-                const innerSpan = actInactAppoimentDay.querySelector('span');
-                innerSpan.classList.remove('left-0.5');
-                innerSpan.classList.add('right-0.5');
-                const parentBtn = actInactAppoimentDay.parentElement;
-                parentBtn.classList.remove('bg-slate-50');
-                parentBtn.classList.add('bg-slate-50/50');
-                const getSpans = parentBtn.querySelectorAll('span');
-                getSpans.forEach(getSpan => {
-                    getSpan.classList.remove('text-slate-600');
-                    getSpan.classList.add('text-slate-400');
-                })
-                const numberOfAppoiment = parentBtn.querySelector('.number-of-appoiment');
+        );
 
-                numberOfAppoiment.classList.remove('text-green-700', 'bg-green-50', 'text-slate-600', 'text-slate-400');
-                numberOfAppoiment.classList.add('text-green-300', 'bg-green-50');
+        const result = await response.json();
 
-                const editAppoimentDay = parentBtn.querySelector('.edit-appoiment-day');
-                editAppoimentDay.classList.remove('text-slate-400');
-                editAppoimentDay.classList.add('text-slate-300');
-            }
-            ;
-        });
-    });
-}
+        if (!result.success) {
+            return;
+        }
+
+        const isActive = result.is_active;
+
+        actInactAppoimentDay.dataset.actInact =
+            String(isActive);
+
+        const innerSpan =
+            actInactAppoimentDay.querySelector('span');
+
+        const parentBtn =
+            actInactAppoimentDay.parentElement;
+
+        const getSpans =
+            parentBtn.querySelectorAll('span');
+
+        const timeWork =
+            editAppointmentDayContainer.querySelector(
+                '.time-work'
+            );
+
+        const timeWorkSpans =
+            timeWork.querySelectorAll('span');
+
+        const editAppoimentDays =
+            editAppointmentDayContainer.querySelectorAll(
+                '.edit-appoiment-day'
+            );
+
+        if (isActive) {
+
+            actInactAppoimentDay.classList.remove(
+                'bg-slate-300'
+            );
+
+            actInactAppoimentDay.classList.add(
+                'bg-blue-600'
+            );
+
+            innerSpan.classList.remove(
+                'right-0.5'
+            );
+
+            innerSpan.classList.add(
+                'left-0.5'
+            );
+
+            parentBtn.classList.remove(
+                'bg-slate-50/50'
+            );
+
+            parentBtn.classList.add(
+                'bg-slate-50'
+            );
+
+            getSpans.forEach(span => {
+                span.classList.remove(
+                    'text-slate-400'
+                );
+
+                span.classList.add(
+                    'text-slate-600'
+                );
+            });
+
+            editAppoimentDays.forEach(button => {
+                button.classList.remove(
+                    'text-slate-300'
+                );
+
+                button.classList.add(
+                    'text-slate-400'
+                );
+            });
+
+            timeWorkSpans.forEach(span => {
+                span.classList.remove(
+                    'text-slate-400'
+                );
+
+                span.classList.add(
+                    'text-slate-600'
+                );
+            });
+
+        } else {
+
+            actInactAppoimentDay.classList.remove(
+                'bg-blue-600'
+            );
+
+            actInactAppoimentDay.classList.add(
+                'bg-slate-300'
+            );
+
+            innerSpan.classList.remove(
+                'left-0.5'
+            );
+
+            innerSpan.classList.add(
+                'right-0.5'
+            );
+
+            parentBtn.classList.remove(
+                'bg-slate-50'
+            );
+
+            parentBtn.classList.add(
+                'bg-slate-50/50'
+            );
+
+            getSpans.forEach(span => {
+                span.classList.remove(
+                    'text-slate-600'
+                );
+
+                span.classList.add(
+                    'text-slate-400'
+                );
+            });
+
+            editAppoimentDays.forEach(button => {
+                button.classList.remove(
+                    'text-slate-400'
+                );
+
+                button.classList.add(
+                    'text-slate-300'
+                );
+            });
+
+            timeWorkSpans.forEach(span => {
+                span.classList.remove(
+                    'text-slate-600'
+                );
+
+                span.classList.add(
+                    'text-slate-400'
+                );
+            });
+        }
+
+    } catch (error) {
+
+        console.error(
+            'Error while changing appointment day:',
+            error
+        );
+    }
+});
 
 
 // go to oppoiment list
@@ -1390,23 +1452,31 @@ const genderInput = document.getElementById('gender-input');
 const timeItems = document.querySelectorAll('input[name="time"]');
 const pageItems = document.querySelectorAll('.page-item');
 const pageInput = document.getElementById('page-input');
-
-if (doctorInput && specialtyInput && provinceInput && specialtyItems && doctorItems && provinceItems && doctorsList && filterBtn) {
+const filterDoctor = document.getElementById('filter-doctor');
+if (specialtyItems) {
     specialtyItems.forEach(specialtyItem => {
         specialtyItem.addEventListener('click', () => {
             specialtyInput.value = specialtyItem.textContent.trim();
         })
     })
-    doctorItems.forEach(doctorItem => {
-        doctorItem.addEventListener('click', () => {
-            doctorInput.value = doctorItem.textContent.trim();
-        })
+    document.addEventListener('click', (event) => {
+        const doctorItem = event.target.closest('.doctor-item');
+        if (!doctorItem) {
+            return;
+        }
+        doctorInput.value = doctorItem.textContent.trim();
     })
+
     provinceItems.forEach(provinceItem => {
         provinceItem.addEventListener('click', () => {
             provinceInput.value = provinceItem.textContent.trim();
         })
     })
+
+}
+if (doctorInput && specialtyInput && provinceInput && specialtyItems && doctorItems && provinceItems && doctorsList && filterBtn) {
+
+
     orderByItems.forEach(orderByItem => {
         orderByItem.addEventListener('click', () => {
             orderByInput.value = orderByItem.dataset.orderBy;
@@ -1468,7 +1538,7 @@ if (doctorInput && specialtyInput && provinceInput && specialtyItems && doctorIt
         if (genderInput.value) {
             params.set('gender', genderInput.value);
         }
-        if (pageInput.value) {
+        if (pageInput) {
             params.set('page', pageInput.value);
         }
         const selectedTimes = [];
@@ -1489,12 +1559,12 @@ if (doctorInput && specialtyInput && provinceInput && specialtyItems && doctorIt
                 "X-Requested-With": "XMLHttpRequest"
             }
         });
-        const html = await response.text();
+        const html = await response.json();
         history.pushState({}, "", url)
 
-        doctorsList.innerHTML = html;
+        doctorsList.innerHTML = html.doctors;
+        filterDoctor.innerHTML = html.filter_doctors
         lucide.createIcons();
-
 
 
     }
@@ -1506,7 +1576,9 @@ if (doctorInput && specialtyInput && provinceInput && specialtyItems && doctorIt
         provinceInput.value = '';
         orderByInput.value = '';
         genderInput.value = '';
-        pageInput.value = '';
+        if (pageInput) {
+            pageInput.value = '';
+        }
         timeItems.forEach(timeItem => {
             timeItem.checked = false;
         });
@@ -1729,8 +1801,12 @@ if (loadMoreBtn) {
 
     });
 }
-const startTime = document.getElementById('start-time');
-const endTime = document.getElementById('end-time');
+const startTime = document.getElementById('id_start_time');
+const endTime = document.getElementById('id_end_time');
+const idEditEndTime = document.getElementById('id_edit_end_time');
+const idEditStartTime = document.getElementById('id_edit_start_time');
+const exception_end_time = document.getElementById('id_exception_end_time');
+const exception_start_time = document.getElementById('id_exception_start_time');
 if (startTime && endTime) {
     flatpickr(startTime, {
         enableTime: true,
@@ -1740,6 +1816,34 @@ if (startTime && endTime) {
         allowInput: false,
     });
     flatpickr(endTime, {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        allowInput: false,
+    });
+    flatpickr(idEditEndTime, {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        allowInput: false,
+    });
+    flatpickr(idEditStartTime, {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        allowInput: false,
+    });
+    flatpickr(exception_start_time, {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        allowInput: false,
+    });
+    flatpickr(exception_end_time, {
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
@@ -1817,7 +1921,6 @@ if (paymentBtn) {
 }
 
 
-
 if (paymentBtn) {
     paymentBtn.addEventListener('click', function () {
 
@@ -1858,41 +1961,259 @@ if (paymentBtn) {
     });
 }
 
-// تأیید لغو
-// const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
-// let selectedAppointment = null;
-// confirmCancelBtn.addEventListener('click', function () {
-//
-//     if (!selectedAppointment) return;
-//
-//     confirmCancelBtn.disabled = true;
-//     confirmCancelBtn.textContent = 'در حال لغو...';
-//
-//     fetch(selectedAppointment.url, {
-//         method: 'POST',
-//         headers: {
-//             'X-CSRFToken': getCookie('csrftoken'),
-//             'X-Requested-With': 'XMLHttpRequest',
-//         },
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//
-//             if (data.success) {
-//                 window.location.reload();
-//                 return;
-//             }
-//
-//             alert(data.message);
-//
-//             confirmCancelBtn.disabled = false;
-//             confirmCancelBtn.textContent = 'بله، لغو کن';
-//         })
-//         .catch(() => {
-//
-//             alert('خطایی در لغو نوبت رخ داد.');
-//
-//             confirmCancelBtn.disabled = false;
-//             confirmCancelBtn.textContent = 'بله، لغو کن';
-//         });
-// });
+// management working hour ajax
+
+async function loadedScheduleWorkAjax() {
+    const managementHoursWorkForm = document.getElementById('management-hours-work-form');
+    const listManagementWorking = document.getElementById('list-management-working');
+    const formData = new FormData(managementHoursWorkForm);
+    const response = await fetch('/doctor-panel', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: formData,
+    });
+    const html = await response.json()
+    listManagementWorking.innerHTML = html.list_management_working
+
+}
+
+// const sendManagementHours = document.getElementById('');
+
+document.addEventListener('click', (event)=>{
+    const sendManagementHours = event.target.closest('#send-management-hours');
+    if(!sendManagementHours){
+        return
+    }
+    loadedScheduleWorkAjax();
+
+})
+
+// edit working hours
+const editPeriodBtn = document.getElementById('edit-period-btn');
+
+let periodId = null;
+let currentDayId = null;
+
+document.addEventListener('click', (event) => {
+
+    const editAppoimentDay = event.target.closest('.edit-appoiment-day');
+
+    if (!editAppoimentDay) {
+        return;
+    }
+
+    periodId = editAppoimentDay.dataset.period;
+    currentDayId = editAppoimentDay.dataset.dayId;
+
+    dayModal.classList.remove(
+        'invisible',
+        'opacity-0',
+        'pointer-events-none'
+    );
+
+    dayModal.classList.add(
+        'visible',
+        'opacity-100',
+        'pointer-events-auto'
+    );
+});
+
+function closeDayModalEdit() {
+
+    dayModal.classList.remove(
+        'visible',
+        'opacity-100',
+        'pointer-events-auto'
+    );
+
+    dayModal.classList.add(
+        'invisible',
+        'opacity-0',
+        'pointer-events-none'
+    );
+
+    body.style.overflow = 'auto';
+
+    if (typeof overlay !== 'undefined' && overlay) {
+
+        overlay.classList.remove(
+            'visible',
+            'opacity-100',
+            'pointer-events-auto'
+        );
+
+        overlay.classList.add(
+            'invisible',
+            'opacity-0',
+            'pointer-events-none'
+        );
+    }
+}
+
+if (editPeriodBtn) {
+
+    editPeriodBtn.addEventListener('click', async () => {
+
+        if (!periodId) {
+            return;
+        }
+
+        const formEl = dayModal.tagName === 'FORM'
+            ? dayModal
+            : dayModal.querySelector('form');
+
+        if (!formEl) {
+            return;
+        }
+
+        const formData = new FormData(formEl);
+
+        try {
+
+            const response = await fetch(
+                `/edite-period-appointment/${periodId}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    body: formData,
+                }
+            );
+
+            const result = await response.json();
+
+            if (result.success) {
+
+                const container = document.getElementById(
+                    `period-container-${result.day_id}`
+                );
+
+                if (container) {
+                    container.innerHTML = result.list_management_working;
+                }
+
+                closeDayModalEdit();
+
+                periodId = null;
+                currentDayId = null;
+
+            } else {
+
+                alert(result.message || 'خطایی رخ داد');
+
+            }
+
+        } catch (error) {
+
+            console.error('Error:', error);
+            alert('ارتباط با سرور برقرار نشد');
+
+        }
+    });
+}
+
+
+// add exception day
+
+async function addExceptionDay() {
+    const formData = new FormData(exceptionModal);
+
+    const response = await fetch('/exception-day', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: formData,
+    });
+
+    const result = await response.json();
+    lucide.createIcons();
+
+
+
+    const exceptionDayContainer = document.getElementById('exception-day-container');
+
+    if (result.success) {
+        exceptionDayContainer.innerHTML = result.exception_day;
+    }
+}
+
+
+document.addEventListener('click', (event) => {
+    const saveExceptionDayBtn = event.target.closest('#save-exception-day-btn');
+    if (!saveExceptionDayBtn) {
+        return;
+    }
+    addExceptionDay();
+    exceptionModal.classList.remove('visible','opacity-100','pointer-events-auto');
+    exceptionModal.classList.add('invisible','opacity-0','pointer-events-none');
+    overlay.classList.remove('visible','opacity-100');
+    overlay.classList.add('invisible','opacity-0');
+    body.style.overflow = 'auto';
+});
+
+// delete exception day
+async function deleteException(deleteExceptionIcon) {
+
+    const exceptionId = deleteExceptionIcon.dataset.exceptionId;
+
+    const response = await fetch('/delete-exception-day/' + exceptionId, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    });
+
+    const result = await response.json();
+
+    const exceptionDayContainer =
+        document.getElementById('exception-day-container');
+
+    exceptionDayContainer.innerHTML = result.exception_day;
+    lucide.createIcons();
+
+}
+
+document.addEventListener('click', (event) => {
+    const deleteExceptionIcon = event.target.closest('.delete-exception-icon');
+
+    if (!deleteExceptionIcon) {
+        return;
+    }
+    deleteException(deleteExceptionIcon);
+});
+
+//edit profile with ajax request
+async function editProfileAjax(){
+    const profileForm = document.getElementById('profile-form');
+    const formData = new FormData(profileForm);
+
+    const response = await fetch('/edit-profile-doctor',{
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: formData,
+    })
+    const result = await response.json()
+    const doctorProfile = document.getElementById('doctor-profile');
+    doctorProfile.innerHTML = result.profile_doctor;
+    console.log(result.profile_doctor)
+}
+
+document.addEventListener('click',(event)=>{
+    const changeProfileBtn = event.target.closest('#change-profile-btn')
+    if(!changeProfileBtn){
+        return
+    }
+    editProfileAjax()
+})
+

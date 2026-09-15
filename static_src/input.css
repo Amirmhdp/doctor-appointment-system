@@ -9,63 +9,27 @@
 }
 
 @theme {
-    --color-primary-special: #0170fc
-
-;
-    --color-primary-dark-blue: #15203b
-
-;
-    --color-primary-blue-gray: #5d677e
-
-;
-    --color-primary-blue-hover: #1473f5
-
-;
-    --color-low-gray: #eaecf0
-
-;
-    --color-medium-gray: #9ca3ae
-
-;
-    --color-overlay-gray: #777879
-
-;
-    --color-light-gray: #e0e3e8
-
-;
-    --color-custom-black: #1d2939
-
-;
-    --color-light-blue: #e0edfd
-
-;
-    --color-navy: #01173f
-
-;
-    --color-royal-blue: #446cc5
-
-;
-    --color-deep-blue: #08295a
-
-;
-    --color-dark-blue: #09377d
-
-;
-    --color-slate-gray: #4e556a
-
-;
+    --color-primary-special: #0170fc  ;
+    --color-primary-dark-blue: #15203b  ;
+    --color-primary-blue-gray: #5d677e  ;
+    --color-primary-blue-hover: #1473f5;
+    --color-low-gray: #eaecf0  ;
+    --color-medium-gray: #9ca3ae  ;
+    --color-overlay-gray: #777879  ;
+    --color-light-gray: #e0e3e8  ;
+    --color-custom-black: #1d2939  ;
+    --color-light-blue: #e0edfd  ;
+    --color-navy: #01173f  ;
+    --color-royal-blue: #446cc5  ;
+    --color-deep-blue: #08295a  ;
+    --color-dark-blue: #09377d  ;
+    --color-slate-gray: #4e556a  ;
 
     /* font-family */
-    --font-iran:
-
-"IRANSans", sans-serif
-
-;
+    --font-iran:  "IRANSans", sans-serif ;
 
     /* animation */
-    --animate-slide-up: slide-up
-
-0.7s ease-out forwards
+    --animate-slide-up: slide-up  0.7s ease-out forwards
 
 ;
 
@@ -92,6 +56,19 @@
     .swiper {
         width: 600px;
         height: 300px;
+    }
+    #id_gender div label{
+        display: flex;
+        align-items: center;
+
+
+    }
+    #id_specialties option{
+        margin-top: 5px;
+    }
+    #change-id label{
+        width: 3px;
+        height: 21px;
     }
 }
 

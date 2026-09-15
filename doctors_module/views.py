@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Value, Avg, Q
+from django.utils import timezone
 from datetime import time
 from django.db.models.functions import Concat
 from django.http import JsonResponse
@@ -9,7 +10,7 @@ from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 
 from doctors_module.forms import CommentForm
-from doctors_module.models import Doctor, Specialty, Comment, FAQ, AvailableSlot, Appointment, Province
+from doctors_module.models import Doctor, Specialty, Comment, FAQ, AvailableSlot, Appointment, Province, WeeklySchedule
 
 # Create your views here.
 from doctors_module.service import book_appointment, SlotNotAvailableError
@@ -83,7 +84,11 @@ def doctor_list(request):
 
     }
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
-        return render(request, 'doctors_module/include/doctors.html', context)
+        return JsonResponse({
+            'doctors': render_to_string('doctors_module/include/doctors.html', context),
+            'filter_doctors': render_to_string('doctors_module/include/doctor_filter.html', context),
+        })
+
     return render(request, 'doctors_module/doctors_list_page.html', context)
 
 
@@ -93,13 +98,16 @@ def detail_doctor(request, url_title):
         is_active=True,
         url_title=url_title,
     )
+    today = timezone.localdate()
     available_slots = AvailableSlot.objects.filter(
         doctor=doctor,
-        is_available=True
+        is_available=True,
+        date__gte=today
     ).order_by(
         'date',
         'start_time'
     )
+    weekly_schedules = WeeklySchedule.objects.filter(doctor=doctor, is_active=True)
     comments_queryset = Comment.objects.filter(is_active=True, doctor_id=doctor.id, parent=None).select_related('user').order_by('-created_at')
     faqs = FAQ.objects.filter(is_active=True, specialties__in=doctor.specialties.all())
     is_doctor = hasattr(request.user, 'doctor_profile')
@@ -163,7 +171,8 @@ def detail_doctor(request, url_title):
         'comments_count': comments_count,
         'avg_rating': avg_rating,
         'available_slots': available_slots,
-        'is_doctor': is_doctor
+        'is_doctor': is_doctor,
+        'weekly_schedules': weekly_schedules,
     }
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return JsonResponse({

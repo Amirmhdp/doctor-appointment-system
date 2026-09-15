@@ -1,0 +1,34 @@
+{% load poll_extras %}
+<div class="flex items-center justify-between mb-5">
+    <h2 class="font-bold text-slate-800">ساعات کاری هفتگی</h2>
+    <button id="openExceptionModal"
+            class="text-blue-600 text-xs font-medium border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer">
+        افزودن بازه استثنا
+    </button>
+</div>
+
+<div class="space-y-2.5 overflow-x-auto">
+    <!-- day -->
+
+    {% for schedule_work in schedules_work %}
+        <div data-day-id="{{ schedule_work.id }}"
+             class="edit-appoiment-day-container flex items-center justify-between gap-4 bg-slate-50 rounded-xl px-4 py-3">
+            <div class="flex items-center gap-5">
+                <button data-act-inact="{% if schedule_work.is_active %}true{% else %}false{% endif %}"
+                        class="active-day-appoiment w-10 h-5 rounded-full {% if schedule_work.is_active %}bg-blue-600{% else %}bg-slate-300{% endif %} relative shrink-0 cursor-pointer">
+                    <span class="absolute top-0.5  {% if schedule_work.is_active %}left-0.5{% else %}right-0.5{% endif %} w-4 h-4 bg-white rounded-full"></span>
+                </button>
+                <span class="w-16 text-sm font-medium {% if schedule_work.is_active %}text-slate-600{% else %}text-slate-400{% endif %}">{{ schedule_work.get_weekday_display }}</span>
+            </div>
+            <div class="flex items-center gap-4 time-work" id="period-container-{{ schedule_work.id }}">
+                {% include 'doctor_panel/include/period_day.html' with schedule_work=schedule_work period=period %}
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+
+
+
+
+
