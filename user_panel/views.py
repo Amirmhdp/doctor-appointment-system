@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
+from django.db.models import Avg
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
@@ -7,7 +8,8 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from account_module.models import User
-from doctors_module.models import Appointment
+from doctors_module.models import Appointment, Doctor
+from patient.models import FavoriteDoctor
 from user_panel.forms import ProfileForm
 
 
@@ -19,17 +21,20 @@ def user_panel(request):
     user = request.user
     profile_form = ProfileForm(instance=user)
     appointments = Appointment.objects.filter(patient__user_id=patient,status__in=['pending', 'confirmed']).select_related('doctor__user','available_slot', ).prefetch_related('doctor__specialties', ).order_by('available_slot__date', 'available_slot__start_time')
-
+    favorite_doctors = FavoriteDoctor.objects.filter(patient__user=user)
     upcoming_appointments = appointments.filter(status__in=['pending', 'confirmed'],available_slot__date__gte=today).order_by('available_slot__date', 'available_slot__start_time')
     past_appointments = Appointment.objects.filter(status='completed',patient__user_id=patient).order_by('available_slot__date', 'available_slot__start_time')
     cancelled_appointments = Appointment.objects.filter(status='cancelled', patient__user_id=patient).order_by('-available_slot__date', '-available_slot__start_time')
-
+    next_appointment = upcoming_appointments.first()
+    favorite_doctors = favorite_doctors.annotate(avg_rating=Avg('doctor__comments__rating'))
     context = {
         'appointments': appointments,
         'upcoming_appointments': upcoming_appointments,
         'past_appointments': past_appointments,
         'cancelled_appointments': cancelled_appointments,
-        'profile_form': profile_form
+        'profile_form': profile_form,
+        'next_appointment': next_appointment,
+        'favorite_doctors': favorite_doctors,
     }
 
     return render(request,'user_panel/user_panel.html',context)
@@ -130,3 +135,44 @@ def EditProfileUser(request):
         'success': False,
         'message': 'اطلاعات وارد شده معتبر نیست'
     })
+
+@login_required
+@require_POST
+def set_favorite_doctor(request, pk):
+
+    patient = request.user.patient_profile
+
+    favorite_doctor = FavoriteDoctor.objects.filter(patient=patient, doctor_id=pk).first()
+    if not favorite_doctor:
+        add_favorite = FavoriteDoctor(patient=request.user.patient_profile, doctor_id=pk)
+        add_favorite.save()
+        return JsonResponse({
+            'message': 'حذف از علاقه مندی'
+        })
+    else:
+        favorite_doctor.delete()
+        return JsonResponse({
+            'message': 'افزودن به علاقه مندی'
+        })
+
+@login_required
+@require_POST
+def remove_favorite_doctor(request, pk):
+    favorite_doctor = FavoriteDoctor.objects.filter(id=pk, patient__user=request.user).first()
+    if not favorite_doctor:
+        return JsonResponse({
+            'message': 'علاقه مندی یافت نشد',
+            'success': False
+        })
+    else:
+        favorite_doctor.delete()
+        favorite_doctors = FavoriteDoctor.objects.filter(patient__user=request.user).annotate(avg_rating=Avg('doctor__comments__rating'))
+        context = {
+            'favorite_doctors': favorite_doctors
+        }
+        return JsonResponse({
+            'favorite_list': render_to_string('user_panel/include/favorite.html', context, request=request),
+            'message': 'علاقه مندی حذف شد',
+            'success': True
+        })
+

@@ -1,0 +1,35 @@
+{% if favorite_doctors %}
+
+    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5" >
+        {% for favorite_doctor in favorite_doctors %}
+            <div class="bg-white rounded-2xl p-4 text-center relative shadow-[0_0_20px_#e0edfd]">
+                <button id="remove-favorite-btn" data-favorite-id="{{ favorite_doctor.id }}" class="absolute top-3 left-3 ">
+                    <i data-lucide="x" class="w-6 h-6 p-1 text-red-500 bg-red-50 hover:text-red-600 hover:bg-red-100 rounded-full cursor-pointer transition-all duration-300 ease-in-out"></i>
+                </button>
+                <img src="{{ favorite_doctor.doctor.user.avatar.url }}"
+                     class="w-20 h-20 rounded-full object-cover mx-auto mb-3"/>
+                <div class="font-bold text-slate-800 whitespace-nowrap">دکتر {{ favorite_doctor.doctor.user.get_full_name }}</div>
+                {% for specialty in favorite_doctor.doctor.specialties.all|slice:':1' %}
+                    <div class="text-xs text-slate-400 mt-1 whitespace-nowrap">متخصص {{ specialty.name }}</div>
+                {% endfor %}
+
+                <div class="text-xs text-amber-500 mt-2 mb-4 flex items-center gap-1 justify-end pl-1">
+                   <span class="text-custom-black text-sm">{{ favorite_doctor.avg_rating|floatformat:1|default:"0" }}</span>
+                <i data-lucide="star" class="w-5 h-5 fill-yellow-500 text-yellow-500"></i>
+                </div>
+                <a href="{% url 'profile_page' url_title=favorite_doctor.doctor.url_title %}" class="w-full bg-blue-600 whitespace-nowrap py-2.5 px-3.5 md:px-10.25 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl mt-4">
+                    مشاهده پروفایل
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+        <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+            <img class="w-[70%] md:w-[40%] lg:w-[35%]" src="/static/images/no-favorite.webp" alt="not-found">
+            <p class="text-lg text-custom-black font-bold lg:text-[21px]">هیچ علاقه مندی یافت نشد</p>
+            <p class="text-center text-sm lg:text-[16px] text-slate-700">برای شما هیچ علاقه مندی در سیستم ما ثبت نشده است</p>
+            <a href="{% url 'home' %}" class="px-3 py-2.5 text-white rounded-lg text-sm lg:text-[16px] bg-primary-special">بازگشت
+                به صفحه اصلی</a>
+        </div>
+{% endif %}

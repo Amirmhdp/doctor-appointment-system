@@ -63,9 +63,13 @@
                                 <i data-lucide="calendar-check" class="w-5 h-5 text-white"></i>
                                 رزرو نوبت
                             </button>
-                            <button class="flex items-center cursor-pointer justify-center gap-2 bg-white text-sm text-primary-special border border-primary-special py-2 px-3 w-full rounded-lg hover:bg-primary-special hover:text-white duration-200 ease-in-out">
+                            <button data-doctor-id="{{ doctor.id }}" class="add-remove-favorite flex items-center cursor-pointer justify-center gap-2 bg-white text-sm text-primary-special border border-primary-special py-2 px-3 w-full rounded-lg hover:bg-primary-special hover:text-white duration-200 ease-in-out">
                                 <i data-lucide="heart" class="w-5 h-5 hover:text-white"></i>
-                                افزودن به علاقه مندی
+                                {% if is_favorite %}
+                                    <span id="text-favorite">حذف از علاقه مندی</span>
+                                    {% else %}
+                                    <span id="text-favorite">افزودن به علاقه مندی</span>
+                                {% endif %}
                             </button>
                         </div>
                     </div>

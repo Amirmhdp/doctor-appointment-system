@@ -14,7 +14,7 @@ from doctors_module.models import Doctor, Specialty, Comment, FAQ, AvailableSlot
 
 # Create your views here.
 from doctors_module.service import book_appointment, SlotNotAvailableError
-from patient.models import Patient
+from patient.models import Patient, FavoriteDoctor
 
 
 def doctor_list(request):
@@ -107,6 +107,8 @@ def detail_doctor(request, url_title):
         'date',
         'start_time'
     )
+    user = request.user
+    is_favorite = FavoriteDoctor.objects.filter(patient__user=user, doctor=doctor).exists()
     weekly_schedules = WeeklySchedule.objects.filter(doctor=doctor, is_active=True)
     comments_queryset = Comment.objects.filter(is_active=True, doctor_id=doctor.id, parent=None).select_related('user').order_by('-created_at')
     faqs = FAQ.objects.filter(is_active=True, specialties__in=doctor.specialties.all())
@@ -173,6 +175,7 @@ def detail_doctor(request, url_title):
         'available_slots': available_slots,
         'is_doctor': is_doctor,
         'weekly_schedules': weekly_schedules,
+        'is_favorite': is_favorite
     }
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return JsonResponse({

@@ -2666,3 +2666,49 @@ document.addEventListener('click', (event) => {
     }
     editProfileUserPanelAjax()
 })
+
+// add remove a doctor from favorite list
+
+document.addEventListener('click', (event)=>{
+    const addRemoveFavorite = event.target.closest('.add-remove-favorite');
+    if (!addRemoveFavorite) {
+        return;
+    }
+    async function favoriteDoctorAjax(){
+        const doctorId = addRemoveFavorite.dataset.doctorId;
+        const response = await fetch('/add-remove-favorite/' + doctorId, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        const result = await response.json();
+        const textFavorite = document.getElementById('text-favorite');
+        textFavorite.textContent = result.message;
+    }
+    favoriteDoctorAjax();
+})
+
+document.addEventListener('click', (event)=>{
+    const RemoveFavorite = event.target.closest('#remove-favorite-btn');
+    if (!RemoveFavorite) {
+        return;
+    }
+    async function favoriteDoctorAjax(){
+        const favoriteId = RemoveFavorite.dataset.favoriteId;
+        const response = await fetch('/remove-favorite/' + favoriteId, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        })
+        const result = await response.json();
+        const favoriteList = document.getElementById('favorite-list');
+        favoriteList.innerHTML = result.favorite_list;
+        lucide.createIcons();
+
+    }
+    favoriteDoctorAjax();
+})

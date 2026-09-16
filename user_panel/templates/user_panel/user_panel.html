@@ -10,10 +10,10 @@
             <aside class="flex flex-col w-full bg-white border-l border-slate-100 md:p-5 shrink-0">
                 <!-- Doctor info card -->
                 <div class="hidden md:flex w-full items-center gap-3 bg-primary-special px-3 py-2 rounded-lg mb-6">
-                    <img src="https://i.pravatar.cc/160?img=68"
+                    <img src="{{ request.user.avatar.url }}"
                          class="w-12 h-12 rounded-full p-0.5 border-2 border-white object-cover" alt="doctor-image"/>
                     <div class="flex flex-col justify-center gap-1 w-full">
-                        <h1 class="text-sm text-white font-bold">سارا احمدی</h1>
+                        <h1 class="text-sm text-white font-bold">{{ request.user.get_full_name }}</h1>
                     </div>
                 </div>
 
@@ -83,7 +83,7 @@
             <div class="mt-4 doctor-info-panel" id="dashboard">
                 <div class="flex-1 p-2 md:p-6 space-y-5">
                     <div>
-                        <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">سلام سارا احمدی
+                        <h1 class="text-2xl font-bold text-slate-800 flex items-center gap-2">سلام {{ request.user.get_full_name }}
                             <span>👋</span></h1>
                         <p class="text-sm text-slate-500 mt-1">به پنل کاربری خود خوش آمدید.</p>
                     </div>
@@ -100,7 +100,7 @@
                                     <line x1="3" y1="10" x2="21" y2="10"/>
                                 </svg>
                             </div>
-                            <div class="text-2xl font-bold text-slate-800">۳</div>
+                            <div class="text-2xl font-bold text-slate-800">{{ upcoming_appointments.count }}</div>
                             <div class="text-sm text-slate-500 mt-1">نوبت‌های آینده</div>
                             <span class="text-xs text-blue-600 font-medium mt-3 inline-block see-all-appoiment cursor-pointer"
                                   id="openNextAppoiment" data-get-time-appoiment="future-appoiment">مشاهده همه</span>
@@ -113,7 +113,7 @@
                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
                                 </svg>
                             </div>
-                            <div class="text-2xl font-bold text-slate-800">۱۲</div>
+                            <div class="text-2xl font-bold text-slate-800">{{ past_appointments.count }}</div>
                             <div class="text-sm text-slate-500 mt-1">نوبت‌های گذشته</div>
                             <span class="text-xs text-blue-600 font-medium mt-3 inline-block see-all-appoiment cursor-pointer"
                                   data-get-time-appoiment="past-appoiment">مشاهده همه</span>
@@ -122,7 +122,7 @@
                             <div class="w-11 h-11 rounded-full bg-red-50 flex items-center justify-center mb-4">
                                 <i data-lucide="CalendarX2" class="w-5 h-5 text-red-500"></i>
                             </div>
-                            <div class="text-2xl font-bold text-slate-800">۵</div>
+                            <div class="text-2xl font-bold text-slate-800">{{ cancelled_appointments.count }}</div>
                             <div class="text-sm text-slate-500 mt-1">نوبت های لغو شده</div>
                             <span class="text-xs text-blue-600 font-medium mt-3 inline-block see-all-appoiment cursor-pointer"
                                   data-get-time-appoiment="cancel-appoiment">مشاهده همه</span>
@@ -130,13 +130,9 @@
 
                         <div class="bg-white rounded-2xl px-3 py-3.5 shadow-[0_0_20px_#e0edfd] flex flex-col justify-center items-center gap-1">
                             <div class="w-11 h-11 rounded-full bg-amber-50 flex items-center justify-center mb-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-amber-500"
-                                     viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <polygon
-                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
-                                </svg>
+                                <i data-lucide="heart" class="w-5 h-5 text-red-500"></i>
                             </div>
-                            <div class="text-2xl font-bold text-slate-800">۲</div>
+                            <div class="text-2xl font-bold text-slate-800">{{ favorite_doctors.count }}</div>
                             <div class="text-sm text-slate-500 mt-1">پزشکان محبوب</div>
                             <span class="text-xs text-blue-600 font-medium mt-3 inline-block cursor-pointer"
                                   id="intersted-doctors">مشاهده همه</span>
@@ -145,38 +141,52 @@
 
                     <!-- Next appointment + promo banner -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                        <div class="bg-white rounded-2xl md:p-5">
+                        {% if next_appointment %}
+                            <div class="bg-white rounded-2xl md:p-5">
                             <h2 class="font-bold text-slate-800 mb-4">نوبت بعدی شما</h2>
                             <div class="flex items-center gap-4 mb-4">
-                                <img src="https://i.pravatar.cc/160?img=68" class="w-14 h-14 rounded-full object-cover"
-                                     alt=""/>
+                                {% if next_appointment.patient.user.avatar %}
+                                    <img src="{{ next_appointment.patient.user.avatar.url }}" class="w-14 h-14 rounded-full object-cover" alt="image-user"/>
+                                    {% else %}
+                                    <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                                {% endif %}
                                 <div>
-                                    <div class="font-bold text-slate-800">دکتر علیرضا محمدی</div>
-                                    <div class="text-xs text-slate-400 mt-1">متخصص قلب و عروق</div>
+                                    <div class="font-bold text-slate-800">دکتر {{ next_appointment.doctor.user.get_full_name }}</div>
+                                    {% for specialty in next_appointment.specialties %}
+                                        <div class="text-xs text-slate-400 mt-1">متخصص {{ specialty }}</div>
+                                    {% endfor %}
+
                                 </div>
                             </div>
                             <div class="flex items-center gap-6 text-sm text-slate-500 mb-5">
-                <span class="flex items-center gap-1.5">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2"/>
-                    <line x1="16" y1="2" x2="16" y2="6"/>
-                    <line x1="8" y1="2" x2="8" y2="6"/>
-                    <line x1="3" y1="10" x2="21" y2="10"/>
-                  </svg>سه‌شنبه، ۲۶ اردیبهشت ۱۴۰۳
-                </span>
                                 <span class="flex items-center gap-1.5">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
-                       stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="12 6 12 12 16 14"/>
-                  </svg>10:30
-                </span>
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                                       stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                  </svg>{{ next_appointment.available_slot.date|to_jalali }}
+                                </span>
+                                <span class="flex items-center gap-1.5">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none"
+                                       stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                  </svg>{{ next_appointment.available_slot.start_time }}
+                                </span>
                             </div>
                             <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl see-all-appoiment cursor-pointer">
                                 مشاهده جزئیات نوبت
                             </button>
                         </div>
+                            {% else %}
+                                <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+                                    <img src="/static/images/appointment.webp" alt="no-appointment-img">
+                                    <p class="text-[16px] text-custom-black font-bold lg:text-[21px]">هیچ نوبتی در سیستم یافت نشد</p>
+                                    <p class="text-center text-sm text-slate-700">نوبتی برای شما در سیستم ثبت نشده است</p>
+                                </div>
+                        {% endif %}
 
                         <div class="bg-linear-to-l from-blue-50 to-blue-100/60 rounded-2xl p-6 flex items-center justify-between gap-4">
                             <div class="flex-1">
@@ -221,40 +231,8 @@
                         <p class="text-sm text-slate-500 mt-1">پزشکانی که به لیست علاقه‌مندی‌های خود اضافه کرده‌اید.</p>
                     </div>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                        <div class="bg-white rounded-2xl p-4 text-center relative shadow-[0_0_20px_#e0edfd]">
-                            <button class="absolute top-3 left-3 text-red-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"
-                                     fill="currentColor" stroke="currentColor" stroke-width="1">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                                </svg>
-                            </button>
-                            <img src="https://i.pravatar.cc/160?img=68"
-                                 class="w-20 h-20 rounded-full object-cover mx-auto mb-3"/>
-                            <div class="font-bold text-slate-800 whitespace-nowrap">دکتر علیرضا محمدی</div>
-                            <div class="text-xs text-slate-400 mt-1 whitespace-nowrap">متخصص قلب و عروق</div>
-                            <div class="text-xs text-amber-500 mt-2">4.8 ★</div>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl mt-4">
-                                مشاهده پروفایل
-                            </button>
-                        </div>
-
-                        <div class="bg-white rounded-2xl p-4 text-center relative shadow-[0_0_20px_#e0edfd]">
-                            <button class="absolute top-3 left-3 text-red-500">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"
-                                     fill="currentColor" stroke="currentColor" stroke-width="1">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-                                </svg>
-                            </button>
-                            <img src="https://i.pravatar.cc/160?img=47"
-                                 class="w-20 h-20 rounded-full object-cover mx-auto mb-3"/>
-                            <div class="font-bold text-slate-800 whitespace-nowrap">دکتر سارا احمدی</div>
-                            <div class="text-xs text-slate-400 mt-1 whitespace-nowrap">متخصص زنان و زایمان</div>
-                            <div class="text-xs text-amber-500 mt-2">4.9 ★</div>
-                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl mt-4">
-                                مشاهده پروفایل
-                            </button>
-                        </div>
+                    <div class="w-full" id="favorite-list">
+                        {% include 'user_panel/include/favorite.html' %}
                     </div>
                 </div>
             </div>
