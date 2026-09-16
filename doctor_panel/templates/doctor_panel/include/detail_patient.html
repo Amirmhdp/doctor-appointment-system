@@ -1,0 +1,47 @@
+{% load poll_extras %}
+<div class="relative bg-white md:rounded-2xl w-full h-full md:h-fit md:max-w-md p-6">
+                <div class="flex items-center justify-between mb-5">
+                    <h2 class="font-bold text-slate-800">جزئیات بیمار</h2>
+                    <button id="closePatientDetailsModal" class="text-slate-400 hover:text-slate-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Patient header -->
+                <div class="flex items-center gap-4 bg-slate-50 rounded-xl p-4 mb-5">
+                    {% if patient.user.avatar.url %}
+                        <img id="pm-img" src="{{ patient.user.avatar.url }}" class="w-16 h-16 rounded-full object-cover" alt=""/>
+                    {% endif %}
+                    <div>
+                        <div id="pm-name" class="font-bold text-slate-800">{{ patient.user.get_full_name }}</div>
+                        <span id="pm-status"
+                              class="inline-block mt-2 text-[11px] px-2.5 py-1 rounded-full bg-green-50 text-green-700">فعال</span>
+                    </div>
+                </div>
+
+                <!-- Info: stacked vertically -->
+                <div class="space-y-3 text-sm">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <span class="text-xs text-slate-400">شماره تماس</span>
+                        <span id="pm-phone" class="text-slate-700 font-medium">{{ patient.user.phone_number }}</span>
+                    </div>
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <span class="text-xs text-slate-400">کد ملی</span>
+                        <span id="pm-code" class="text-slate-700 font-medium">{{ patient.user.national_code }}</span>
+                    </div>
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <span class="text-xs text-slate-400">آخرین نوبت</span>
+                        <span id="pm-last" class="text-slate-700 font-medium">
+                            {{ patient_appointment.available_slot.date|to_jalali }}
+                        </span>
+                    </div>
+                </div>
+
+                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl mt-5"
+                        id="closePatientDetailsModal2">بستن
+                </button>
+            </div>

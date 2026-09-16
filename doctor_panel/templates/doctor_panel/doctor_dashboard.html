@@ -10,11 +10,15 @@
             <aside class="flex flex-col w-full bg-white border-l border-slate-100 md:p-5 shrink-0">
                 <!-- Doctor info card -->
                 <div class="hidden md:flex w-full items-center gap-3 bg-primary-special px-3 py-2 rounded-lg mb-6">
-                    <img src="https://i.pravatar.cc/160?img=68"
-                         class="w-12 h-12 rounded-full p-0.5 border-2 border-white object-cover" alt="doctor-image"/>
+                    {% if request.user.avatar %}
+                        <img src="{{ request.user.avatar.url }}" class="w-12 h-12 rounded-full p-0.5 border-2 border-white object-cover" alt="doctor-image"/>
+                        {% else %}
+                        <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                    {% endif %} 
+
                     <div class="flex flex-col justify-center gap-1 w-full">
                         <h1 class="text-sm text-white font-bold">دکتر {{ doctor.user.get_full_name }}</h1>
-                        {% for specialty in doctor.specialties.all %}
+                        {% for specialty in doctor.specialties.all|slice:':1' %}
                             <h3 class="text-xs text-white font-bold opacity-90">{{ specialty.name }}</h3>
                         {% endfor %}
 
@@ -92,8 +96,7 @@
             <div class="mt-4 doctor-info-panel" id="dashboard">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-3 py-2 md:py-5">
                     <div>
-                        <h1 class="text-2xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">سلام دکتر علی
-                            محمدی <span>👋</span></h1>
+                        <h1 class="text-2xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">سلام دکتر {{ doctor.user.get_full_name }} <span>👋</span></h1>
                         <p class="text-slate-500 text-sm mt-1 md:hidden lg:inline">به پنل مدیریت مطب خوش آمدید. در اینجا
                             می‌توانید وضعیت نوبت‌های مطب خود را مدیریت کنید.</p>
                     </div>
@@ -105,7 +108,7 @@
                         <div class="w-11 h-11 rounded-full bg-blue-50 flex items-center justify-center mb-4">
                             <i data-lucide="users" class="w-5 h-5 text-blue-600"></i>
                         </div>
-                        <div class="text-2xl font-bold text-slate-800">125</div>
+                        <div class="text-2xl font-bold text-slate-800">{{ today_patients_count }}</div>
                         <div class="text-sm text-slate-500 mt-1">بیماران امروز</div>
                     </div>
                     <!-- Card: نوبت‌های امروز -->
@@ -113,7 +116,7 @@
                         <div class="w-11 h-11 rounded-full bg-blue-50 flex items-center justify-center mb-4">
                             <i data-lucide="calendar" class="w-5 h-5 text-blue-600"></i>
                         </div>
-                        <div class="text-2xl font-bold text-slate-800">32</div>
+                        <div class="text-2xl font-bold text-slate-800">{{ today_appointments.count }}</div>
                         <div class="text-sm text-slate-500 mt-1">نوبت‌های امروز</div>
                     </div>
 
@@ -122,7 +125,7 @@
                         <div class="w-11 h-11 rounded-full bg-blue-50 flex items-center justify-center mb-4">
                             <i data-lucide="CalendarCheck2" class="w-5 h-5 text-blue-600"></i>
                         </div>
-                        <div class="text-2xl font-bold text-slate-800">21</div>
+                        <div class="text-2xl font-bold text-slate-800">{{ completed_appointments_count }}</div>
                         <div class="text-sm text-slate-500 mt-1">نوبت های تکمیل شده</div>
                     </div>
 
@@ -131,7 +134,7 @@
                         <div class="w-11 h-11 rounded-full bg-blue-50 flex items-center justify-center mb-4">
                             <i data-lucide="heart" class="w-5 h-5 text-blue-600"></i>
                         </div>
-                        <div class="text-2xl font-bold text-slate-800">98%</div>
+                        <div class="text-2xl font-bold text-slate-800">{{ rating.avg_rating|default:'0' }}</div>
                         <div class="text-sm text-slate-500 mt-1">رضایت بیماران</div>
                     </div>
                 </div>
@@ -140,118 +143,76 @@
                     <div class="bg-white rounded-2xl p-5 px-3 py-3.5 shadow-[0_0_20px_#e0edfd] mt-4">
                         <div class="flex items-center justify-between mb-4">
                             <h2 class="font-bold text-slate-800">نوبت‌های امروز</h2>
-                            <button id="open-today-appoiment" class="text-blue-600 text-sm font-medium cursor-pointer">
-                                مشاهده همه
-                            </button>
+                            {% if today_appointments|length > 6 %}
+                                <button id="open-today-appoiment" class="text-blue-600 text-sm font-medium cursor-pointer">
+                                    مشاهده همه
+                                </button>
+                            {% endif %} 
+
                         </div>
 
                         <ul class="space-y-4">
                             <!-- appointment item -->
-                            <li class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/80?img=12" alt=""
-                                     class="w-11 h-11 rounded-full object-cover"/>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-medium text-slate-800 truncate">امیر حسین رضایی</div>
-                                    <div class="text-xs text-slate-500">ویزیت پیگیری</div>
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-xs text-slate-500 mb-1">09:00</div>
-                                    <span class="text-[11px] bg-green-50 text-green-700 px-2 py-1 rounded-full">تایید شده</span>
-                                </div>
-                            </li>
+                            {% if today_appointments %}
+                                {% for today_appointment in today_appointments|slice:':6' %}
+                                    <li class="flex items-center gap-3">
+                                        <img src="https://i.pravatar.cc/80?img=12" alt=""
+                                             class="w-11 h-11 rounded-full object-cover"/>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="text-sm font-medium text-slate-800 truncate">{{ today_appointment.patient.user.get_full_name }}</div>
+                                            <div class="text-xs text-slate-500">ویزیت پیگیری</div>
+                                        </div>
+                                        <div class="text-left">
+                                            <div class="text-xs text-slate-500 mb-1">{{ today_appointment.available_slot.start_time|to_jalali }}</div>
+                                            <span class="text-[11px] bg-green-50 text-green-700 px-2 py-1 rounded-full">{{ today_appointment.get_status_display }}</span>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                                {% else %}
+                                    <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+                                        <img src="/static/images/appointment.webp" alt="no-appointment-img">
+                                        <p class="text-[16px] text-custom-black font-bold lg:text-[21px]">هیچ نوبتی در سیستم یافت نشد</p>
+                                        <p class="text-center text-sm text-slate-700">متاسفانه امروز نوبت بیماری برای شما در سیستم ثبت نشده است</p>
+                                    </div>
+                            {% endif %}
 
-                            <li class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/80?img=45" alt=""
-                                     class="w-11 h-11 rounded-full object-cover"/>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-medium text-slate-800 truncate">سارا احمدی</div>
-                                    <div class="text-xs text-slate-500">بررسی نتایج</div>
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-xs text-slate-500 mb-1">10:30</div>
-                                    <span class="text-[11px] bg-amber-50 text-amber-700 px-2 py-1 rounded-full">در انتظار</span>
-                                </div>
-                            </li>
 
-                            <li class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/80?img=33" alt=""
-                                     class="w-11 h-11 rounded-full object-cover"/>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-medium text-slate-800 truncate">علی کریمی</div>
-                                    <div class="text-xs text-slate-500">ویزیت اولیه</div>
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-xs text-slate-500 mb-1">12:00</div>
-                                    <span class="text-[11px] bg-green-50 text-green-700 px-2 py-1 rounded-full">تایید شده</span>
-                                </div>
-                            </li>
-
-                            <li class="flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/80?img=47" alt=""
-                                     class="w-11 h-11 rounded-full object-cover"/>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-medium text-slate-800 truncate">مریم محمدی</div>
-                                    <div class="text-xs text-slate-500">بررسی چکاپ</div>
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-xs text-slate-500 mb-1">14:30</div>
-                                    <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-1 rounded-full">در حال انتظار</span>
-                                </div>
-                            </li>
                         </ul>
-
-                        <div class="text-center text-xs text-slate-400 mt-5 pt-4 border-t border-slate-100">
-                            تعداد نوبت‌های امروز: <span class="font-medium text-slate-600">32</span>
-                        </div>
+                    
                     </div>
                     <div class="space-y-5">
                         <div class="bg-white rounded-2xl p-5 px-3 py-3.5 shadow-[0_0_20px_#e0edfd] mt-4">
                             <div class="flex items-center justify-between mb-4">
                                 <h2 class="font-bold text-slate-800">نوبت‌های پیش رو</h2>
-                                <button id="open-next-appoiment"
-                                        class="text-blue-600 text-sm font-medium cursor-pointer">مشاهده همه
-                                </button>
+                                {% if appointments|length > 6 %}
+                                    <button id="open-next-appoiment" class="text-blue-600 text-sm font-medium cursor-pointer">مشاهده همه</button>
+                                {% endif %}
                             </div>
 
                             <ul class="space-y-4">
-                                <li class="flex items-center gap-3">
-                                    <img src="https://i.pravatar.cc/80?img=12" alt=""
-                                         class="w-11 h-11 rounded-full object-cover"/>
-                                    <div class="flex-1 min-w-0">
-                                        <div class="text-sm font-medium text-slate-800 truncate">امیر حسین رضایی</div>
-                                        <div class="text-xs text-slate-500">ویزیت پیگیری</div>
+                                {% if appointments %}
+                                    {% for appointment in appointments|slice:':6' %}
+                                        <li class="flex items-center gap-3">
+                                            <img src="{{ appointment.patient.user.avatar.url }}" alt="{{ appointment.patient.user.get_full_name }}"
+                                                 class="w-11 h-11 rounded-full object-cover"/>
+                                            <div class="flex-1 min-w-0">
+                                                <div class="text-sm font-medium text-slate-800 truncate">{{ appointment.patient.user.get_full_name }}</div>
+                                                <div class="text-xs text-slate-500">ویزیت پیگیری</div>
+                                            </div>
+                                            <div class="text-left">
+                                                <div class="text-xs text-slate-500 mb-1">{{ appointment.available_slot.start_time }}</div>
+                                                <span class="text-[11px] bg-blue-50 text-blue-700 px-2 py-1 rounded-full">{{ appointment.available_slot.date|to_jalali }}</span>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                    {% else %}
+                                    <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+                                        <img src="/static/images/appointment.webp" alt="no-appointment-img">
+                                        <p class="text-[16px] text-custom-black font-bold lg:text-[21px]">هیچ نوبتی در سیستم یافت نشد</p>
+                                        <p class="text-center text-sm text-slate-700">متاسفانه امروز نوبت بیماری برای شما در سیستم ثبت نشده است</p>
                                     </div>
-                                    <div class="text-left">
-                                        <div class="text-xs text-slate-500 mb-1">09:00</div>
-                                        <span class="text-[11px] bg-blue-50 text-blue-700 px-2 py-1 rounded-full">فردا</span>
-                                    </div>
-                                </li>
+                                {% endif %}
 
-                                <li class="flex items-center gap-3">
-                                    <img src="https://i.pravatar.cc/80?img=45" alt=""
-                                         class="w-11 h-11 rounded-full object-cover"/>
-                                    <div class="flex-1 min-w-0">
-                                        <div class="text-sm font-medium text-slate-800 truncate">سارا احمدی</div>
-                                        <div class="text-xs text-slate-500">بررسی نتایج</div>
-                                    </div>
-                                    <div class="text-left">
-                                        <div class="text-xs text-slate-500 mb-1">10:30</div>
-                                        <span class="text-[11px] bg-blue-50 text-blue-700 px-2 py-1 rounded-full">فردا</span>
-                                    </div>
-                                </li>
-
-                                <li class="flex items-center gap-3">
-                                    <img src="https://i.pravatar.cc/80?img=33" alt=""
-                                         class="w-11 h-11 rounded-full object-cover"/>
-                                    <div class="flex-1 min-w-0">
-                                        <div class="text-sm font-medium text-slate-800 truncate">علی کریمی</div>
-                                        <div class="text-xs text-slate-500">ویزیت اولیه</div>
-                                    </div>
-                                    <div class="text-left">
-                                        <div class="text-xs text-slate-500 mb-1">14:00</div>
-                                        <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-1 rounded-full">۲۶ اردیبهشت</span>
-                                    </div>
-                                </li>
                             </ul>
                         </div>
                     </div>
@@ -261,189 +222,7 @@
                SECTION 3: APPOINTMENTS PAGE CONTENT (این بخش نوبت‌ها است)
                ================================================================                                   -->
             <div id="appoiment" class="doctor-info-panel flex-1 p-6 space-y-5 hidden px-3 py-3.5 mt-4 rounded-lg">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                            نوبت‌ها
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-400" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="4" width="18" height="18" rx="2"/>
-                                <line x1="16" y1="2" x2="16" y2="6"/>
-                                <line x1="8" y1="2" x2="8" y2="6"/>
-                                <line x1="3" y1="10" x2="21" y2="10"/>
-                            </svg>
-                        </h1>
-                        <p class="text-sm text-slate-500 mt-1">لیست تمام نوبت‌های امروز و روزهای آینده.</p>
-                    </div>
-                </div>
-
-                {% comment %} <div class="flex items-center gap-3">
-          <select class="border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-600 bg-white focus:outline-none">
-            <option>همه وضعیت‌ها</option>
-            <option>تایید شده</option>
-            <option>در انتظار</option>
-            <option>لغو شده</option>
-          </select>
-          <div class="flex items-center gap-2 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-600 bg-white">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="4" width="18" height="18" rx="2" />
-              <line x1="16" y1="2" x2="16" y2="6" />
-              <line x1="8" y1="2" x2="8" y2="6" />
-              <line x1="3" y1="10" x2="21" y2="10" />
-            </svg>۱۴۰۳/۰۲/۲۴
-          </div>
-          <button class="border border-blue-200 text-blue-600 rounded-xl px-4 py-2.5 text-sm font-medium bg-blue-50">امروز</button>
-        </div> {% endcomment %}
-
-                <div class="bg-white rounded-2xl overflow-y-auto">
-                    <table class="w-full text-sm">
-                        <thead>
-                        <tr class="text-slate-400 text-xs border-b border-slate-100">
-                            <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">ساعت</th>
-                            <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">بیمار</th>
-                            <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">نوع ویزیت</th>
-                            <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">وضعیت</th>
-                            <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">مبلغ (تومان)</th>
-                            <th class="text-right font-medium py-3.5 px-5 whitespace-nowrap">عملیات</th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-50">
-                        <tr>
-                            <td class="py-3.5 px-5 text-slate-500">09:00</td>
-                            <td class="px-5 font-medium text-slate-700">سارا احمدی</td>
-                            <td class="px-5 text-slate-500">ویزیت حضوری</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
-                            </td>
-                            <td class="px-5 text-slate-500">۳۰۰,۰۰۰</td>
-                            <td class="px-5 flex gap-2">
-                                <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                                <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="1"/>
-                                        <circle cx="19" cy="12" r="1"/>
-                                        <circle cx="5" cy="12" r="1"/>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3.5 px-5 text-slate-500">10:30</td>
-                            <td class="px-5 font-medium text-slate-700">محمد رضا کریمی</td>
-                            <td class="px-5 text-slate-500">ویزیت آنلاین</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full whitespace-nowrap">در انتظار</span>
-                            </td>
-                            <td class="px-5 text-slate-500">۲۵۰,۰۰۰</td>
-                            <td class="px-5 flex gap-2">
-                                <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                                <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="1"/>
-                                        <circle cx="19" cy="12" r="1"/>
-                                        <circle cx="5" cy="12" r="1"/>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3.5 px-5 text-slate-500">12:00</td>
-                            <td class="px-5 font-medium text-slate-700">علی حسینی</td>
-                            <td class="px-5 text-slate-500">ویزیت حضوری</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
-                            </td>
-                            <td class="px-5 text-slate-500">۳۰۰,۰۰۰</td>
-                            <td class="px-5 flex gap-2">
-                                <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                                <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="1"/>
-                                        <circle cx="19" cy="12" r="1"/>
-                                        <circle cx="5" cy="12" r="1"/>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3.5 px-5 text-slate-500">14:30</td>
-                            <td class="px-5 font-medium text-slate-700">زهرا صنعتی</td>
-                            <td class="px-5 text-slate-500">ویزیت آنلاین</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-red-50 text-red-700 px-2.5 py-1 rounded-full whitespace-nowrap">لغو شده</span>
-                            </td>
-                            <td class="px-5 text-slate-500">-</td>
-                            <td class="px-5 flex gap-2">
-                                <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                                <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="1"/>
-                                        <circle cx="19" cy="12" r="1"/>
-                                        <circle cx="5" cy="12" r="1"/>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3.5 px-5 text-slate-500">16:00</td>
-                            <td class="px-5 font-medium text-slate-700">امیرحسین نادری</td>
-                            <td class="px-5 text-slate-500">ویزیت حضوری</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
-                            </td>
-                            <td class="px-5 text-slate-500">۳۰۰,۰۰۰</td>
-                            <td class="px-5 flex gap-2">
-                                <button class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-                                    </svg>
-                                </button>
-                                <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                         fill="none" stroke="currentColor" stroke-width="2">
-                                        <circle cx="12" cy="12" r="1"/>
-                                        <circle cx="19" cy="12" r="1"/>
-                                        <circle cx="5" cy="12" r="1"/>
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="flex items-center justify-center gap-2 py-4 text-xs text-slate-400 border-t border-slate-50">
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-50">...</button>
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۴</button>
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۳</button>
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۲</button>
-                        <button class="w-7 h-7 rounded-lg bg-blue-600 text-white">۱</button>
-                    </div>
-                </div>
+                {% include 'doctor_panel/include/appointment_list.html' %}
             </div>
 
             <div id="patients" class="doctor-info-panel flex-1 space-y-5 hidden px-3 py-3.5 mt-4 rounded-lg">
@@ -467,114 +246,48 @@
                             <th class="text-right font-medium py-3.5 px-5">نام بیمار</th>
                             <th class="text-right font-medium py-3.5 px-5">شماره تماس</th>
                             <th class="text-right font-medium py-3.5 px-5">کد ملی</th>
-                            <th class="text-right font-medium py-3.5 px-5">آخرین نوبت</th>
                             <th class="text-right font-medium py-3.5 px-5">وضعیت</th>
                             <th class="text-right font-medium py-3.5 px-5">عملیات</th>
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
                         <!-- patient row -->
-                        <tr>
-                            <td class="py-3.5 px-5 flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/80?img=45" class="w-9 h-9 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700">سارا احمدی</span>
-                            </td>
-                            <td class="px-5 text-slate-500 whitespace-nowrap">0912-345-6789</td>
-                            <td class="px-5 text-slate-500">1234567890</td>
-                            <td class="px-5 text-slate-500">1403/02/30</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">فعال</span>
-                            </td>
-                            <td class="px-5">
-                                <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">
-                                    جزئیات
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3.5 px-5 flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/80?img=33" class="w-9 h-9 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700">محمد رضا کریمی</span>
-                            </td>
-                            <td class="px-5 text-slate-500 whitespace-nowrap">0935-234-5678</td>
-                            <td class="px-5 text-slate-500">2345678901</td>
-                            <td class="px-5 text-slate-500">1403/02/18</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">فعال</span>
-                            </td>
-                            <td class="px-5">
-                                <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">
-                                    جزئیات
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3.5 px-5 flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/80?img=12" class="w-9 h-9 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700">علی حسینی</span>
-                            </td>
-                            <td class="px-5 text-slate-500 whitespace-nowrap">0911-987-6543</td>
-                            <td class="px-5 text-slate-500">3456789012</td>
-                            <td class="px-5 text-slate-500">1403/02/15</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-red-50 text-red-700 px-2.5 py-1 rounded-full">غیرفعال</span>
-                            </td>
-                            <td class="px-5">
-                                <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">
-                                    جزئیات
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3.5 px-5 flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/80?img=47" class="w-9 h-9 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700">زهرا صنعتی</span>
-                            </td>
-                            <td class="px-5 text-slate-500 whitespace-nowrap">0938-456-1234</td>
-                            <td class="px-5 text-slate-500">4567890123</td>
-                            <td class="px-5 text-slate-500">1403/02/10</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">فعال</span>
-                            </td>
-                            <td class="px-5">
-                                <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">
-                                    جزئیات
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3.5 px-5 flex items-center gap-3">
-                                <img src="https://i.pravatar.cc/80?img=25" class="w-9 h-9 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700">امیرحسین نادری</span>
-                            </td>
-                            <td class="px-5 text-slate-500 whitespace-nowrap">0919-876-5432</td>
-                            <td class="px-5 text-slate-500">5678901234</td>
-                            <td class="px-5 text-slate-500">1403/02/05</td>
-                            <td class="px-5">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">فعال</span>
-                            </td>
-                            <td class="px-5">
-                                <button class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">
-                                    جزئیات
-                                </button>
-                            </td>
-                        </tr>
+                        {% for patient in patients %}
+                            <tr>
+                                <td class="py-3.5 px-5 flex items-center gap-3">
+                                    {% if patient.user.avatar.name %}
+                                        <img src="{{ patient.user.avatar.url }}" class="w-9 h-9 rounded-full object-cover" alt=""/>
+                                    {% else %}
+                                        <img src="https://i.pravatar.cc/80?img=45" class="w-9 h-9 rounded-full object-cover" alt=""/>
+                                    {% endif %}
+                                    <span class="font-medium text-slate-700">
+                                        {{ patient.user.get_full_name }}
+                                    </span>
+                                </td>
+
+                                <td class="px-5 text-slate-500 whitespace-nowrap">
+                                    {{ patient.user.phone_number }}
+                                </td>
+
+                                <td class="px-5 text-slate-500">
+                                    {{ patient.user.national_code }}
+                                </td>
+                                <td class="px-5">
+                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">
+                                    فعال
+                                </span>
+                                </td>
+
+                                <td class="px-5">
+                                    <button data-patient-id="{{ patient.id }}" class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">
+                                        جزئیات
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
                         </tbody>
                     </table>
-
-                    <div class="flex items-center justify-center gap-2 py-4 text-xs text-slate-400 border-t border-slate-50">
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-50">...</button>
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۵</button>
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۴</button>
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۳</button>
-                        <button class="w-7 h-7 rounded-lg hover:bg-slate-50">۲</button>
-                        <button class="w-7 h-7 rounded-lg bg-blue-600 text-white">۱</button>
-                    </div>
                 </div>
             </div>
 
@@ -669,54 +382,21 @@
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
-                        <tr>
-                            <td class="py-3 px-3 text-slate-500">09:00</td>
-                            <td class="px-3 flex items-center gap-2">
-                                <img src="https://i.pravatar.cc/80?img=45" class="w-8 h-8 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700 whitespace-nowrap mx-5">سارا احمدی</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت پیگیری</td>
-                            <td class="px-3">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3 px-3 text-slate-500">10:30</td>
-                            <td class="px-3 flex items-center gap-2">
-                                <img src="https://i.pravatar.cc/80?img=33" class="w-8 h-8 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700 whitespace-nowrap mx-5">محمد رضا کریمی</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">بررسی نتایج</td>
-                            <td class="px-3">
-                                <span class="text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full whitespace-nowrap">در انتظار</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3 px-3 text-slate-500">12:00</td>
-                            <td class="px-3 flex items-center gap-2">
-                                <img src="https://i.pravatar.cc/80?img=12" class="w-8 h-8 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700 whitespace-nowrap mx-5">علی حسینی</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت اولیه</td>
-                            <td class="px-3">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3 px-3 text-slate-500">14:30</td>
-                            <td class="px-3 flex items-center gap-2">
-                                <img src="https://i.pravatar.cc/80?img=47" class="w-8 h-8 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700 whitespace-nowrap mx-5">زهرا صنعتی</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">بررسی چکاپ</td>
-                            <td class="px-3">
-                                <span class="text-[11px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full whitespace-nowrap">در حال انتظار</span>
-                            </td>
-                        </tr>
+                        {% for today_appointment in today_appointments %}
+                            <tr>
+                                <td class="py-3 px-3 text-slate-500">{{ today_appointment.available_slot.start_time }}</td>
+                                <td class="px-3 flex items-center gap-2">
+                                    <img src="https://i.pravatar.cc/80?img=45" class="w-8 h-8 rounded-full object-cover"
+                                         alt=""/>
+                                    <span class="font-medium text-slate-700 whitespace-nowrap mx-5">{{ today_appointment.patient.user.get_full_name }}</span>
+                                </td>
+                                <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت پیگیری</td>
+                                <td class="px-3">
+                                    <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">{{ today_appointment.get_status_display }}</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
+
                         </tbody>
                     </table>
                 </div>
@@ -748,51 +428,25 @@
                         </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50">
-                        <tr>
-                            <td class="py-3 px-3">
-                                <span class="text-[11px] bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full whitespace-nowrap">فردا</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">09:00</td>
-                            <td class="px-3 flex items-center gap-2">
-                                <img src="https://i.pravatar.cc/80?img=45" class="w-8 h-8 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700 whitespace-nowrap mx-5">سارا احمدی</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت پیگیری</td>
-                            <td class="px-3">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3 px-3">
-                                <span class="text-[11px] bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full whitespace-nowrap">فردا</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">10:30</td>
-                            <td class="px-3 flex items-center gap-2">
-                                <img src="https://i.pravatar.cc/80?img=33" class="w-8 h-8 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700 whitespace-nowrap mx-5">محمد رضا کریمی</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">بررسی نتایج</td>
-                            <td class="px-3">
-                                <span class="text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full whitespace-nowrap">در انتظار</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="py-3 px-3">
-                                <span class="text-[11px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-full whitespace-nowrap">۲۶ اردیبهشت</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">14:00</td>
-                            <td class="px-3 flex items-center gap-2">
-                                <img src="https://i.pravatar.cc/80?img=12" class="w-8 h-8 rounded-full object-cover"
-                                     alt=""/>
-                                <span class="font-medium text-slate-700 whitespace-nowrap mx-5">علی کریمی</span>
-                            </td>
-                            <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت اولیه</td>
-                            <td class="px-3">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">تایید شده</span>
-                            </td>
-                        </tr>
+                            {% for appointment in appointments %}
+                                <tr>
+                                    <td class="py-3 px-3">
+                                        <span class="text-[11px] bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full whitespace-nowrap">{{ appointment.available_slot.date|to_jalali }}</span>
+                                    </td>
+                                    <td class="px-3 text-slate-500 whitespace-nowrap">{{ appointment.available_slot.start_time }}</td>
+                                    <td class="px-3 flex items-center gap-2">
+                                        <img src="{{ appointment.patient.user.avatar.url }}" class="w-8 h-8 rounded-full object-cover"
+                                             alt=""/>
+                                        <span class="font-medium text-slate-700 whitespace-nowrap mx-5">{{ appointment.patient.user.get_full_name }}</span>
+                                    </td>
+                                    <td class="px-3 text-slate-500 whitespace-nowrap">ویزیت پیگیری</td>
+                                    <td class="px-3">
+                                        <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">{{ appointment.get_status_display }}</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+
                         </tbody>
                     </table>
                 </div>
@@ -804,7 +458,8 @@
             <div class="bg-white md:rounded-2xl w-full h-full md:h-fit md:max-w-md p-6">
                 <div class="flex items-center justify-between mb-5">
                     <h2 class="font-bold text-slate-800">افزودن بازه استثنا</h2>
-                    <button type="button" id="closeExceptionModal" class="text-slate-400 hover:text-slate-600 cursor-pointer">
+                    <button type="button" id="closeExceptionModal"
+                            class="text-slate-400 hover:text-slate-600 cursor-pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -865,49 +520,7 @@
         </form>
         <div id="patientDetailsModal"
              class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
-            <div class="relative bg-white md:rounded-2xl w-full h-full md:h-fit md:max-w-md p-6">
-                <div class="flex items-center justify-between mb-5">
-                    <h2 class="font-bold text-slate-800">جزئیات بیمار</h2>
-                    <button id="closePatientDetailsModal" class="text-slate-400 hover:text-slate-600">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="6" x2="6" y2="18"></line>
-                            <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Patient header -->
-                <div class="flex items-center gap-4 bg-slate-50 rounded-xl p-4 mb-5">
-                    <img id="pm-img" src="https://i.pravatar.cc/160?img=45" class="w-16 h-16 rounded-full object-cover"
-                         alt=""/>
-                    <div>
-                        <div id="pm-name" class="font-bold text-slate-800">سارا احمدی</div>
-                        <span id="pm-status"
-                              class="inline-block mt-2 text-[11px] px-2.5 py-1 rounded-full bg-green-50 text-green-700">فعال</span>
-                    </div>
-                </div>
-
-                <!-- Info: stacked vertically -->
-                <div class="space-y-3 text-sm">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <span class="text-xs text-slate-400">شماره تماس</span>
-                        <span id="pm-phone" class="text-slate-700 font-medium">0912-345-6789</span>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <span class="text-xs text-slate-400">کد ملی</span>
-                        <span id="pm-code" class="text-slate-700 font-medium">1234567890</span>
-                    </div>
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <span class="text-xs text-slate-400">آخرین نوبت</span>
-                        <span id="pm-last" class="text-slate-700 font-medium">1403/02/30</span>
-                    </div>
-                </div>
-
-                <button class="w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl mt-5"
-                        id="closePatientDetailsModal2">بستن
-                </button>
-            </div>
+            {% include 'doctor_panel/include/detail_patient.html' %}
         </div>
         <div id="editStatusModal"
              class="fixed invisible opacity-0 pointer-events-none duration-300 transition-all md:h-fit md:left-1/2 md:-translate-x-1/2 ease-in-out flex inset-0 z-50 items-center justify-center md:p-4">
@@ -938,15 +551,32 @@
                         <label class="block text-xs text-slate-500 mb-2">وضعیت نوبت</label>
                         <div class="space-y-2">
                             <label class="flex items-center gap-2.5 border border-slate-200 rounded-xl px-4 py-2.5 cursor-pointer has-checked:border-green-400 has-checked:bg-green-50">
-                                <input type="radio" name="status" value="تایید شده" class="accent-green-600"/>
+                                <input
+                                        type="radio"
+                                        name="status"
+                                        value="confirmed"
+                                        class="accent-green-600"
+                                />
                                 <span class="text-sm text-slate-700">تایید شده</span>
                             </label>
+
                             <label class="flex items-center gap-2.5 border border-slate-200 rounded-xl px-4 py-2.5 cursor-pointer has-checked:border-amber-400 has-checked:bg-amber-50">
-                                <input type="radio" name="status" value="در انتظار" class="accent-amber-600"/>
+                                <input
+                                        type="radio"
+                                        name="status"
+                                        value="pending"
+                                        class="accent-amber-600"
+                                />
                                 <span class="text-sm text-slate-700">در انتظار</span>
                             </label>
+
                             <label class="flex items-center gap-2.5 border border-slate-200 rounded-xl px-4 py-2.5 cursor-pointer has-checked:border-red-400 has-checked:bg-red-50">
-                                <input type="radio" name="status" value="لغو شده" class="accent-red-600"/>
+                                <input
+                                        type="radio"
+                                        name="status"
+                                        value="cancelled"
+                                        class="accent-red-600"
+                                />
                                 <span class="text-sm text-slate-700">لغو شده</span>
                             </label>
                         </div>
@@ -956,7 +586,10 @@
                         <button class="flex-1 border border-slate-200 text-slate-600 text-sm font-medium py-2.5 rounded-xl cursor-pointer"
                                 id="closeEditStatusModal2">انصراف
                         </button>
-                        <button class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl cursor-pointer">
+                        <button
+                                id="saveAppointmentStatus"
+                                type="button"
+                                class="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2.5 rounded-xl cursor-pointer">
                             ذخیره
                         </button>
                     </div>

@@ -186,20 +186,20 @@ if (apponentDate) {
         minDate: new persianDate().valueOf(),
     });
 }
-if(idDate){
+if (idDate) {
     $('#id_date').persianDatepicker({
-    format: 'YYYY/MM/DD',
-    minDate: new persianDate().valueOf(),
-    onSelect: function(unix) {
-        const date = new persianDate(unix);
+        format: 'YYYY/MM/DD',
+        minDate: new persianDate().valueOf(),
+        onSelect: function (unix) {
+            const date = new persianDate(unix);
 
-        const gregorianDate = date
-            .toCalendar('gregorian')
-            .format('YYYY-MM-DD');
+            const gregorianDate = date
+                .toCalendar('gregorian')
+                .format('YYYY-MM-DD');
 
-        document.getElementById('id_date_hidden').value = gregorianDate;
-    }
-});
+            document.getElementById('id_date_hidden').value = gregorianDate;
+        }
+    });
 }
 // console.log(apponentDate.textContent);
 
@@ -1982,9 +1982,9 @@ async function loadedScheduleWorkAjax() {
 
 // const sendManagementHours = document.getElementById('');
 
-document.addEventListener('click', (event)=>{
+document.addEventListener('click', (event) => {
     const sendManagementHours = event.target.closest('#send-management-hours');
-    if(!sendManagementHours){
+    if (!sendManagementHours) {
         return
     }
     loadedScheduleWorkAjax();
@@ -2136,7 +2136,6 @@ async function addExceptionDay() {
     lucide.createIcons();
 
 
-
     const exceptionDayContainer = document.getElementById('exception-day-container');
 
     if (result.success) {
@@ -2151,10 +2150,10 @@ document.addEventListener('click', (event) => {
         return;
     }
     addExceptionDay();
-    exceptionModal.classList.remove('visible','opacity-100','pointer-events-auto');
-    exceptionModal.classList.add('invisible','opacity-0','pointer-events-none');
-    overlay.classList.remove('visible','opacity-100');
-    overlay.classList.add('invisible','opacity-0');
+    exceptionModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
+    exceptionModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
+    overlay.classList.remove('visible', 'opacity-100');
+    overlay.classList.add('invisible', 'opacity-0');
     body.style.overflow = 'auto';
 });
 
@@ -2191,11 +2190,11 @@ document.addEventListener('click', (event) => {
 });
 
 //edit profile with ajax request
-async function editProfileAjax(){
+async function editProfileAjax() {
     const profileForm = document.getElementById('profile-form');
     const formData = new FormData(profileForm);
 
-    const response = await fetch('/edit-profile-doctor',{
+    const response = await fetch('/edit-profile-doctor', {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCookie('csrftoken'),
@@ -2209,11 +2208,217 @@ async function editProfileAjax(){
     console.log(result.profile_doctor)
 }
 
-document.addEventListener('click',(event)=>{
+document.addEventListener('click', (event) => {
     const changeProfileBtn = event.target.closest('#change-profile-btn')
-    if(!changeProfileBtn){
+    if (!changeProfileBtn) {
         return
     }
     editProfileAjax()
 })
 
+//pagination for appointment
+
+document.addEventListener('click', async (event) => {
+
+    const rangePageAppointment =
+        event.target.closest('.range-page-appointment');
+
+    if (!rangePageAppointment) {
+        return;
+    }
+
+    const page = rangePageAppointment.dataset.pageAppointment;
+
+    const response = await fetch('/doctor-panel?page=' + page, {
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+    });
+
+    const result = await response.json();
+
+    const appointmentList = document.getElementById('appoiment');
+
+    appointmentList.innerHTML = result.appointment_list;
+
+    lucide.createIcons();
+});
+
+document.addEventListener('click', async (event) => {
+
+    const editButton = event.target.closest('.open-edit-state');
+
+    if (!editButton) {
+        return;
+    }
+
+    const appointmentId = editButton.dataset.appointmentId;
+
+    const response = await fetch(
+        `/appointment/${appointmentId}/`,
+        {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        }
+    );
+
+    const result = await response.json();
+
+    if (!result.success) {
+        return;
+    }
+
+    const appointment = result.appointment;
+
+    document.getElementById('sm-name').textContent =
+        appointment.name;
+
+    document.getElementById('sm-meta').textContent =
+        `${appointment.date}، ${appointment.start_time} — ویزیت حضوری`;
+
+    const statusInputs =
+        document.querySelectorAll('#editStatusModal input[name="status"]');
+
+    statusInputs.forEach(input => {
+        input.checked = input.value === appointment.status;
+    });
+
+    const editStatusModal =
+        document.getElementById('editStatusModal');
+
+    editStatusModal.classList.remove(
+        'invisible',
+        'opacity-0',
+        'pointer-events-none'
+    );
+
+    editStatusModal.dataset.appointmentId = appointment.id;
+});
+
+
+document.addEventListener('click', (event) => {
+
+    if (
+        event.target.closest('#closeEditStatusModal') ||
+        event.target.closest('#closeEditStatusModal2')
+    ) {
+        editStatusModal.classList.add(
+            'invisible',
+            'opacity-0',
+            'pointer-events-none'
+        );
+    }
+
+});
+
+document.addEventListener('click', async (event) => {
+
+    const saveButton = event.target.closest('#saveAppointmentStatus');
+
+    if (!saveButton) {
+        return;
+    }
+
+    const editStatusModal = document.getElementById('editStatusModal');
+
+    const appointmentId = editStatusModal.dataset.appointmentId;
+
+    const selectedStatus = document.querySelector(
+        '#editStatusModal input[name="status"]:checked'
+    );
+
+    if (!selectedStatus) {
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('status', selectedStatus.value);
+
+    const response = await fetch(
+        `/appointment/${appointmentId}/update-status/`,
+        {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: formData,
+        }
+    );
+
+    const result = await response.json();
+
+    if (!result.success) {
+        console.log(result.errors);
+        return;
+    }
+
+    // آپدیت وضعیت همان ردیف جدول
+const appointmentRow = document.querySelector(
+    `[data-appointment-row="${appointmentId}"]`
+);
+
+if (!appointmentRow) {
+    console.log('Appointment row not found:', appointmentId);
+    return;
+}
+
+const statusElement =
+    appointmentRow.querySelector('.appointment-status');
+
+if (!statusElement) {
+    console.log('Status element not found:', appointmentId);
+    return;
+}
+
+statusElement.textContent =
+    result.appointment.status_display;
+
+    // بستن Modal
+    editStatusModal.classList.add(
+        'invisible',
+        'opacity-0',
+        'pointer-events-none'
+    );
+});
+
+// show detail patient
+document.addEventListener('click', (event) => {
+
+    const detailPatientBtn =
+        event.target.closest('.detail-patient');
+
+    if (!detailPatientBtn) {
+        return;
+    }
+
+    async function detailPatientAjax() {
+
+        const getPatientId =
+            detailPatientBtn.dataset.patientId;
+
+        const response = await fetch(
+            '/detail-patient/' + getPatientId,
+            {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            }
+        );
+
+        const result = await response.json();
+
+        const patientDetailsModal =
+            document.getElementById('patientDetailsModal');
+
+        patientDetailsModal.innerHTML =
+            result.detail_patient;
+    }
+
+    detailPatientAjax();
+});

@@ -1,19 +1,22 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db import transaction
-from django.db.models import OuterRef, Exists
+from django.db.models import OuterRef, Exists, Avg
 from django.http import JsonResponse, HttpRequest
 from django.shortcuts import render, get_object_or_404, redirect
 # Create your views here.
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.decorators.http import require_POST
-
+from django.utils import timezone
 from account_module.models import User
-from doctor_panel.forms import WeeklyScheduleForm, editPeriodForm, ScheduleExceptionForm, ProfileForm, DoctorForm
-from doctors_module.models import Doctor, WeeklySchedule, SchedulePeriod, AvailableSlot, Appointment, ScheduleException, \
-    Specialty
+from doctor_panel.forms import WeeklyScheduleForm, editPeriodForm, ScheduleExceptionForm, ProfileForm, DoctorForm,AppointmentStatusForm
+from doctors_module.models import Doctor, WeeklySchedule, SchedulePeriod, AvailableSlot, Appointment, ScheduleException
 from doctors_module.service import generate_slots_for_days, generate_slots_for_date
 from datetime import date, timedelta
+
+from patient.models import Patient
+
 
 @login_required
 def doctor_panel(request):
@@ -25,9 +28,18 @@ def doctor_panel(request):
     if not Doctor.objects.filter(user_id=request.user.id).exists():
         return redirect(reverse('home'))
     doctor = Doctor.objects.get(user_id=request.user.id)
+    today = timezone.localdate()
+    today_patients_count = Patient.objects.filter(appointments__doctor=doctor,appointments__available_slot__date=today).distinct().count()
+    today_appointments = Appointment.objects.filter(doctor=doctor, available_slot__date=today).select_related('patient__user', 'available_slot')
     profile_form = ProfileForm(instance=get_user)
     doctor_form = DoctorForm(instance=doctor)
-
+    appointment = Appointment.objects.filter(doctor=doctor, available_slot__is_available=False).select_related('patient__user', 'available_slot').order_by('available_slot__date')
+    patients = Patient.objects.filter(appointments__doctor=doctor).distinct().order_by('appointments__available_slot__date')
+    paginator = Paginator(appointment, 8)
+    get_page_appointment = request.GET.get('page')
+    page_obj = paginator.get_page(get_page_appointment)
+    completed_appointments_count = Appointment.objects.filter(doctor=doctor,status='completed',available_slot__date=today).count()
+    rating = Doctor.objects.filter(id=doctor.id,is_active=True).annotate(avg_rating=Avg('comments__rating')).first()
 
     if request.method == 'POST':
         weekday_form = WeeklyScheduleForm(request.POST)
@@ -65,10 +77,19 @@ def doctor_panel(request):
         'exception_work': exception_work,
         'profile_form': profile_form,
         'doctor_form': doctor_form,
+        'appointments': appointment,
+        'page_obj': page_obj,
+        'patients': patients,
+        'today_patients_count': today_patients_count,
+        'today_appointments': today_appointments,
+        'completed_appointments_count': completed_appointments_count,
+        'rating': rating
+
     }
     if request.headers.get("X-Requested-With") == "XMLHttpRequest":
         return JsonResponse({
             'list_management_working': render_to_string('doctor_panel/include/list_management_working.html', context),
+            'appointment_list': render_to_string('doctor_panel/include/appointment_list.html', context),
         })
     return render(request, 'doctor_panel/doctor_dashboard.html', context)
 
@@ -305,4 +326,120 @@ def EditProfile(request):
     return JsonResponse({
         'success': False,
         'message': 'اطلاعات وارد شده معتبر نیست'
+    })
+
+
+@login_required
+def appointment_detail(request, appointment_id):
+
+    doctor = Doctor.objects.filter(user=request.user).first()
+
+    if not doctor:
+        return JsonResponse({
+            'success': False,
+            'message': 'دسترسی غیرمجاز'
+        }, status=403)
+
+    appointment = Appointment.objects.filter(
+        id=appointment_id,
+        doctor=doctor
+    ).select_related(
+        'patient__user',
+        'available_slot'
+    ).first()
+
+    if not appointment:
+        return JsonResponse({
+            'success': False,
+            'message': 'نوبت پیدا نشد'
+        }, status=404)
+
+    return JsonResponse({
+        'success': True,
+        'appointment': {
+            'id': appointment.id,
+            'name': appointment.patient.user.get_full_name(),
+            'status': appointment.status,
+            'status_display': appointment.get_status_display(),
+            'date': appointment.available_slot.date.strftime('%Y-%m-%d'),
+            'start_time': appointment.available_slot.start_time.strftime('%H:%M'),
+        }
+    })
+@login_required
+def update_appointment_status(request, appointment_id):
+
+    if request.method != 'POST':
+        return JsonResponse({
+            'success': False,
+            'message': 'متد نامعتبر است.'
+        }, status=405)
+
+    doctor = Doctor.objects.filter(user=request.user).first()
+
+    if not doctor:
+        return JsonResponse({
+            'success': False,
+            'message': 'دسترسی غیرمجاز'
+        }, status=403)
+
+    appointment = Appointment.objects.filter(
+        id=appointment_id,
+        doctor=doctor
+    ).first()
+
+    if not appointment:
+        return JsonResponse({
+            'success': False,
+            'message': 'نوبت پیدا نشد.'
+        }, status=404)
+
+    form = AppointmentStatusForm(request.POST, instance=appointment)
+
+    if form.is_valid():
+
+        appointment = form.save()
+
+        return JsonResponse({
+            'success': True,
+            'appointment': {
+                'id': appointment.id,
+                'status': appointment.status,
+                'status_display': appointment.get_status_display(),
+            }
+        })
+
+    return JsonResponse({
+        'success': False,
+        'errors': form.errors
+    }, status=400)
+
+
+@login_required
+def detail_patient(request, patient_id):
+
+    doctor = Doctor.objects.filter(user=request.user).first()
+
+    if not doctor:
+        return JsonResponse({
+            'success': False,
+            'message': 'دسترسی غیرمجاز'
+        }, status=403)
+
+    patient = Patient.objects.filter(id=patient_id,appointments__doctor=doctor).select_related('user').first()
+
+    if not patient:
+        return JsonResponse({
+            'success': False,
+            'message': 'بیمار پیدا نشد.'
+        }, status=404)
+    patient_appointment = patient.appointments.order_by('-available_slot__date').first()
+    context = {
+        'patient': patient,
+        'patient_appointment': patient_appointment
+    }
+
+    return JsonResponse({
+        'success': True,
+        'detail_patient': render_to_string('doctor_panel/include/detail_patient.html',context,request=request
+        )
     })

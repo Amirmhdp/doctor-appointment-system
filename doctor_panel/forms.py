@@ -1,7 +1,7 @@
 from django import forms
 
 from account_module.models import User
-from doctors_module.models import Doctor
+from doctors_module.models import Doctor, Appointment
 
 
 class WeeklyScheduleForm(forms.Form):
@@ -212,4 +212,7 @@ class DoctorForm(forms.ModelForm):
             'specialties': 'تخصص',
         }
 
-
+class AppointmentStatusForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = ['status']
