@@ -6,7 +6,9 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
+from account_module.models import User
 from doctors_module.models import Appointment
+from user_panel.forms import ProfileForm
 
 
 @login_required
@@ -14,7 +16,8 @@ def user_panel(request):
 
     patient = request.user.id
     today = timezone.localdate()
-
+    user = request.user
+    profile_form = ProfileForm(instance=user)
     appointments = Appointment.objects.filter(patient__user_id=patient,status__in=['pending', 'confirmed']).select_related('doctor__user','available_slot', ).prefetch_related('doctor__specialties', ).order_by('available_slot__date', 'available_slot__start_time')
 
     upcoming_appointments = appointments.filter(status__in=['pending', 'confirmed'],available_slot__date__gte=today).order_by('available_slot__date', 'available_slot__start_time')
@@ -26,6 +29,7 @@ def user_panel(request):
         'upcoming_appointments': upcoming_appointments,
         'past_appointments': past_appointments,
         'cancelled_appointments': cancelled_appointments,
+        'profile_form': profile_form
     }
 
     return render(request,'user_panel/user_panel.html',context)
@@ -49,7 +53,7 @@ def show_canceled(request, pk):
         'detail_cancel': render_to_string('user_panel/include/detail_cancel.html', context, request=request)
     })
 
-@login_required
+@require_POST
 def cancel_appointment(request, appointment_id):
 
     if request.method != 'POST':
@@ -96,4 +100,33 @@ def cancel_appointment(request, appointment_id):
         'success': True,
         'message': 'نوبت با موفقیت لغو شد.',
         'list_appointment': render_to_string('user_panel/include/list_appointment.html', context, request=request)
+    })
+
+@login_required
+@require_POST
+def EditProfileUser(request):
+    user_id = request.user.id
+    user = User.objects.filter(id=user_id).first()
+    if not user:
+        return JsonResponse({
+            'success': False,
+            'message': 'کاربر پیدا نشد'
+        })
+    profile_form = ProfileForm(request.POST, request.FILES, instance=user)
+    if profile_form.is_valid():
+        profile_form.save()
+        profile_form = ProfileForm(instance=user)
+        user = User.objects.get(id=request.user.id)
+        context = {
+            'profile_form': profile_form,
+            'user': user
+        }
+        return JsonResponse({
+            'success': True,
+            'message': 'پروفایل با موفقیت ویرایش شد.',
+            'profile_user': render_to_string('user_panel/include/profile_user_panel.html', context, request=request)
+        })
+    return JsonResponse({
+        'success': False,
+        'message': 'اطلاعات وارد شده معتبر نیست'
     })

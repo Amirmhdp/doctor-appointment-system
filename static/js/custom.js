@@ -2639,3 +2639,30 @@ document.addEventListener('click', async (event) => {
     }
 
 });
+
+// edit profile user panel
+
+async function editProfileUserPanelAjax() {
+    const profileForm = document.getElementById('user-panel-profile-form');
+    const formData = new FormData(profileForm);
+
+    const response = await fetch('/edit-profile-user', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: formData,
+    })
+    const result = await response.json()
+    const userProfile = document.getElementById('manage-visit-time');
+    userProfile.innerHTML = result.profile_user;
+}
+
+document.addEventListener('click', (event) => {
+    const changeProfileBtn = event.target.closest('#change-profile-user-btn')
+    if (!changeProfileBtn) {
+        return
+    }
+    editProfileUserPanelAjax()
+})
