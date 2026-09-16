@@ -985,108 +985,119 @@ document.addEventListener('click', async (event) => {
 
 // go to oppoiment list
 
-const seeAllAppoiments = document.querySelectorAll('.see-all-appoiment');
+document.addEventListener('click', (event) => {
 
-if (seeAllAppoiments) {
-    seeAllAppoiments.forEach(seeAllAppoiment => {
-        seeAllAppoiment.addEventListener('click', () => {
-            const itemNavPanels = document.querySelectorAll('.item-nav-panel');
+    const seeAllAppoiment = event.target.closest('.see-all-appoiment');
 
-            itemNavPanels.forEach(itemNavPanel => {
-                itemNavPanel.classList.remove('bg-blue-600', 'text-white');
-                itemNavPanel.classList.add('text-slate-500');
-            });
-            const appoimentBtn = document.getElementById('appoiment-btn');
-            const appoimentSvg = document.getElementById('appoiment-svg');
-            appoimentBtn.classList.remove('bg-white', 'text-slate-500');
-            appoimentBtn.classList.add('bg-blue-600', 'text-white');
-            const iconDocotrPanels = document.querySelectorAll('.icon-docotr-panel');
-            iconDocotrPanels.forEach(iconDocotrPanel => {
-                iconDocotrPanel.classList.remove('text-white');
-                iconDocotrPanel.classList.add('text-slate-500');
-            });
-            appoimentSvg.classList.remove('text-slate-500');
-            appoimentSvg.classList.add('text-white');
-            const doctorInfoPanels = document.querySelectorAll('.doctor-info-panel');
-            const appoiment = document.getElementById('appoiment');
+    if (!seeAllAppoiment) {
+        return;
+    }
 
-            doctorInfoPanels.forEach(doctorInfoPanel => {
-                doctorInfoPanel.classList.add('hidden');
+    const itemNavPanels = document.querySelectorAll('.item-nav-panel');
 
-            });
-            appoiment.classList.remove('hidden');
+    itemNavPanels.forEach(itemNavPanel => {
+        itemNavPanel.classList.remove(
+            'bg-blue-600',
+            'text-white'
+        );
 
-            const myAppoimentTaps = document.querySelectorAll('.my-appoiment-taps');
-
-            const getAttSeeAllBtn = seeAllAppoiment.dataset.getTimeAppoiment;
+        itemNavPanel.classList.add('text-slate-500');
+    });
 
 
-            if (getAttSeeAllBtn == 'future-appoiment') {
-                myAppoimentTaps.forEach(item => {
-                    item.classList.remove('bg-blue-600', 'text-white');
-                    item.classList.add('text-slate-500');
-                    if (item.dataset.timeAppoiment == 'future-appoiment') {
-                        item.classList.remove('text-slate-500');
-                        item.classList.add('bg-blue-600', 'text-white');
+    const appoimentBtn = document.getElementById('appoiment-btn');
+    const appoimentSvg = document.getElementById('appoiment-svg');
 
-                        const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
-                        listAppoimentTimes.forEach(listAppoimentTime => {
-                            listAppoimentTime.classList.add('hidden');
-                        });
+    appoimentBtn.classList.remove(
+        'bg-white',
+        'text-slate-500'
+    );
 
-                        const getAtt = item.dataset.timeAppoiment;
-                        const timeAppoimentContent = document.getElementById(getAtt);
-                        timeAppoimentContent.classList.remove('hidden');
-                    }
-
-                });
-
-            }
-            if (getAttSeeAllBtn == 'past-appoiment') {
-                myAppoimentTaps.forEach(item => {
-                    item.classList.remove('bg-blue-600', 'text-white');
-                    item.classList.add('text-slate-500');
-                    if (item.dataset.timeAppoiment == 'past-appoiment') {
-                        item.classList.remove('text-slate-500');
-                        item.classList.add('bg-blue-600', 'text-white');
-
-                        const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
-                        listAppoimentTimes.forEach(listAppoimentTime => {
-                            listAppoimentTime.classList.add('hidden');
-                        });
-
-                        const getAtt = item.dataset.timeAppoiment;
-                        const timeAppoimentContent = document.getElementById(getAtt);
-                        timeAppoimentContent.classList.remove('hidden');
-                    }
-
-                });
-            }
-            if (getAttSeeAllBtn == 'cancel-appoiment') {
-                myAppoimentTaps.forEach(item => {
-                    item.classList.remove('bg-blue-600', 'text-white');
-                    item.classList.add('text-slate-500');
-                    if (item.dataset.timeAppoiment == 'cancel-appoiment') {
-                        item.classList.remove('text-slate-500');
-                        item.classList.add('bg-blue-600', 'text-white');
-
-                        const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
-                        listAppoimentTimes.forEach(listAppoimentTime => {
-                            listAppoimentTime.classList.add('hidden');
-                        });
-
-                        const getAtt = item.dataset.timeAppoiment;
-                        const timeAppoimentContent = document.getElementById(getAtt);
-                        timeAppoimentContent.classList.remove('hidden');
-                    }
-
-                });
-            }
+    appoimentBtn.classList.add(
+        'bg-blue-600',
+        'text-white'
+    );
 
 
-        })
-    })
-}
+    const iconDocotrPanels =
+        document.querySelectorAll('.icon-docotr-panel');
+
+    iconDocotrPanels.forEach(iconDocotrPanel => {
+        iconDocotrPanel.classList.remove('text-white');
+        iconDocotrPanel.classList.add('text-slate-500');
+    });
+
+
+    appoimentSvg.classList.remove('text-slate-500');
+    appoimentSvg.classList.add('text-white');
+
+
+    const doctorInfoPanels =
+        document.querySelectorAll('.doctor-info-panel');
+
+    const appoiment =
+        document.getElementById('appoiment');
+
+    doctorInfoPanels.forEach(doctorInfoPanel => {
+        doctorInfoPanel.classList.add('hidden');
+    });
+
+    appoiment.classList.remove('hidden');
+
+
+    const myAppoimentTaps =
+        document.querySelectorAll('.my-appoiment-taps');
+
+    const getAttSeeAllBtn =
+        seeAllAppoiment.dataset.getTimeAppoiment;
+
+
+    // ابتدا همه تب‌ها را غیرفعال کن
+    myAppoimentTaps.forEach(item => {
+        item.classList.remove(
+            'bg-blue-600',
+            'text-white'
+        );
+
+        item.classList.add('text-slate-500');
+    });
+
+
+    // تب موردنظر را فعال کن
+    const selectedTap =
+        document.querySelector(
+            `.my-appoiment-taps[data-time-appoiment="${getAttSeeAllBtn}"]`
+        );
+
+    if (selectedTap) {
+
+        selectedTap.classList.remove('text-slate-500');
+
+        selectedTap.classList.add(
+            'bg-blue-600',
+            'text-white'
+        );
+    }
+
+
+    // همه لیست‌ها را مخفی کن
+    const listAppoimentTimes =
+        document.querySelectorAll('.list-appoiment-time');
+
+    listAppoimentTimes.forEach(listAppoimentTime => {
+        listAppoimentTime.classList.add('hidden');
+    });
+
+
+    // لیست مربوط به تب انتخاب‌شده را نمایش بده
+    const timeAppoimentContent =
+        document.getElementById(getAttSeeAllBtn);
+
+    if (timeAppoimentContent) {
+        timeAppoimentContent.classList.remove('hidden');
+    }
+
+});
 
 
 // go to intersted doctors
@@ -1128,65 +1139,171 @@ if (interstedDoctors) {
 
 // active inactive appoiment taps
 
-const myAppoimentTaps = document.querySelectorAll('.my-appoiment-taps');
+document.addEventListener('click', (event) => {
 
-if (myAppoimentTaps) {
-    myAppoimentTaps.forEach(myAppoimentTap => {
-        myAppoimentTap.addEventListener('click', () => {
-            myAppoimentTaps.forEach(item => {
-                item.classList.remove('bg-blue-600', 'text-white');
-                item.classList.add('text-slate-500');
-            });
-            myAppoimentTap.classList.add('bg-blue-600', 'text-white');
-            myAppoimentTap.classList.remove('text-slate-500');
+    const myAppoimentTap =
+        event.target.closest('.my-appoiment-taps');
+
+    if (!myAppoimentTap) {
+        return;
+    }
 
 
-            const listAppoimentTimes = document.querySelectorAll('.list-appoiment-time');
-            listAppoimentTimes.forEach(listAppoimentTime => {
-                listAppoimentTime.classList.add('hidden');
-            });
+    // غیرفعال کردن تمام تب‌ها
+    const myAppoimentTaps =
+        document.querySelectorAll('.my-appoiment-taps');
 
-            const getAtt = myAppoimentTap.dataset.timeAppoiment;
-            const timeAppoimentContent = document.getElementById(getAtt);
-            timeAppoimentContent.classList.remove('hidden');
+    myAppoimentTaps.forEach(item => {
+        item.classList.remove(
+            'bg-blue-600',
+            'text-white'
+        );
 
-
-        });
+        item.classList.add('text-slate-500');
     });
-}
 
-const cancelAppoimentBtns = document.querySelectorAll('.cancel-appoiment-btn');
-const cancelModal = document.getElementById('cancelModal');
-const closeCancleModal = document.getElementById('cancelModal');
 
-if (cancelAppoimentBtns, cancelModal, closeCancleModal) {
-    cancelAppoimentBtns.forEach(cancelAppoimentBtn => {
-        cancelAppoimentBtn.addEventListener('click', () => {
-            cancelModal.classList.remove('invisible', 'opacity-0', 'pointer-events-none');
-            cancelModal.classList.add('visible', 'opacity-100', 'pointer-events-auto');
-            overlay.classList.remove('invisible', 'opacity-0');
-            overlay.classList.add('visible', 'opacity-100');
-            body.style.overflow = 'hidden'
-        })
+    // فعال کردن تب انتخاب شده
+    myAppoimentTap.classList.remove('text-slate-500');
 
-    })
-    closeCancleModal.addEventListener('click', () => {
-        cancelModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        cancelModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
+    myAppoimentTap.classList.add(
+        'bg-blue-600',
+        'text-white'
+    );
 
-    })
-    overlay.addEventListener('click', () => {
-        cancelModal.classList.remove('visible', 'opacity-100', 'pointer-events-auto');
-        cancelModal.classList.add('invisible', 'opacity-0', 'pointer-events-none');
-        overlay.classList.remove('visible', 'opacity-100');
-        overlay.classList.add('invisible', 'opacity-0');
-        body.style.overflow = 'auto'
 
-    })
-}
+    // مخفی کردن تمام لیست‌ها
+    const listAppoimentTimes =
+        document.querySelectorAll('.list-appoiment-time');
+
+    listAppoimentTimes.forEach(listAppoimentTime => {
+        listAppoimentTime.classList.add('hidden');
+    });
+
+
+    // پیدا کردن محتوای تب
+    const getAtt =
+        myAppoimentTap.dataset.timeAppoiment;
+
+    const timeAppoimentContent =
+        document.getElementById(getAtt);
+
+
+    // نمایش محتوای تب
+    if (timeAppoimentContent) {
+        timeAppoimentContent.classList.remove('hidden');
+    }
+
+});
+
+document.addEventListener('click', (event) => {
+
+    // دکمه باز کردن مودال لغو
+    const cancelAppoimentBtn =
+        event.target.closest('.cancel-appoiment-btn');
+
+    if (cancelAppoimentBtn) {
+
+        const cancelModal =
+            document.getElementById('cancelModal');
+
+        cancelModal.classList.remove(
+            'invisible',
+            'opacity-0',
+            'pointer-events-none'
+        );
+
+        cancelModal.classList.add(
+            'visible',
+            'opacity-100',
+            'pointer-events-auto'
+        );
+
+        overlay.classList.remove(
+            'invisible',
+            'opacity-0'
+        );
+
+        overlay.classList.add(
+            'visible',
+            'opacity-100'
+        );
+
+        body.style.overflow = 'hidden';
+
+        return;
+    }
+
+
+    // دکمه بستن مودال
+    const closeCancleModal =
+        event.target.closest('#close-cancle-modal');
+
+    if (closeCancleModal) {
+
+        const cancelModal =
+            document.getElementById('cancelModal');
+
+        cancelModal.classList.remove(
+            'visible',
+            'opacity-100',
+            'pointer-events-auto'
+        );
+
+        cancelModal.classList.add(
+            'invisible',
+            'opacity-0',
+            'pointer-events-none'
+        );
+
+        overlay.classList.remove(
+            'visible',
+            'opacity-100'
+        );
+
+        overlay.classList.add(
+            'invisible',
+            'opacity-0'
+        );
+
+        body.style.overflow = 'auto';
+
+        return;
+    }
+
+
+    // کلیک روی Overlay
+    if (event.target === overlay) {
+
+        const cancelModal =
+            document.getElementById('cancelModal');
+
+        cancelModal.classList.remove(
+            'visible',
+            'opacity-100',
+            'pointer-events-auto'
+        );
+
+        cancelModal.classList.add(
+            'invisible',
+            'opacity-0',
+            'pointer-events-none'
+        );
+
+        overlay.classList.remove(
+            'visible',
+            'opacity-100'
+        );
+
+        overlay.classList.add(
+            'invisible',
+            'opacity-0'
+        );
+
+        body.style.overflow = 'auto';
+    }
+
+});
 
 
 // counter
@@ -2421,4 +2538,104 @@ document.addEventListener('click', (event) => {
     }
 
     detailPatientAjax();
+});
+
+
+document.addEventListener('click', async (event) => {
+
+    // نمایش جزئیات نوبت برای لغو
+    const cancelAppoimentBtn =
+        event.target.closest('.cancel-appoiment-btn');
+
+    if (cancelAppoimentBtn) {
+
+        const appointmentId =
+            cancelAppoimentBtn.dataset.appointmentId;
+
+        const response = await fetch(
+            '/show-canceld-detail/' + appointmentId,
+            {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            }
+        );
+
+        const result = await response.json();
+
+        const cancelModal =
+            document.getElementById('cancelModal');
+
+        cancelModal.innerHTML =
+            result.detail_cancel;
+
+        return;
+    }
+
+
+    // تایید لغو نوبت
+    const confirmCancelBtn =
+        event.target.closest('#confirm-cancel-btn');
+
+    if (confirmCancelBtn) {
+
+        const appointmentId =
+            confirmCancelBtn.dataset.deleteAppointmentId;
+
+        const response = await fetch(
+            '/delete-appointment/' + appointmentId,
+            {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            }
+        );
+
+        const result = await response.json();
+
+        if (!result.success) {
+            return;
+        }
+
+        // بروزرسانی لیست نوبت‌ها
+        const appointmentList =
+            document.getElementById('appoiment');
+
+        appointmentList.innerHTML =
+            result.list_appointment;
+
+
+        // بستن مودال
+        const cancelModal =
+            document.getElementById('cancelModal');
+
+        cancelModal.classList.remove(
+            'visible',
+            'opacity-100',
+            'pointer-events-auto'
+        );
+
+        cancelModal.classList.add(
+            'invisible',
+            'opacity-0',
+            'pointer-events-none'
+        );
+
+        overlay.classList.remove(
+            'visible',
+            'opacity-100'
+        );
+
+        overlay.classList.add(
+            'invisible',
+            'opacity-0'
+        );
+
+        body.style.overflow = 'auto';
+    }
+
 });

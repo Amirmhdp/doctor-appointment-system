@@ -95,6 +95,7 @@ def regenerate_slots_for_doctor(doctor, days=30):
             doctor=doctor,
             date=target_date
         )
+
 def book_appointment(patient, slot_id):
 
     with transaction.atomic():

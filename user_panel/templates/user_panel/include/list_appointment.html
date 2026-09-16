@@ -1,0 +1,327 @@
+{% load poll_extras %}
+<div class="flex-1 p-1 md:p-6 space-y-5">
+    <div>
+        <h1 class="text-xl font-bold text-slate-800">نوبت‌های من</h1>
+        <p class="text-sm text-slate-500 mt-1">لیست همه نوبت‌های ثبت‌شده شما نزد پزشکان</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="overflow-x-auto w-full">
+        <div class="flex items-center gap-2 bg-white rounded-xl p-1.5 w-fit">
+            <button data-time-appoiment="all-appoiment"
+                    class="px-4 py-2 rounded-lg text-sm bg-blue-600 text-white font-medium whitespace-nowrap my-appoiment-taps hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out cursor-pointer">
+                همه نوبت‌ها
+            </button>
+            <button data-time-appoiment="future-appoiment"
+                    class="px-4 py-2 rounded-lg text-sm text-slate-500 whitespace-nowrap my-appoiment-taps hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out cursor-pointer">
+                نوبت‌های آینده
+            </button>
+            <button data-time-appoiment="past-appoiment"
+                    class="px-4 py-2 rounded-lg text-sm text-slate-500 whitespace-nowrap my-appoiment-taps hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out cursor-pointer">
+                نوبت‌های گذشته
+            </button>
+            <button data-time-appoiment="cancel-appoiment"
+                    class="px-4 py-2 rounded-lg text-sm text-slate-500 whitespace-nowrap my-appoiment-taps hover:bg-blue-600 hover:text-white transition-all duration-300 ease-in-out cursor-pointer">
+                نوبت‌های لغو شده
+            </button>
+        </div>
+    </div>
+
+    <!-- Appointment list -->
+    <div class="max-w-5xl mx-auto space-y-3 list-appoiment-time" id="all-appoiment">
+        {% for appointment in appointments %}
+
+            <div class="bg-white rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center gap-4 md:gap-4 lg:gap-6 justify-between">
+
+                <!-- doctor + status -->
+                <div class="flex items-center gap-3 min-w-0 md:flex-1 lg:flex-none lg:w-56">
+
+                      {% if request.user.avatar %}
+                          <img src="{{ appointment.doctor.image.url }}" class="w-11 h-11 rounded-full object-cover shrink-0" alt="{{ appointment.doctor.user.get_full_name }}">
+                        {% else %}
+                        <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                    {% endif %}
+                    <div class="min-w-0">
+
+                        <div class="flex items-center gap-2 flex-wrap">
+
+                        <span class="text-sm font-medium text-slate-800 whitespace-nowrap">
+                            {{ appointment.doctor.user.get_full_name }}
+                        </span>
+
+                            {% if appointment.status == 'confirmed' %}
+                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full md:hidden w-fit">
+                                    تایید شده
+                                </span>
+                            {% elif appointment.status == 'pending' %}
+                                <span class="text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full md:hidden w-fit">
+                                    در انتظار تایید
+                                </span>
+                            {% elif appointment.status == 'cancelled' %}
+                                <span class="text-[11px] bg-red-50 text-red-700 px-2.5 py-1 rounded-full md:hidden w-fit">
+                                    لغو شده
+                                </span>
+                            {% elif appointment.status == 'completed' %}
+                                <span class="text-[11px] bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full md:hidden w-fit">
+                                    انجام شده
+                                </span>
+                            {% endif %}
+
+                        </div>
+
+                        <div class="text-xs text-slate-400 whitespace-nowrap">
+                            {{ appointment.doctor.specialties.first.name }}
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- status -->
+                {% if appointment.status == 'confirmed' %}
+                    <span class="hidden md:inline-block text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap shrink-0 w-fit">
+                        تایید شده
+                    </span>
+                {% elif appointment.status == 'pending' %}
+                    <span class="hidden md:inline-block text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full whitespace-nowrap shrink-0 w-fit">
+                        در انتظار تایید
+                    </span>
+                {% elif appointment.status == 'cancelled' %}
+                    <span class="hidden md:inline-block text-[11px] bg-red-50 text-red-700 px-2.5 py-1 rounded-full whitespace-nowrap shrink-0 w-fit">
+                        لغو شده
+                    </span>
+                {% elif appointment.status == 'completed' %}
+                    <span class="hidden md:inline-block text-[11px] bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full whitespace-nowrap shrink-0 w-fit">
+                        انجام شده
+                    </span>
+                {% endif %}
+
+                <!-- date + time -->
+                <div class="flex items-center justify-between md:justify-start gap-3 md:gap-4 lg:gap-6 text-xs md:text-sm text-slate-500 md:text-slate-600 shrink-0">
+                    <span class="whitespace-nowrap">
+                        {{ appointment.available_slot.date|to_jalali }}
+                    </span>
+                    <span class="whitespace-nowrap font-medium md:font-normal">
+                        {{ appointment.available_slot.start_time|time:"H:i" }}
+                    </span>
+                </div>
+
+                <!-- action -->
+                {% if appointment.status == 'pending' or appointment.status == 'confirmed' %}
+                    <button
+                            type="button"
+                            data-appointment-id="{{ appointment.id }}"
+                            data-url="{% url 'cancel_appointment' appointment.id %}"
+                            data-doctor="{{ appointment.doctor.user.get_full_name }}"
+                            data-date="{{ appointment.available_slot.date|to_jalali }}"
+                            data-time="{{ appointment.available_slot.start_time|time:'H:i' }}"
+                            class="cancel-appoiment-btn cursor-pointer text-red-700 text-xs border border-red-100 rounded-lg px-4 py-2 whitespace-nowrap w-full md:w-auto shrink-0">
+                            لغو نوبت
+                    </button>
+                {% endif %}
+
+            </div>
+
+        {% empty %}
+            <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+                <img src="/static/images/appointment.webp" class="w-full md:w-[60%] lg:w-[50%]" alt="no-appointment-img">
+                <p class="text-[16px] text-custom-black font-bold lg:text-[16px]">هیچ نوبتی در سیستم یافت نشد</p>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="max-w-5xl mx-auto space-y-3 list-appoiment-time hidden" id="future-appoiment">
+
+        {% for appointment in upcoming_appointments %}
+
+            <div class="bg-white rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center gap-4 md:gap-4 lg:gap-6 justify-between">
+
+                <div class="flex items-center gap-3 min-w-0 md:flex-1 lg:flex-none lg:w-56">
+
+                    {% if appointment.doctor.image %}
+                        <img src="{{ appointment.doctor.image.url }}" class="w-11 h-11 rounded-full object-cover shrink-0" alt="{{ appointment.doctor.user.get_full_name }}">
+                    {% endif %}
+
+                    <div class="min-w-0">
+
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-sm font-medium text-slate-800 whitespace-nowrap">
+                                {{ appointment.doctor.user.get_full_name }}
+                            </span>
+
+                            {% if appointment.status == 'confirmed' %}
+                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full md:hidden">
+                                    تایید شده
+                                </span>
+                            {% else %}
+                                <span class="text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full md:hidden">
+                                    در انتظار تایید
+                                </span>
+                            {% endif %}
+                        </div>
+
+                        <div class="text-xs text-slate-400 whitespace-nowrap">
+                            {{ appointment.doctor.specialties.first.name }}
+                        </div>
+
+                    </div>
+                </div>
+
+                {% if appointment.status == 'confirmed' %}
+                    <span class="hidden md:inline-block text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">
+                        تایید شده
+                    </span>
+                {% else %}
+                    <span class="hidden md:inline-block text-[11px] bg-amber-50 text-amber-700 px-2.5 py-1 rounded-full">
+                        در انتظار تایید
+                    </span>
+                {% endif %}
+
+                <div class="flex items-center justify-between md:justify-start gap-3 md:gap-4 lg:gap-6 text-xs md:text-sm text-slate-500">
+
+                    <span class="whitespace-nowrap">
+                        {{ appointment.available_slot.date|to_jalali }}
+                    </span>
+
+                    <span class="whitespace-nowrap font-medium">
+                        {{ appointment.available_slot.start_time|time:"H:i" }}
+                    </span>
+
+                </div>
+
+                <button
+                        type="button"
+                        data-appointment-id="{{ appointment.id }}"
+                        class="cancel-appoiment-btn cursor-pointer text-red-700 text-xs border border-red-100 rounded-lg px-4 py-2 whitespace-nowrap w-full md:w-auto shrink-0">
+                    لغو نوبت
+                </button>
+
+            </div>
+
+        {% empty %}
+
+            <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+                <img src="/static/images/appointment.webp" class="w-full md:w-[60%] lg:w-[50%]" alt="no-appointment-img">
+                <p class="text-[16px] text-custom-black font-bold lg:text-[16px]">هیچ نوبتی در سیستم یافت نشد</p>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+    <div class="max-w-5xl mx-auto space-y-3 list-appoiment-time hidden" id="past-appoiment">
+
+        {% for appointment in past_appointments %}
+
+            <div class="bg-white rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center gap-4 md:gap-4 lg:gap-6 justify-between">
+
+                <div class="flex items-center gap-3 min-w-0 md:flex-1 lg:flex-none lg:w-56">
+
+                    {% if appointment.doctor.image %}
+                        <img
+                                src="{{ appointment.doctor.image.url }}"
+                                class="w-11 h-11 rounded-full object-cover shrink-0"
+                                alt="{{ appointment.doctor.user.get_full_name }}"
+                        >
+                    {% endif %}
+
+                    <div class="min-w-0">
+
+                        <div class="flex items-center gap-2 flex-wrap">
+        <span class="text-sm font-medium text-slate-800 whitespace-nowrap">
+            {{ appointment.doctor.user.get_full_name }}
+        </span>
+
+                            <span class="text-[11px] bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full md:hidden">
+            انجام شده
+        </span>
+                        </div>
+
+                        <div class="text-xs text-slate-400 whitespace-nowrap">
+                            {{ appointment.doctor.specialties.first.name }}
+                        </div>
+
+                    </div>
+                </div>
+
+                <span class="hidden md:inline-block text-[11px] bg-blue-50 text-blue-700 px-2.5 py-1 rounded-full">
+انجام شده
+</span>
+
+                <div class="flex items-center justify-between md:justify-start gap-3 md:gap-4 lg:gap-6 text-xs md:text-sm text-slate-500">
+
+<span class="whitespace-nowrap">
+    {{ appointment.available_slot.date|to_jalali }}
+</span>
+
+                    <span class="whitespace-nowrap font-medium">
+    {{ appointment.available_slot.start_time|time:"H:i" }}
+</span>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+                <img src="/static/images/appointment.webp" class="w-full md:w-[60%] lg:w-[50%]" alt="no-appointment-img">
+                <p class="text-[16px] text-custom-black font-bold lg:text-[16px]">هیچ نوبتی در سیستم یافت نشد</p>
+            </div>
+
+        {% endfor %}
+
+    </div>
+    <div class="max-w-5xl mx-auto space-y-3 list-appoiment-time hidden" id="cancel-appoiment">
+
+        {% for appointment in cancelled_appointments %}
+
+            <div class="bg-white rounded-2xl p-4 flex flex-col lg:flex-row lg:items-center gap-4 md:gap-4 lg:gap-6 justify-between">
+
+                <div class="flex items-center gap-3 min-w-0 md:flex-1 lg:flex-none lg:w-56">
+
+                    {% if appointment.doctor.image %}
+                        <img src="{{ appointment.doctor.image.url }}" class="w-11 h-11 rounded-full object-cover shrink-0" alt="{{ appointment.doctor.user.get_full_name }}">
+                    {% endif %}
+
+                    <div class="min-w-0">
+
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-sm font-medium text-slate-800 whitespace-nowrap">
+                                {{ appointment.doctor.user.get_full_name }}
+                            </span>
+                            <span class="text-[11px] bg-red-50 text-red-700 px-2.5 py-1 rounded-full md:hidden">لغو شده</span>
+                        </div>
+
+                        <div class="text-xs text-slate-400 whitespace-nowrap">
+                            {{ appointment.doctor.specialties.first.name }}
+                        </div>
+
+                    </div>
+                </div>
+
+                <span class="hidden md:inline-block text-[11px] bg-red-50 text-red-700 px-2.5 py-1 rounded-full">لغو شده</span>
+
+                <div class="flex items-center justify-between md:justify-start gap-3 md:gap-4 lg:gap-6 text-xs md:text-sm text-slate-500">
+
+                    <span class="whitespace-nowrap">
+                        {{ appointment.available_slot.date|to_jalali }}
+                    </span>
+
+                    <span class="whitespace-nowrap font-medium">
+                        {{ appointment.available_slot.start_time|time:"H:i" }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+                <img src="/static/images/appointment.webp" class="w-full md:w-[60%] lg:w-[50%]" alt="no-appointment-img">
+                <p class="text-[16px] text-custom-black font-bold lg:text-[16px]">هیچ نوبتی در سیستم یافت نشد</p>
+            </div>
+
+        {% endfor %}
+
+    </div>
+</div>
