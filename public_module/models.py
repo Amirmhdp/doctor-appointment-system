@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 
 # Create your models here.
@@ -24,3 +25,27 @@ class SettingsModel(models.Model):
     class Meta:
         verbose_name = 'تنظیمات سایت'
         verbose_name_plural = 'تنظیمات سایت'
+
+class ContactUs(models.Model):
+    name = models.CharField(max_length=50,verbose_name='نام')
+    last_name = models.CharField(max_length=50,verbose_name='نام خانوادگی')
+    phone_number = models.CharField(max_length=11,
+        validators=[
+            RegexValidator(
+                regex=r'^09\d{9}$',
+                message='شماره موبایل باید با 09 شروع شود و 11 رقم باشد.'
+            )
+        ],
+        verbose_name="شماره موبایل"
+    )
+    title_message = models.CharField(max_length=120, verbose_name='عنوان پیام')
+    message = models.TextField(verbose_name='متن پیام')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ارسال')
+
+    def __str__(self):
+        return f'{self.name} {self.last_name}'
+
+    class Meta:
+        verbose_name = 'تماس با ما'
+        verbose_name_plural = 'تماس با ما'
+        ordering = ['-created_at']

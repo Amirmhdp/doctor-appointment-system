@@ -2714,3 +2714,47 @@ document.addEventListener('click', (event)=>{
     }
     favoriteDoctorAjax();
 })
+
+// contact us form ajax
+document.addEventListener('click', (event)=>{
+    const submitBtnContactUs = event.target.closest('#submit-btn-contact-us');
+    if (!submitBtnContactUs) {
+        return;
+    }
+    const contactUsForm = event.target.closest('#contact-us-form');
+    async function sendMessageAjax(){
+        const formData = new FormData(contactUsForm);
+        const response = await fetch('/contact-us',{
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body:  formData
+        })
+        const result = await response.json()
+        const messageContactUs = document.getElementById('message');
+
+        messageContactUs.classList.remove('hidden', 'text-green-700', 'bg-green-100', 'border', 'border-green-300', 'text-red-700', 'bg-red-100', 'border-red-300');
+
+        messageContactUs.textContent = result.message;
+
+        if (result.success) {
+
+            messageContactUs.classList.add('text-green-700', 'bg-green-100', 'border', 'border-green-300', 'px-4', 'py-2', 'rounded-lg');
+
+            contactUsForm.reset();
+
+        } else {
+
+            messageContactUs.classList.add('text-red-700', 'bg-red-100', 'border', 'border-red-300', 'px-4', 'py-2', 'rounded-lg');
+        }
+
+        setTimeout(() => {
+            messageContactUs.textContent = '';
+            messageContactUs.classList.add('hidden');
+        }, 3000);
+
+    }
+    sendMessageAjax();
+})

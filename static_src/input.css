@@ -74,4 +74,26 @@
         width: 3px;
         height: 21px;
     }
+    #message {
+        display: block;
+        margin-top: 10px;
+
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    #message.success {
+        color: #15803d;
+        background-color: #dcfce7;
+        border: 1px solid #86efac;
+    }
+
+    #message.error {
+        color: #b91c1c;
+        background-color: #fee2e2;
+        border: 1px solid #fca5a5;
+    }
 }
