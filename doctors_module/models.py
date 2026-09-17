@@ -377,34 +377,12 @@ class FAQ(models.Model):
         verbose_name_plural = 'سوالات متداول'
 
 class Rule(models.Model):
-    title = models.CharField(
-        max_length=200,
-        verbose_name='عنوان'
-    )
-
-    content = models.TextField(
-        verbose_name='متن قانون'
-    )
-
-    order = models.PositiveIntegerField(
-        default=0,
-        verbose_name='ترتیب نمایش'
-    )
-
-    is_active = models.BooleanField(
-        default=True,
-        verbose_name='فعال'
-    )
-
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='تاریخ ایجاد'
-    )
-
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        verbose_name='آخرین بروزرسانی'
-    )
+    title = models.CharField(max_length=200,verbose_name='عنوان')
+    content = models.TextField(verbose_name='متن قانون')
+    order = models.PositiveIntegerField(default=0,verbose_name='ترتیب نمایش')
+    is_active = models.BooleanField(default=True,verbose_name='فعال')
+    created_at = models.DateTimeField(auto_now_add=True,verbose_name='تاریخ ایجاد')
+    updated_at = models.DateTimeField(auto_now=True,verbose_name='آخرین بروزرسانی')
 
     def __str__(self):
         return self.title

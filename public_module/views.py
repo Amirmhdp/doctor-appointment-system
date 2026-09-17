@@ -2,7 +2,7 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 # Create your views here.
-from doctors_module.models import FAQ
+from doctors_module.models import FAQ, Rule
 from public_module.forms import ContactUsForm
 from public_module.models import SettingsModel
 
@@ -46,5 +46,9 @@ def faq(request):
     }
     return render(request, 'public_module/faq.html', context)
     
-class TermsAndConditionsView(TemplateView):
-    template_name = 'public_module/terms_and_conditions.html'
+def terms_and_conditions(request):
+    terms = Rule.objects.filter(is_active=True)
+    context = {
+        'terms': terms
+    }
+    return render(request, 'public_module/terms_and_conditions.html', context)
