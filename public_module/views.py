@@ -2,6 +2,7 @@ from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render
 from django.views.generic import TemplateView
 # Create your views here.
+from doctors_module.models import FAQ
 from public_module.forms import ContactUsForm
 from public_module.models import SettingsModel
 
@@ -36,8 +37,14 @@ def contact_us(request: HttpRequest):
     }
     return render(request, 'public_module/contact_us.html', context)
     
-class FaqView(TemplateView):
-    template_name = 'public_module/faq.html'
+def faq(request):
+    faq_users = FAQ.objects.filter(user_type='citizen', is_active=True)
+    faq_doctors = FAQ.objects.filter(user_type='doctor', is_active=True)
+    context = {
+        'faq_doctors': faq_doctors,
+        'faq_users': faq_users,
+    }
+    return render(request, 'public_module/faq.html', context)
     
 class TermsAndConditionsView(TemplateView):
     template_name = 'public_module/terms_and_conditions.html'

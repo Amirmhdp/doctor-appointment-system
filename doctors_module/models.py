@@ -356,36 +356,17 @@ class Education(models.Model):
         verbose_name_plural = 'تحصیلات'
 
 class FAQ(models.Model):
-    specialties = models.ManyToManyField(
-        'Specialty',
-        related_name='faqs',
-        blank=True,
-        verbose_name='تخصص‌ها'
+    USER_TYPE_CHOICES = (
+        ('citizen', 'شهروند'),
+        ('doctor', 'پزشک'),
     )
-
-    question = models.CharField(
-        max_length=300,
-        verbose_name='سوال'
-    )
-
-    answer = models.TextField(
-        verbose_name='پاسخ'
-    )
-
-    order = models.PositiveIntegerField(
-        default=0,
-        verbose_name='ترتیب نمایش'
-    )
-
-    is_active = models.BooleanField(
-        default=True,
-        verbose_name='فعال'
-    )
-
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        verbose_name='تاریخ ایجاد'
-    )
+    specialties = models.ManyToManyField('Specialty', related_name='faqs', blank=True, verbose_name='تخصص‌ها')
+    user_type = models.CharField(max_length=20,choices=USER_TYPE_CHOICES, default='citizen', null=True, blank=True, verbose_name='مخاطب')
+    question = models.CharField(max_length=300, verbose_name='سوال')
+    answer = models.TextField(verbose_name='پاسخ')
+    order = models.PositiveIntegerField(default=0,verbose_name='ترتیب نمایش')
+    is_active = models.BooleanField(default=True, verbose_name='فعال')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')
 
     def __str__(self):
         return self.question
