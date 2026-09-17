@@ -12,29 +12,40 @@
         </div>
         <div class="hidden lg:flex flex-row items-center justify-between w-[38%] list-none">
             <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-                <a href="">خانه</a>
+                <a href="{% url 'home' %}">خانه</a>
                 <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
             </li>
             <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-                <a href="">پزشکان</a>
+                <a href="{% url 'doctors_list_page' %}">پزشکان</a>
+                <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+            </li>
+            {% if request.user.doctor_profile %}
+                <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
+                    <a href="{% url 'doctor-panel' %}">پروفایل</a>
+                    <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+                </li>
+                {% elif request.user.is_superuser %}
+                <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
+                    <a href="{% url 'admin:index' %}">پروفایل</a>
+                    <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+                </li>
+                {% elif request.user %}
+                <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
+                    <a href="{% url 'user_panel_page' %}">پروفایل</a>
+                    <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
+                </li>
+            {% endif %}
+            <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
+                <a href="{% url 'about_us_page' %}">درباره ما</a>
                 <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
             </li>
             <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-                <a href="">پروفایل</a>
-                <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
-            </li>
-            <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-                <a href="">درباره ما</a>
-                <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
-            </li>
-            <li class="group flex flex-col items-center justify-center text-primary-blue-gray text-[16px] hover:text-primary-blue-hover transition-all ease-in-out duration-75 font-bold">
-                <a href="">تماس با ما</a>
+                <a href="{% url 'contact_us_page' %}">تماس با ما</a>
                 <span class="mt-1 h-0.5 w-0 bg-primary-blue-hover transition-all duration-300 ease-out group-hover:w-full"></span>
             </li>
         </div>
         <div class="relative flex flex-row item-center justify-center gap-2 w-[20%]">
-            <button id="search"><i data-lucide="search"
-                                   class="w-10 h-10 cursor-pointer border rounded-lg border-low-gray px-1.5 font-normal text-primary-blue-gray"></i>
+            <button id="search"><i data-lucide="search" class="w-10 h-10 cursor-pointer border rounded-lg border-low-gray px-1.5 font-normal text-primary-blue-gray"></i>
             </button>
 
 

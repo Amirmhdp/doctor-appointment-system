@@ -1275,8 +1275,10 @@ document.addEventListener('click', (event) => {
     // کلیک روی Overlay
     if (event.target === overlay) {
 
-        const cancelModal =
-            document.getElementById('cancelModal');
+        const cancelModal = document.getElementById('cancelModal');
+        if (!cancelModal){
+            return;
+        }
 
         cancelModal.classList.remove(
             'visible',
