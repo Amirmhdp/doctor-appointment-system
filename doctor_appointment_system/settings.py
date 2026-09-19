@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 
     #external apps
     'django_render_partial',
+    'django_celery_beat',
 
 ]
 
