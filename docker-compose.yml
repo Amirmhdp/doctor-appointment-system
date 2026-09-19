@@ -1,0 +1,62 @@
+
+services:
+
+  db:
+    image: postgres:16-alpine
+    container_name: medicare_db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:8-alpine
+    container_name: medicare_redis
+
+  web:
+    build: .
+    container_name: medicare_web
+    env_file:
+      - .env
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+
+  celery_worker:
+    build: .
+    container_name: medicare_celery_worker
+    env_file:
+      - .env
+    command: celery -A doctor_appointment_system worker --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+
+  celery_beat:
+    build: .
+    container_name: medicare_celery_beat
+    env_file:
+      - .env
+    command: celery -A doctor_appointment_system beat --loglevel=info
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+
+
+volumes:
+  postgres_data:

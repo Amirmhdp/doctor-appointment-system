@@ -279,6 +279,10 @@ class Appointment(models.Model):
         auto_now_add=True,
         verbose_name='تاریخ ثبت نوبت'
     )
+    reminder_sent = models.BooleanField(
+        default=False,
+        verbose_name='یادآوری ارسال شده'
+    )
 
     status = models.CharField(
         max_length=20,
