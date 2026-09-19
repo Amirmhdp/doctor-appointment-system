@@ -14,14 +14,18 @@
             <a href="{% url 'profile_page' url_title=doctor.url_title %}" class="text-sm text-slate-gray font-bold">دکتر
                 علیرضا محمدی</a>
         </div>
-        <div class="flex flex-col justify-center mt-3">
+        <div class="flex flex-col justify-center mt-8.5 md:mt-4.25">
             <div class="flex flex-col justify-center items-start gap-2.5 mt-3 md:rounded-lg md:px-3 md:py-3 md:shadow-[0_0_20px_#e0edfd]">
                 <div class="flex flex-col justify-center items-start gap-2.5 md:flex-row md:items-center lg:justify-start">
-                    <div class="flex items-center justify-center md:items-start md:justify-center lg:justify-items-start md:w-[50%] lg:w-[35%]">
-                        <img src="/static/images/doctor-blob.png" class="w-full sm:w-[60%] md:w-full"
-                             alt="doctor-blob"/>
+                    <div class="relative flex items-center justify-center md:items-start md:justify-center lg:justify-items-start md:w-[50%] lg:w-[35%]">
+                        {% if doctor.image %}
+                            <img src="{{ doctor.image.url }}" class="w-62.5 -top-8 lg:top-2 absolute " alt="doctor-blob"/>
+                            <img src="/static/images/ChatGPT%20Image%20Sep%2019,%202026,%2001_26_47%20PM.png" class="w-full sm:w-[60%] md:w-full" alt="blob">
+                        {% else %}
+                            <img src="/static/images/doctor-blob.png" class="w-full sm:w-[60%] md:w-full" alt="doctor-blob"/>
+                        {% endif %}
                     </div>
-                    <div class="flex flex-col justify-center items-start gap-3 md:w-[50%] lg:w-[65%] lg:flex-row">
+                    <div class="flex flex-col w-full justify-center items-start gap-3 md:w-[50%] lg:w-[65%] lg:flex-row">
                         <div class="flex flex-col justify-center items-start gap-3 lg:w-[70%]">
                             <h1 class="text-lg text-custom-black font-bold lg:text-[21px]">دکتر {{ doctor.user }}</h1>
                             {% for specialty in doctor.specialties.all %}
@@ -58,19 +62,25 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-center gap-2 w-full lg:w-[30%]">
-                            <button id="booking-btn" type="button" data-slot-id="9"
-                                    class="flex items-center cursor-pointer justify-center gap-2 bg-primary-special text-sm text-white hover:bg-primary-special/75 py-2 px-3 w-full rounded-lg">
-                                <i data-lucide="calendar-check" class="w-5 h-5 text-white"></i>
-                                رزرو نوبت
-                            </button>
-                            <button data-doctor-id="{{ doctor.id }}" class="add-remove-favorite flex items-center cursor-pointer justify-center gap-2 bg-white text-sm text-primary-special border border-primary-special py-2 px-3 w-full rounded-lg hover:bg-primary-special hover:text-white duration-200 ease-in-out">
-                                <i data-lucide="heart" class="w-5 h-5 hover:text-white"></i>
-                                {% if is_favorite %}
-                                    <span id="text-favorite">حذف از علاقه مندی</span>
-                                    {% else %}
-                                    <span id="text-favorite">افزودن به علاقه مندی</span>
-                                {% endif %}
-                            </button>
+
+                                <button id="booking-btn" type="button" data-slot-id="9"
+                                        class="flex items-center cursor-pointer justify-center gap-2 bg-primary-special text-sm text-white hover:bg-primary-special/75 py-2 px-3 w-full rounded-lg">
+                                    <i data-lucide="calendar-check" class="w-5 h-5 text-white"></i>
+                                    رزرو نوبت
+                                </button>
+
+                             {% if not is_doctor and not request.user.is_superuser and request.user.is_authenticated %}
+                                <button data-doctor-id="{{ doctor.id }}" class="add-remove-favorite flex items-center cursor-pointer justify-center gap-2 bg-white text-sm text-primary-special border border-primary-special py-2 px-3 w-full rounded-lg hover:bg-primary-special hover:text-white duration-200 ease-in-out">
+                                    <i data-lucide="heart" class="w-5 h-5 hover:text-white"></i>
+
+                                    {% if is_favorite %}
+                                        <span id="text-favorite">حذف از علاقه مندی</span>
+                                        {% else %}
+                                        <span id="text-favorite">افزودن به علاقه مندی</span>
+                                    {% endif %}
+
+                                </button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -267,7 +277,7 @@
             </div>
         </div>
         <div id="booking-list"
-             class="invisible opacity-0 transition-all duration-200 ease-in pointer-events-none fixed z-40 top-0 bottom-0 left-0 right-0 md:top-14 md:left-1/2 md:-translate-x-1/2 md:bottom-auto md:rounded-lg md:px-5 bg-white flex flex-col items-center gap-6.25 px-3 py-2  lg:py-5 lg:px-6.25 md:w-[50%]">
+             class="invisible opacity-0 transition-all duration-200 ease-in pointer-events-none fixed z-40 top-0 bottom-0 left-0 right-0 md:top-14 md:left-1/2 md:-translate-x-1/2 md:bottom-auto md:rounded-lg md:px-5 bg-white flex flex-col items-center gap-6.25 px-3 py-2  lg:py-5 lg:px-6.25 md:w-[50%] ">
             <div class="w-full">
         <span class="flex items-center gap-2 border-b pb-3 border-light-gray text-sm font-bold text-slate-gray">
           <button type="button" class="cursor-pointer" id="close-booking-list"><i data-lucide="chevron-right"
@@ -313,7 +323,7 @@
 
                 </div>
             </div>
-            <div class="flex flex-col justify-center gap-3 w-full">
+            <div class="flex flex-col h-68.5 overflow-y-auto gap-3 w-full">
 
                 {% for group in slots_by_date %}
 

@@ -137,33 +137,7 @@ class ScheduleExceptionForm(forms.Form):
         })
     )
 
-# class ProfileForm(forms.Form):
-#
-#
-#      name = forms.CharField(
-#         label='اسم',
-#         widget=forms.TextInput(attrs={
-#             'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray',
-#         })
-#         )
-#      last_name = forms.CharField(
-#         label='نام خانوادگی',
-#         widget=forms.TextInput(attrs={
-#             'class': '',
-#         })
-#         )
-#      phone_number = forms.CharField(
-#         label='نام خانوادگی',
-#         widget=forms.TextInput(attrs={
-#             'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray',
-#         })
-#         )
-#      specialty = forms.ChoiceField(
-#         label='نام خانوادگی',
-#         widget=forms.Select(attrs={
-#             'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray',
-#         })
-#         )
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
@@ -200,16 +174,37 @@ class DoctorForm(forms.ModelForm):
 
     class Meta:
         model = Doctor
-        fields = ['specialties']
+        fields = ['specialties', 'bio', 'medical_code', 'short_description', 'years_of_experience', 'image']
 
         widgets = {
             'specialties': forms.SelectMultiple(attrs={
                 'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400'
             }),
+            'bio': forms.Textarea(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray',
+                'rows': 6
+            }),
+            'medical_code': forms.TextInput(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray'
+        }),
+            'short_description': forms.Textarea(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray',
+                'rows': 4
+            }),
+            'years_of_experience': forms.NumberInput(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray'
+            }),
+            'image': forms.FileInput(
+                attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray',
+                'placeholder': 'برای انتخاب تصویر اینجا کلیک کنید'
+            }),
         }
+
 
         labels = {
             'specialties': 'تخصص',
+            'image': 'برای انتخاب تصویر اینجا کلیک کنید'
         }
 
 class AppointmentStatusForm(forms.ModelForm):

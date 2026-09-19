@@ -1,11 +1,16 @@
 from datetime import timedelta
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpRequest, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import View
-from .forms import RegisterForm, OTPForm, LoginForm, ForgotPasswordForm, ResetPasswordForm
+
+from patient.models import Patient
+from user_panel.forms import ProfileForm
+from .forms import RegisterForm, OTPForm, LoginForm, ForgotPasswordForm, ResetPasswordForm, DoctorRegister, ClinicForm
 from .models import User
 import secrets
 from .services.sms_service import send_sms
@@ -41,6 +46,7 @@ class RegisterView(View):
                                 verification_code=generate_otp(), username=phone_number)
                 new_user.set_password(password)
                 new_user.save()
+                Patient.objects.create(user=new_user)
                 request.session['verification_user_id'] = new_user.id
                 # send_sms_task.delay(
                 #     phone_number,
@@ -340,3 +346,59 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect(reverse('home'))
+
+
+class DoctorRegisterView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        user_form = ProfileForm(instance=request.user)
+        doctor_form = DoctorRegister()
+        context = {
+            'user_form': user_form,
+            'doctor_form': doctor_form,
+        }
+        return render(request,'account_module/doctor_register.html', context)
+
+    def post(self, request):
+        user_form = ProfileForm(request.POST, instance=request.user)
+        doctor_form = DoctorRegister(request.POST,request.FILES)
+        if user_form.is_valid() and doctor_form.is_valid():
+
+            user = user_form.save()
+
+            doctor = doctor_form.save(commit=False)
+            doctor.user = user
+            doctor.save()
+
+            doctor_form.save_m2m()
+
+            return redirect('create_clinic')
+        context = {
+            'user_form': user_form,
+            'doctor_form': doctor_form,
+        }
+        return render(request,'account_module/doctor_register.html', context)
+
+class ClinicCreateView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        form = ClinicForm()
+        context = {
+            'clinic_form': form,
+        }
+        return render(request,'account_module/clinic.html', context)
+
+    def post(self, request):
+        form = ClinicForm(request.POST)
+
+        if form.is_valid():
+            clinic = form.save(commit=False)
+            doctor = request.user.doctor_profile
+            clinic.doctor = doctor
+            clinic.save()
+
+            return redirect('doctor-panel')
+        context = {
+            'clinic_form': form,
+        }
+        return render(request,'account_module/clinic.html', context)

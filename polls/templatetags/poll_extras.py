@@ -1,5 +1,6 @@
 from django import template
 import jdatetime
+import datetime
 register = template.Library()
 
 
@@ -8,12 +9,18 @@ def times(number):
     return range(number)
 
 
+
 @register.filter
 def to_jalali(value):
     if not value:
         return ''
 
-    jalali_date = jdatetime.datetime.fromgregorian(datetime=value)
+    if isinstance(value, datetime.datetime):
+        jalali_date = jdatetime.datetime.fromgregorian(datetime=value)
+    elif isinstance(value, datetime.date):
+        jalali_date = jdatetime.date.fromgregorian(date=value)
+    else:
+        return ''
 
     return jalali_date.strftime('%Y/%m/%d')
 

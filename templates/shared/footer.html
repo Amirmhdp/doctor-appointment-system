@@ -6,7 +6,7 @@
         <h2 class="text-primary-special text-2xl text font-bold">Medi<span class="text-white">Care</span></h2>
         <img src="/static/images/logo.png" class="w-12.75 -mr-2 -mt-2" alt="logo" />
       </div>
-      <p class="text-sm text-white text-right">مدی کر با ارائه خدمات پزشکی آنلاین و تسهیل نوبت گیری از پزشکان متخصص راه اندازی شده است. مادر کنار شما هستیم با تجربه ای سریع امن و مطمئن از خدمات درمانی داشته باشید</p>
+      <p class="text-sm text-white text-right">{{ footer.about_medicare }}</p>
       <div class="grid grid-cols-2 gap-2">
         <div class="flex flex-col justify-center items-center gap-1 px-2 py-2">
           <i data-lucide="clock" class="w-10 h-10 lg:w-12 lg:h-12 p-2 text-royal-blue"></i>
@@ -28,81 +28,25 @@
       </span>
 
       <div id="list-fast-link" class="flex flex-col justify-center gap-3 max-h-0 overflow-hidden opacity-0 transition-all duration-300 ease-in-out">
-        <li class="text-white text-[15px] flex flex-row items-center gap-1 border-t border-deep-blue pt-2">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+        {% for fast_link in footer.fast_link.all %}
+            <li class="text-white text-[15px] flex flex-row items-center gap-1 border-t border-deep-blue pt-2">
+              <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+              <a href="{{ fast_link.url_title }}">{{ fast_link.title }}</a>
+            </li>
+        {% endfor %}
 
-          <a href="">خانه</a>
-        </li>
-        <li class="text-white text-[15px] flex flex-row items-center gap-1">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href="">لیست پزشکان</a>
-        </li>
-        <li class="text-white text-[15px] flex flex-row items-center gap-1">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>رزرو نوبت
-        </li>
-        <li class="text-white text-[15px] flex flex-row items-center gap-1">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>سوالات متداول
-        </li>
-        <li class="text-white text-[15px] flex flex-row items-center gap-1">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>قوانین و مقررات
-        </li>
-        <li class="text-white text-[15px] flex flex-row items-center gap-1">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>درباره ما
-        </li>
-        <li class="text-white text-[15px] flex flex-row items-center gap-1">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>تماس با ما
-        </li>
       </div>
     </div>
     <div class="flex items-center justify-center  w-[30%] md:w-[17%] lg:w-[12%]">
       <div class="hidden md:flex flex-col gap-3 md:w-full   justify-center list-none">
         <span class="text-white text-[15px]">لینک های سریع</span>
-        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-2.5 transition-transform duration-300">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+        {% for fast_link in footer.fast_link.all %}
+            <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-2.5 transition-transform duration-300">
+              <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
+              <a href="{{ fast_link.url_title }}">{{ fast_link.title }}</a>
+            </li>
+        {% endfor %}
 
-          <a href="">خانه</a>
-        </li>
-        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-2.5 transition-transform duration-300">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href="">لیست پزشکان</a>
-        </li>
-        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-2.5 transition-transform duration-300">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>رزرو نوبت
-        </li>
-        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-2.5 transition-transform duration-300">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>سوالات متداول
-        </li>
-        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-2.5 transition-transform duration-300">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>قوانین و مقررات
-        </li>
-        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-2.5 transition-transform duration-300">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>درباره ما
-        </li>
-        <li class="flex items-center gap-1 text-white text-sm hover:-translate-x-2.5 transition-transform duration-300">
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special transition-transform duration-300"></i>
-
-          <a href=""></a>تماس با ما
-        </li>
       </div>
     </div>
     <div class="flex flex-col justify-between md:border-r px-2 py-1 border-deep-blue md:w-[30%]">
@@ -125,7 +69,7 @@
   </div>
   <div class="flex items-center justify-center gap-1">
     <i data-lucide="copyright" class="w-5 h-5 text-white"></i>
-    <p class="text-white text-[15px]">کلیه‌ی حقوق این وبسایت متعلق به شرکت مدی کر می باشد</p>
+    <p class="text-white text-[15px]">{{ footer.copyright }}</p>
   </div>
 
 </footer>

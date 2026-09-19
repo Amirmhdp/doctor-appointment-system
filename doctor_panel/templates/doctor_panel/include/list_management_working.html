@@ -10,21 +10,28 @@
 <div class="space-y-2.5 overflow-x-auto">
     <!-- day -->
 
-    {% for schedule_work in schedules_work %}
-        <div data-day-id="{{ schedule_work.id }}"
-             class="edit-appoiment-day-container flex items-center justify-between gap-4 bg-slate-50 rounded-xl px-4 py-3">
-            <div class="flex items-center gap-5">
-                <button data-act-inact="{% if schedule_work.is_active %}true{% else %}false{% endif %}"
-                        class="active-day-appoiment w-10 h-5 rounded-full {% if schedule_work.is_active %}bg-blue-600{% else %}bg-slate-300{% endif %} relative shrink-0 cursor-pointer">
-                    <span class="absolute top-0.5  {% if schedule_work.is_active %}left-0.5{% else %}right-0.5{% endif %} w-4 h-4 bg-white rounded-full"></span>
-                </button>
-                <span class="w-16 text-sm font-medium {% if schedule_work.is_active %}text-slate-600{% else %}text-slate-400{% endif %}">{{ schedule_work.get_weekday_display }}</span>
+    {% if schedules_work %}
+        {% for schedule_work in schedules_work %}
+            <div data-day-id="{{ schedule_work.id }}"
+                 class="edit-appoiment-day-container flex items-center justify-between gap-4 bg-slate-50 rounded-xl px-4 py-3">
+                <div class="flex items-center gap-5">
+                    <button data-act-inact="{% if schedule_work.is_active %}true{% else %}false{% endif %}"
+                            class="active-day-appoiment w-10 h-5 rounded-full {% if schedule_work.is_active %}bg-blue-600{% else %}bg-slate-300{% endif %} relative shrink-0 cursor-pointer">
+                        <span class="absolute top-0.5  {% if schedule_work.is_active %}left-0.5{% else %}right-0.5{% endif %} w-4 h-4 bg-white rounded-full"></span>
+                    </button>
+                    <span class="w-16 text-sm font-medium {% if schedule_work.is_active %}text-slate-600{% else %}text-slate-400{% endif %}">{{ schedule_work.get_weekday_display }}</span>
+                </div>
+                <div class="flex items-center gap-4 time-work" id="period-container-{{ schedule_work.id }}">
+                    {% include 'doctor_panel/include/period_day.html' with schedule_work=schedule_work period=period %}
+                </div>
             </div>
-            <div class="flex items-center gap-4 time-work" id="period-container-{{ schedule_work.id }}">
-                {% include 'doctor_panel/include/period_day.html' with schedule_work=schedule_work period=period %}
+        {% endfor %}
+        {% else %}
+            <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+                <img src="/static/images/appointment.webp" class="w-full md:w-[60%] lg:w-[80%]" alt="no-appointment-img">
+                <p class="text-[16px] text-custom-black font-bold lg:text-[16px]">هیچ برنامه هفتگی در سیستم یافت نشد</p>
             </div>
-        </div>
-    {% endfor %}
+    {% endif %}
 
 </div>
 

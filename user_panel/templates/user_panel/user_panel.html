@@ -9,13 +9,16 @@
         <div class="flex items-start flex-col justify-center gap-5 w-full md:w-[35%] lg:w-[23%] md:px-3 md:py-3.5 md:shadow-[0_0_20px_#e0edfd] md:mt-4 md:rounded-lg">
             <aside class="flex flex-col w-full bg-white border-l border-slate-100 md:p-5 shrink-0">
                 <!-- Doctor info card -->
-                <div class="hidden md:flex w-full items-center gap-3 bg-primary-special px-3 py-2 rounded-lg mb-6">
-                    <img src="{{ request.user.avatar.url }}"
-                         class="w-12 h-12 rounded-full p-0.5 border-2 border-white object-cover" alt="doctor-image"/>
-                    <div class="flex flex-col justify-center gap-1 w-full">
-                        <h1 class="text-sm text-white font-bold">{{ request.user.get_full_name }}</h1>
+                {% if request.user.avatar %}
+                    <div class="hidden md:flex w-full items-center gap-3 bg-primary-special px-3 py-2 rounded-lg mb-6">
+                        {% if request.user.avatar %}
+                            <img src="{{ request.user.avatar.url }}" class="w-12 h-12 rounded-full p-0.5 border-2 border-white object-cover" alt="doctor-image"/>
+                        {% endif %}
+                        <div class="flex flex-col justify-center gap-1 w-full">
+                            <h1 class="text-sm text-white font-bold">{{ request.user.get_full_name }}</h1>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
 
                 <!-- Navigation -->
                 <nav class="flex-1 h-13.75 space-y-1 w-full fixed bottom-0 right-0 left-0 z-16 md:static bg-white flex items-center overflow-x-auto md:flex-col md:z-0 md:items-start">
@@ -145,8 +148,8 @@
                             <div class="bg-white rounded-2xl md:p-5">
                             <h2 class="font-bold text-slate-800 mb-4">نوبت بعدی شما</h2>
                             <div class="flex items-center gap-4 mb-4">
-                                {% if next_appointment.patient.user.avatar %}
-                                    <img src="{{ next_appointment.patient.user.avatar.url }}" class="w-14 h-14 rounded-full object-cover" alt="image-user"/>
+                                {% if next_appointment.doctor.user.avatar %}
+                                    <img src="{{ next_appointment.doctor.user.avatar.url }}" class="w-14 h-14 rounded-full object-cover" alt="image-user"/>
                                     {% else %}
                                     <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
                                 {% endif %}

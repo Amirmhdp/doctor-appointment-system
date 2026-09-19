@@ -253,9 +253,9 @@ if (specialList.length > 0) {
 const searchIcon = document.getElementById('search');
 const searchBox = document.getElementById('searchbox');
 const closeIconSearchBox = document.getElementById('close-searchbox');
-const searchInput = document.getElementById('search-input');
+const searchInput = document.getElementById('id_search');
 const clearInputBtn = document.getElementById('clear-input-btn');
-const trendSearch = document.getElementById('trend-search');
+
 const resultSearch = document.getElementById('result-search');
 const searchedValue = document.getElementById('searched-value');
 
@@ -292,14 +292,89 @@ if (iconCloseSidebar && iconSidebar && sidebar && overlay) {
         searchBox.classList.add('opacity-0', 'invisible', 'pointer-events-none');
     })
 }
-if (searchInput && clearInputBtn && resultSearch && trendSearch) {
-    searchInput.addEventListener('input', () => {
-        if (searchInput.value.length > 2) {
-            resultSearch.classList.remove('hidden');
-            resultSearch.classList.add('flex');
-            trendSearch.classList.remove('flex');
-            trendSearch.classList.add('hidden');
+if (searchInput) {
+    searchBox.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(searchBox);
+
+        // فقط اگر کاربر لاگین باشد، سرچ را ذخیره کن
+        if (isAuthenticated) {
+
+            const response = await fetch('/save-recent-search', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (!result.success) {
+                return;
+            }
         }
+
+        // چه لاگین باشد چه نباشد، جستجو انجام می‌شود
+        const searchValue = formData.get('search');
+
+        window.location.href =
+            `${searchBox.action}?search=${encodeURIComponent(searchValue)}`;
+    });
+}
+if (searchInput && clearInputBtn && resultSearch ) {
+
+const resultSearchContainer =
+    document.getElementById('result-search-container');
+
+let debounceTimer;
+
+
+async function liveSearch() {
+
+    const formData = new FormData(searchBox);
+
+    const response = await fetch('/live-search', {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': getCookie('csrftoken'),
+            'X-Requested-With': 'XMLHttpRequest',
+        },
+        body: formData
+    });
+
+    const result = await response.json();
+
+    resultSearchContainer.innerHTML = result.result_search;
+
+    lucide.createIcons();
+}
+
+
+searchInput.addEventListener('input', () => {
+
+    clearTimeout(debounceTimer);
+
+    if (searchInput.value.length > 2) {
+
+        resultSearch.classList.remove('hidden');
+        resultSearch.classList.add('flex');
+
+        debounceTimer = setTimeout(() => {
+            liveSearch();
+        }, 400);
+
+    } else {
+
+        resultSearchContainer.innerHTML = '';
+
+        resultSearch.classList.remove('flex');
+        resultSearch.classList.add('hidden');
+    }
+
+});
         if (searchInput.value.length > 0) {
             clearInputBtn.classList.remove('opacity-0', 'invisible');
             clearInputBtn.classList.add('opacity-100', 'visible');
@@ -310,22 +385,22 @@ if (searchInput && clearInputBtn && resultSearch && trendSearch) {
 
             resultSearch.classList.add('hidden');
             resultSearch.classList.remove('flex');
-            trendSearch.classList.add('flex');
-            trendSearch.classList.remove('hidden');
+
+
         }
 
-    })
-    clearInputBtn.addEventListener('click', () => {
-        searchInput.value = ''
-        clearInputBtn.classList.remove('opacity-100', 'visible');
-        clearInputBtn.classList.add('opacity-0', 'invisible');
-        resultSearch.classList.add('hidden');
-        resultSearch.classList.remove('flex');
-        trendSearch.classList.add('flex');
-        trendSearch.classList.remove('hidden');
+    }
+    if(clearInputBtn){
+        clearInputBtn.addEventListener('click', () => {
+            searchInput.value = ''
+            clearInputBtn.classList.remove('opacity-100', 'visible');
+            clearInputBtn.classList.add('opacity-0', 'invisible');
+            resultSearch.classList.add('hidden');
+            resultSearch.classList.remove('flex');
 
-    })
-}
+        })
+    }
+
 
 
 // faq dropdown
@@ -1276,7 +1351,7 @@ document.addEventListener('click', (event) => {
     if (event.target === overlay) {
 
         const cancelModal = document.getElementById('cancelModal');
-        if (!cancelModal){
+        if (!cancelModal) {
             return;
         }
 
@@ -1660,6 +1735,9 @@ if (doctorInput && specialtyInput && provinceInput && specialtyItems && doctorIt
         if (pageInput) {
             params.set('page', pageInput.value);
         }
+        if(searchInput){
+            params.set('search', searchInput.value);
+        }
         const selectedTimes = [];
 
         timeItems.forEach(timeItem => {
@@ -1695,6 +1773,7 @@ if (doctorInput && specialtyInput && provinceInput && specialtyItems && doctorIt
         provinceInput.value = '';
         orderByInput.value = '';
         genderInput.value = '';
+        searchInput.value = '';
         if (pageInput) {
             pageInput.value = '';
         }
@@ -2017,7 +2096,6 @@ if (paymentBtn) {
 
         fetch(`/payment/start/${slotId}/`, {
             method: 'POST',
-
             headers: {
                 'X-CSRFToken': csrftoken,
             },
@@ -2476,25 +2554,25 @@ document.addEventListener('click', async (event) => {
     }
 
     // آپدیت وضعیت همان ردیف جدول
-const appointmentRow = document.querySelector(
-    `[data-appointment-row="${appointmentId}"]`
-);
+    const appointmentRow = document.querySelector(
+        `[data-appointment-row="${appointmentId}"]`
+    );
 
-if (!appointmentRow) {
-    console.log('Appointment row not found:', appointmentId);
-    return;
-}
+    if (!appointmentRow) {
+        console.log('Appointment row not found:', appointmentId);
+        return;
+    }
 
-const statusElement =
-    appointmentRow.querySelector('.appointment-status');
+    const statusElement =
+        appointmentRow.querySelector('.appointment-status');
 
-if (!statusElement) {
-    console.log('Status element not found:', appointmentId);
-    return;
-}
+    if (!statusElement) {
+        console.log('Status element not found:', appointmentId);
+        return;
+    }
 
-statusElement.textContent =
-    result.appointment.status_display;
+    statusElement.textContent =
+        result.appointment.status_display;
 
     // بستن Modal
     editStatusModal.classList.add(
@@ -2671,12 +2749,13 @@ document.addEventListener('click', (event) => {
 
 // add remove a doctor from favorite list
 
-document.addEventListener('click', (event)=>{
+document.addEventListener('click', (event) => {
     const addRemoveFavorite = event.target.closest('.add-remove-favorite');
     if (!addRemoveFavorite) {
         return;
     }
-    async function favoriteDoctorAjax(){
+
+    async function favoriteDoctorAjax() {
         const doctorId = addRemoveFavorite.dataset.doctorId;
         const response = await fetch('/add-remove-favorite/' + doctorId, {
             method: 'POST',
@@ -2689,15 +2768,17 @@ document.addEventListener('click', (event)=>{
         const textFavorite = document.getElementById('text-favorite');
         textFavorite.textContent = result.message;
     }
+
     favoriteDoctorAjax();
 })
 
-document.addEventListener('click', (event)=>{
+document.addEventListener('click', (event) => {
     const RemoveFavorite = event.target.closest('#remove-favorite-btn');
     if (!RemoveFavorite) {
         return;
     }
-    async function favoriteDoctorAjax(){
+
+    async function favoriteDoctorAjax() {
         const favoriteId = RemoveFavorite.dataset.favoriteId;
         const response = await fetch('/remove-favorite/' + favoriteId, {
             method: 'POST',
@@ -2712,25 +2793,27 @@ document.addEventListener('click', (event)=>{
         lucide.createIcons();
 
     }
+
     favoriteDoctorAjax();
 })
 
 // contact us form ajax
-document.addEventListener('click', (event)=>{
+document.addEventListener('click', (event) => {
     const submitBtnContactUs = event.target.closest('#submit-btn-contact-us');
     if (!submitBtnContactUs) {
         return;
     }
     const contactUsForm = event.target.closest('#contact-us-form');
-    async function sendMessageAjax(){
+
+    async function sendMessageAjax() {
         const formData = new FormData(contactUsForm);
-        const response = await fetch('/contact-us',{
+        const response = await fetch('/contact-us', {
             method: 'POST',
             headers: {
                 'X-CSRFToken': getCookie('csrftoken'),
                 'X-Requested-With': 'XMLHttpRequest',
             },
-            body:  formData
+            body: formData
         })
         const result = await response.json()
         const messageContactUs = document.getElementById('message');
@@ -2756,5 +2839,6 @@ document.addEventListener('click', (event)=>{
         }, 3000);
 
     }
+
     sendMessageAjax();
 })

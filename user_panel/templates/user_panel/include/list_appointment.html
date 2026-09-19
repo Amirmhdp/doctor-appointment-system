@@ -36,11 +36,11 @@
                 <!-- doctor + status -->
                 <div class="flex items-center gap-3 min-w-0 md:flex-1 lg:flex-none lg:w-56">
 
-                      {% if request.user.avatar %}
-                          <img src="{{ appointment.doctor.image.url }}" class="w-11 h-11 rounded-full object-cover shrink-0" alt="{{ appointment.doctor.user.get_full_name }}">
+                      {% if appointment.doctor.user.avatar %}
+                          <img src="{{ appointment.doctor.user.avatar.url }}" class="w-11 h-11 rounded-full object-cover shrink-0" alt="{{ appointment.doctor.user.get_full_name }}">
                         {% else %}
                         <i data-lucide="user" class="w-12.5 h-12.5 text-primary-special bg-light-blue p-3 rounded-full"></i>
-                    {% endif %}
+                      {% endif %}
                     <div class="min-w-0">
 
                         <div class="flex items-center gap-2 flex-wrap">

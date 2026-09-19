@@ -8,8 +8,11 @@
                         <div class="bg-white rounded-2xl p-1">
                             <div class="flex flex-col items-center text-center mb-5">
                                 <div class="relative">
-                                    <img src="{{ user.avatar.url }}"
-                                         class="w-24 h-24 rounded-full object-cover" alt=""/>
+                                    {% if user.avatar %}
+                                        <img src="{{ user.avatar.url }}" class="w-24 h-24 rounded-full object-cover" alt=""/>
+                                        {% else %}
+                                        <i data-lucide="user" class="w-24 h-24 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                                    {% endif %}
                                     <button id="edit-img-profile" class="absolute bottom-0 left-0 w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white border-2 border-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
                                              fill="none" stroke="currentColor" stroke-width="2">

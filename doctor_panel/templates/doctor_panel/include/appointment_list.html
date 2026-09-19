@@ -15,6 +15,7 @@
 </div>
 
 
+{% if page_obj %}
 <div class="bg-white rounded-2xl overflow-y-auto">
     <table class="w-full text-sm">
         <thead>
@@ -28,57 +29,46 @@
         </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
-{% for appointment in page_obj %}
-<tr data-appointment-row="{{ appointment.id }}">
+        {% for appointment in page_obj %}
+            <tr data-appointment-row="{{ appointment.id }}">
 
-    <td class="py-3.5 px-5 text-slate-500">
-        {{ appointment.available_slot.start_time }}
-    </td>
+                <td class="py-3.5 px-5 text-slate-500">
+                    {{ appointment.available_slot.start_time }}
+                </td>
 
-    <td class="px-5 font-medium text-slate-700">
-        {{ appointment.patient.user.get_full_name }}
-    </td>
+                <td class="px-5 font-medium text-slate-700">
+                    {{ appointment.patient.user.get_full_name }}
+                </td>
 
-    <td class="px-5 text-slate-500">
-        ویزیت حضوری
-    </td>
+                <td class="px-5 text-slate-500">
+                    ویزیت حضوری
+                </td>
 
-    <td class="px-5">
+                <td class="px-5">
         <span class="appointment-status text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full whitespace-nowrap">
             {{ appointment.get_status_display }}
         </span>
-    </td>
+                </td>
 
-    <td class="px-5 text-slate-500">
-        100,000
-    </td>
+                <td class="px-5 text-slate-500">
+                    100,000
+                </td>
 
-    <td class="px-5 flex gap-2">
-{#        <button#}
-{#            type="button"#}
-{#            class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer"#}
-{#            data-appointment-id="{{ appointment.id }}"#}
-{#        >#}
-{##}
-{#        </button>#}
-<button
-    type="button"
-    class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer"
-    data-appointment-id="{{ appointment.id }}"
->
-    <svg xmlns="http://www.w3.org/2000/svg"
-         class="w-3.5 h-3.5"
-         viewBox="0 0 24 24"
-         fill="none"
-         stroke="currentColor"
-         stroke-width="2">
-        <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
-    </svg>
-</button>
-    </td>
+                <td class="px-5 flex gap-2">
+                    <button type="button" class="open-edit-state w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center text-slate-400 cursor-pointer" data-appointment-id="{{ appointment.id }}">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="w-3.5 h-3.5"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2">
+                            <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/>
+                        </svg>
+                    </button>
+                </td>
 
-</tr>
-{% endfor %}
+            </tr>
+        {% endfor %}
 
 
         </tbody>
@@ -91,7 +81,8 @@
             </button>
         {% endif %}
         {% for page in page_obj.paginator.page_range %}
-            <button data-page-appointment="{{ page }}" class="w-7 h-7 rounded-lg hover:bg-slate-50 range-page-appointment">{{ page }}</button>
+            <button data-page-appointment="{{ page }}"
+                    class="w-7 h-7 rounded-lg hover:bg-slate-50 range-page-appointment">{{ page }}</button>
         {% endfor %}
 
         {% if page_obj.has_previous %}
@@ -101,3 +92,9 @@
         {% endif %}
     </div>
 </div>
+    {% else %}
+        <div class="flex flex-col gap-4 items-center shadow-[0_0_20px_#e0edfd] px-4 py-3 rounded-lg">
+            <img src="/static/images/appointment.webp" class="w-full md:w-[60%] lg:w-[50%]" alt="no-appointment-img">
+            <p class="text-[16px] text-custom-black font-bold lg:text-[16px]">هیچ برنامه هفتگی در سیستم یافت نشد</p>
+        </div>
+{% endif %}

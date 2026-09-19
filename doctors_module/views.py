@@ -22,6 +22,7 @@ def doctor_list(request):
     specialties = Specialty.objects.filter(is_active=True)
     provinces = Province.objects.filter(is_active=True)
     doctor = request.GET.get('doctor')
+    search = request.GET.get('search')
     specialty = request.GET.get('specialty')
     province = request.GET.get('province')
     order_by = request.GET.get('order-by')
@@ -44,12 +45,18 @@ def doctor_list(request):
                 'user__last_name'
             )
         ).filter(full_name__icontains=doctor)
+    if search:
+        doctors = Doctor.objects.filter(
+            Q(user__first_name__icontains=search)|
+            Q(user__last_name__icontains=search)|
+            Q(specialties__name__icontains=search) |
+            Q(clinics__province__name__icontains=search)).distinct()
     if specialty:
-        doctors = doctors.filter(specialties__name__iexact=specialty)
+        doctors = doctors.filter(specialties__name__icontains=specialty)
     if gender and gender != 'all':
         doctors = doctors.filter(gender=gender)
     if province:
-        doctors = doctors.filter(clinics__province__name=province)
+        doctors = doctors.filter(clinics__province__name__icontains=province)
     if times:
         time_ranges = {
             'morning': (time(8, 0), time(12, 0)),
@@ -108,8 +115,11 @@ def detail_doctor(request, url_title):
         'start_time'
     )
     user = request.user
-    is_favorite = FavoriteDoctor.objects.filter(patient__user=user, doctor=doctor).exists()
-    weekly_schedules = WeeklySchedule.objects.filter(doctor=doctor, is_active=True)
+
+    is_favorite = False
+
+    if user.is_authenticated and hasattr(user, 'patient_profile'):is_favorite = FavoriteDoctor.objects.filter(patient=user.patient_profile,doctor=doctor).exists()
+    weekly_schedules = WeeklySchedule.objects.filter(doctor=doctor, is_active=True).order_by('weekday')
     comments_queryset = Comment.objects.filter(is_active=True, doctor_id=doctor.id, parent=None).select_related('user').order_by('-created_at')
     faqs = FAQ.objects.filter(is_active=True, specialties__in=doctor.specialties.all())
     is_doctor = hasattr(request.user, 'doctor_profile')

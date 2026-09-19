@@ -301,7 +301,7 @@ def EditProfile(request):
             'message': 'پزشک پیدا نشد'
         })
 
-    doctor_form = DoctorForm(request.POST, instance=doctor)
+    doctor_form = DoctorForm(request.POST, request.FILES, instance=doctor)
     profile_form = ProfileForm(request.POST, request.FILES, instance=user)
 
     if profile_form.is_valid() and doctor_form.is_valid():

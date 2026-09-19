@@ -1,0 +1,14 @@
+{% if recent_searches %}
+    <div class="grid grid-cols-3 lg:grid-cols-4 gap-1">
+        {% for recent_search in recent_searches %}
+            <a href="{% url 'doctors_list_page' %}?search={{ recent_search.search }}" class="flex items-center gap-2 w-fit px-4 py-2 border border-light-gray rounded-lg">
+                <i data-lucide="history" class="w-5 h-5 text-slate-gray"></i>
+                <span class="text-slate-gray text-sm font-bold">{{ recent_search.search }}</span>
+            </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="flex items-center">
+        <span class="text-sm text-custom-black my-2">شما تاریخچه جستجو ندارید</span>
+    </div>
+{% endif %}

@@ -1,0 +1,25 @@
+{% if doctors %}
+    {% for doctor in doctors %}
+        <a href="{% url 'profile_page' url_title=doctor.url_title %}"
+           class="flex items-center justify-items-start gap-1.5 border-t border-light-gray py-2 px-3 hover:rounded-lg hover:bg-light-gray duration-200 ease-in-out">
+            <div class="">
+                {% if doctor.user.avatar %}
+                    <img src="{{ doctor.user.avatar.url }}" class="w-10 h-10 rounded-full" alt="doctor-img">
+                    {% else %}
+                    <i data-lucide="user" class="w-10 h-10 p-2 rounded-full text-primary-special bg-light-blue"></i>
+                {% endif %}
+            </div>
+            <div class="flex flex-col justify-center gap-2">
+                <span class="text-sm text-slate-gray font-bold">دکتر {{ doctor.user.get_full_name }}</span>
+                {% for specialty in doctor.specialties.all|slice:':1' %}
+                    <span class="text-sm text-slate-gray font-bold">متخصص {{ specialty.name }}</span>
+                {% endfor %}
+            </div>
+        </a>
+    {% endfor %}
+    {% else %}
+    <div class="flex items-center justify-center ">
+        <span class="text-sm text-custom-black">هیچ پزشکی با این مشخصات یافت نشد</span>
+    </div>
+
+{% endif %}

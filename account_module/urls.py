@@ -7,6 +7,8 @@ urlpatterns = [
     path('forgot-password', views.ForgotPassword.as_view(), name='forgot_password_page'),
     path('otp-verification', views.OTPVerification.as_view(), name='otp_verification_page'),
     path('resend-otp/', views.ResendOTP.as_view(), name='resend_otp'),
+    path('doctor-register/', views.DoctorRegisterView.as_view(), name='doctor_register'),
+    path('clinic/', views.ClinicCreateView.as_view(), name='create_clinic'),
     path('logout/', views.LogoutView.as_view(), name='logout_page'),
     path('reset-password/<token>', views.ResetPasswordView.as_view(), name='reset_password_page'),
 

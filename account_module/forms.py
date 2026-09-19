@@ -1,7 +1,8 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
-
+from doctors_module.models import Doctor
+from doctors_module.models import Clinic
 
 class RegisterForm(forms.Form):
     phone_number = forms.CharField(
@@ -163,4 +164,96 @@ class ResetPasswordForm(forms.Form):
             return confirm_password
         else:
             raise ValidationError('کلمه عبور و تکرار کلمه عبور مغایرت دارند')
+
+
+
+class DoctorRegister(forms.ModelForm):
+
+    class Meta:
+
+        model = Doctor
+
+        fields = [
+            'medical_code',
+            'gender',
+            'specialties',
+            'bio',
+            'years_of_experience',
+            'image',
+        ]
+
+        widgets = {
+            'medical_code': forms.TextInput(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+                'placeholder': 'کد نظام پزشکی خود را وارد کنید',
+            }),
+
+            'gender': forms.Select(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+            }),
+
+            'specialties': forms.SelectMultiple(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+            }),
+
+            'bio': forms.Textarea(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+                'rows': 5,
+                'placeholder': 'توضیح کوتاهی درباره خود و تخصصتان وارد کنید',
+            }),
+
+            'years_of_experience': forms.NumberInput(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+                'placeholder': 'تعداد سال سابقه کار خود را وارد کنید',
+                'min': 0,
+            }),
+
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+                'accept': 'image/*',
+            }),
+        }
+
+
+class ClinicForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Clinic
+
+        fields = [
+            'province',
+            'name',
+            'address',
+            'email',
+            'phone_number',
+        ]
+
+        widgets = {
+            'province': forms.Select(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+            }),
+
+            'name': forms.TextInput(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+                'placeholder': 'نام مطب یا کلینیک را وارد کنید',
+            }),
+
+            'address': forms.Textarea(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+                'rows': 4,
+                'placeholder': 'آدرس کامل مطب یا کلینیک را وارد کنید',
+            }),
+
+            'email': forms.EmailInput(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+                'placeholder': 'ایمیل مطب یا کلینیک را وارد کنید',
+            }),
+
+            'phone_number': forms.TextInput(attrs={
+                'class': 'w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 placeholder:text-sm placeholder:text-slate-gray text-sm text-slate-gray transition-all duration-300 ease-in-out',
+                'placeholder': 'شماره تماس مطب یا کلینیک را وارد کنید',
+            }),
+        }
+
 

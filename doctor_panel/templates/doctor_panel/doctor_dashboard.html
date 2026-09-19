@@ -239,56 +239,62 @@
                         <p class="text-sm text-slate-500 mt-1">لیست تمام بیمارانی که به شما مراجعه کرده‌اند.</p>
                     </div>
                 </div>
-                <div class="bg-white rounded-2xl overflow-x-auto">
-                    <table class="w-full text-sm">
-                        <thead>
-                        <tr class="text-slate-400 text-xs border-b border-slate-100">
-                            <th class="text-right font-medium py-3.5 px-5">نام بیمار</th>
-                            <th class="text-right font-medium py-3.5 px-5">شماره تماس</th>
-                            <th class="text-right font-medium py-3.5 px-5">کد ملی</th>
-                            <th class="text-right font-medium py-3.5 px-5">وضعیت</th>
-                            <th class="text-right font-medium py-3.5 px-5">عملیات</th>
-                        </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-50">
-                        <!-- patient row -->
-                        {% for patient in patients %}
-                            <tr>
-                                <td class="py-3.5 px-5 flex items-center gap-3">
-                                    {% if patient.user.avatar.name %}
-                                        <img src="{{ patient.user.avatar.url }}" class="w-9 h-9 rounded-full object-cover" alt=""/>
-                                    {% else %}
-                                        <img src="https://i.pravatar.cc/80?img=45" class="w-9 h-9 rounded-full object-cover" alt=""/>
-                                    {% endif %}
-                                    <span class="font-medium text-slate-700">
-                                        {{ patient.user.get_full_name }}
-                                    </span>
-                                </td>
-
-                                <td class="px-5 text-slate-500 whitespace-nowrap">
-                                    {{ patient.user.phone_number }}
-                                </td>
-
-                                <td class="px-5 text-slate-500">
-                                    {{ patient.user.national_code }}
-                                </td>
-                                <td class="px-5">
-                                <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">
-                                    فعال
-                                </span>
-                                </td>
-
-                                <td class="px-5">
-                                    <button data-patient-id="{{ patient.id }}" class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">
-                                        جزئیات
-                                    </button>
-                                </td>
+                {% if patients %}
+                    <div class="bg-white rounded-2xl overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                            <tr class="text-slate-400 text-xs border-b border-slate-100">
+                                <th class="text-right font-medium py-3.5 px-5">نام بیمار</th>
+                                <th class="text-right font-medium py-3.5 px-5">شماره تماس</th>
+                                <th class="text-right font-medium py-3.5 px-5">کد ملی</th>
+                                <th class="text-right font-medium py-3.5 px-5">وضعیت</th>
+                                <th class="text-right font-medium py-3.5 px-5">عملیات</th>
                             </tr>
-                        {% endfor %}
+                            </thead>
+                            <tbody class="divide-y divide-slate-50">
+                            <!-- patient row -->
+                            {% for patient in patients %}
+                                <tr>
+                                    <td class="py-3.5 px-5 flex items-center gap-3">
+                                        {% if patient.user.avatar.name %}
+                                            <img src="{{ patient.user.avatar.url }}" class="w-9 h-9 rounded-full object-cover" alt=""/>
+                                        {% else %}
+                                            <i data-lucide="user" class="w-9 h-9 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                                        {% endif %}
+                                        <span class="font-medium text-slate-700">
+                                            {{ patient.user.get_full_name }}
+                                        </span>
+                                    </td>
 
-                        </tbody>
-                    </table>
-                </div>
+                                    <td class="px-5 text-slate-500 whitespace-nowrap">
+                                        {{ patient.user.phone_number }}
+                                    </td>
+
+                                    <td class="px-5 text-slate-500">
+                                        {{ patient.user.national_code }}
+                                    </td>
+                                    <td class="px-5">
+                                    <span class="text-[11px] bg-green-50 text-green-700 px-2.5 py-1 rounded-full">
+                                        فعال
+                                    </span>
+                                    </td>
+
+                                    <td class="px-5">
+                                        <button data-patient-id="{{ patient.id }}" class="text-blue-600 text-xs border border-blue-100 rounded-lg px-3 py-1.5 cursor-pointer detail-patient">
+                                            جزئیات
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="flex items-center justify-center ">
+                        <img src="/static/images/no-patient.webp" class="w-full md:w-[70%]" alt="no-patient">
+                    </div>
+                {% endif %}
             </div>
 
             <div id="manage-visit-time" class="doctor-info-panel flex-1 space-y-5 hidden px-3 py-3.5 mt-4 rounded-lg">

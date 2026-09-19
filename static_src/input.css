@@ -52,6 +52,26 @@
     .datepicker-plot-area {
         font-family: "IRANSans", sans-serif !important;
     }
+    .errorlist {
+        margin-top: 6px;
+        padding: 0;
+        list-style: none;
+        color: #ef4444;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .errorlist li {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .errorlist li::before {
+        content: "•";
+        font-size: 14px;
+        font-weight: bold;
+    }
 
     .swiper {
         width: 600px;
@@ -96,4 +116,37 @@
         background-color: #fee2e2;
         border: 1px solid #fca5a5;
     }
-}
+    .float-slow { animation: float 6s ease-in-out infinite; }
+    .float-slower { animation: float 8s ease-in-out infinite; animation-delay: .8s; }
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        }
+    }
+      .field-input {
+        width: 100%;
+        text-align: right;
+        padding: 1rem 3rem 1rem 1rem;
+        border-radius: 1rem;
+        border: 1px solid #E2E8F0;
+        background-color: #F8FAFC;
+        outline: none;
+        transition: border-color .15s, box-shadow .15s, background-color .15s;
+      }
+      .field-input:focus {
+        border-color: #2563EB;
+        background-color: #FFFFFF;
+        box-shadow: 0 0 0 4px rgba(37,99,235,.12);
+      }
+      .field-icon {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94A3B8;
+        pointer-events: none;
+      }
+      select.field-input {
+        appearance: none;
+        -webkit-appearance: none;
+      }

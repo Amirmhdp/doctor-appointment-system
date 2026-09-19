@@ -49,3 +49,26 @@ class ContactUs(models.Model):
         verbose_name = 'تماس با ما'
         verbose_name_plural = 'تماس با ما'
         ordering = ['-created_at']
+
+class FastLink(models.Model):
+    title = models.CharField(max_length=100, verbose_name='عنوان')
+    url_title = models.CharField(max_length=100, verbose_name='عنوان در url')
+    is_active = models.BooleanField(default=True, verbose_name='فعال پ غیرفعال')
+
+    class Meta:
+        verbose_name = 'لینک سریع'
+        verbose_name_plural = 'لینک های سریع'
+    def __str__(self):
+        return self.title
+
+class Footer(models.Model):
+    about_medicare = models.TextField(null=True, blank=True, verbose_name='درباره مدیکر')
+    fast_link = models.ManyToManyField(FastLink, verbose_name='لینک سریع')
+    copyright = models.CharField(max_length=150, null=True, blank=True, verbose_name='قانون کپی رایت')
+    is_active = models.BooleanField(default=True, verbose_name='فعال / غیرفعال')
+
+    def __str__(self):
+        return self.copyright
+    class Meta:
+        verbose_name = 'فوتر'
+        verbose_name_plural = 'فوتر'

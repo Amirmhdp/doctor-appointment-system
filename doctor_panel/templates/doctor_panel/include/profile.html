@@ -17,8 +17,11 @@
         <h2 class="font-bold text-slate-800 mb-5">اطلاعات پروفایل</h2>
         <div class="flex flex-col items-center text-center mb-5">
             <div class="relative">
-                <img src="{{ user.avatar.url }}" class="w-24 h-24 rounded-full object-cover"
-                     alt=""/>
+                {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" class="w-24 h-24 rounded-full object-cover" alt=""/>
+                {% else %}
+                    <i data-lucide="user" class="w-24 h-24 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                {% endif %}
                 <button id="change-id" class="absolute bottom-0 left-0 w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white border-2 border-white">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
                          fill="none" stroke="currentColor" stroke-width="2">
@@ -52,6 +55,7 @@
                 <span class="text-slate-700 text-xs">{{ doctor.created_at|to_jalali }}</span>
             </div>
         </div>
+
     </div>
 
     <!-- Edit form: takes 2 columns -->
@@ -80,6 +84,26 @@
             <div>
                 <label class="block text-xs text-slate-500 mb-1.5">{{ profile_form.gender.label  }}</label>
                 {{ profile_form.gender }}
+            </div>
+            <div>
+                <label class="block text-xs text-slate-500 mb-1.5">{{ doctor_form.medical_code.label  }}</label>
+                {{ doctor_form.medical_code }}
+            </div>
+            <div>
+                <label class="block text-xs text-slate-500 mb-1.5">{{ doctor_form.years_of_experience.label }}</label>
+                {{ doctor_form.years_of_experience }}
+            </div>
+            <div>
+                <label class="block text-xs text-slate-500 mb-1.5">{{ doctor_form.image.label }}</label>
+                {{ doctor_form.image }}
+            </div>
+            <div>
+                <label class="block text-xs text-slate-500 mb-1.5">{{ doctor_form.short_description.label  }}</label>
+                {{ doctor_form.short_description }}
+            </div>
+            <div>
+                <label class="block text-xs text-slate-500 mb-1.5">{{ doctor_form.bio.label  }}</label>
+                {{ doctor_form.bio }}
             </div>
             <div>
                 {{ profile_form.avatar }}
