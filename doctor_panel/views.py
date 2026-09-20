@@ -382,10 +382,7 @@ def update_appointment_status(request, appointment_id):
             'message': 'دسترسی غیرمجاز'
         }, status=403)
 
-    appointment = Appointment.objects.filter(
-        id=appointment_id,
-        doctor=doctor
-    ).first()
+    appointment = Appointment.objects.filter(id=appointment_id, doctor=doctor).select_related( 'patient__user').first()
 
     if not appointment:
         return JsonResponse({
@@ -399,12 +396,20 @@ def update_appointment_status(request, appointment_id):
 
         appointment = form.save()
 
+        patient_user = appointment.patient.user
+
+        avatar_url = None
+
+        if patient_user.avatar:
+            avatar_url = patient_user.avatar.url
+
         return JsonResponse({
             'success': True,
             'appointment': {
                 'id': appointment.id,
                 'status': appointment.status,
                 'status_display': appointment.get_status_display(),
+                'avatar': avatar_url,
             }
         })
 

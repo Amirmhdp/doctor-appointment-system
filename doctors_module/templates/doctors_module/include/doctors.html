@@ -3,13 +3,13 @@
         {% for doctor in page_obj %}
             <a href="{% url 'profile_page' url_title=doctor.url_title %}"
                class="w-auto! h-fit flex! flex-row md:flex-col! justify-center md:justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2! hover:-translate-y-3 ease-in-out duration-300">
-                <div class="w-[43%] sm:w-[23%] md:w-full flex items-center justify-center">
-                    <img src="{{ doctor.image.url }}" class="p-3.75 lg:p-3.25 w-38 h-33.75"
+                <div class="w-[57%] md:w-full flex items-center justify-center">
+                    <img src="{{ doctor.image.url }}" class="md:p-3.75 lg:p-3.25 md:w-38 md:h-33.75 w-33.5 p-2"
                          alt="img-doctor"/>
                 </div>
                 <div class="flex flex-col w-[57%] md:w-full justify-center items-center gap-2">
                     <h2 class="text-custom-black text-sm">دکتر {{ doctor }}</h2>
-                    {% for specialty in doctor.specialties.all %}
+                    {% for specialty in doctor.specialties.all|slice:'0:1' %}
                         <span class="text-sm text-slate-gray">متخصص {{ specialty }}</span>
                     {% endfor %}
 

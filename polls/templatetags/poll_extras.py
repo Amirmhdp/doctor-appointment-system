@@ -37,3 +37,11 @@ def weekday_fa(value):
     }
 
     return weekdays.get(value.weekday(), '')
+
+
+@register.filter
+def thousand_separator(value):
+    try:
+        return f"{int(value):,}"
+    except (ValueError, TypeError):
+        return value

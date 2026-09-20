@@ -66,30 +66,49 @@
 
     {% comment %}mobile navbar{% endcomment %}
     <div class="lg:hidden fixed z-5 bottom-0 right-0 left-0 w-full h-fit px-4 py-1.5 shadow-[0_0_20px_#e0edfd] flex items-center justify-between bg-white">
-        <div class="flex flex-col justify-center items-center gap-1">
+        <a href="{% url 'home' %}" class="flex flex-col justify-center items-center gap-1">
             <i data-lucide="home" class="w-6 h-6 text-slate-gray"></i>
             <span class="text-slate-gray font-bold text-sm">خانه</span>
-        </div>
+        </a>
         <span class="border-l border-light-gray h-9 w-1"></span>
-        <div class="flex flex-col justify-center items-center gap-1">
+        <a href="{% url 'doctors_list_page' %}" class="flex flex-col justify-center items-center gap-1">
             <i data-lucide="calendar-check" class="w-6 h-6 text-slate-gray"></i>
             <span class="text-slate-gray font-bold text-sm">نوبت</span>
-        </div>
+        </a>
         <span class="border-l border-light-gray h-9 w-1"></span>
-        <div class="flex flex-col justify-center items-center gap-1">
+        <a href="{% url 'doctors_list_page' %}" class="flex flex-col justify-center items-center gap-1">
             <i data-lucide="stethoscope" class="w-6 h-6 text-slate-gray"></i>
             <span class="text-slate-gray font-bold text-sm">پزشکان</span>
-        </div>
+        </a>
         <span class="border-l border-light-gray h-9 w-1"></span>
-        <div class="flex flex-col justify-center items-center gap-1">
+        <a href="{% url 'contact_us_page' %}" class="flex flex-col justify-center items-center gap-1">
             <i data-lucide="phone" class="w-6 h-6 text-slate-gray"></i>
             <span class="text-slate-gray font-bold text-sm">تماس با ما</span>
-        </div>
+        </a>
         <span class="border-l border-light-gray h-9 w-1"></span>
-        <div class="flex flex-col justify-center items-center gap-1">
-            <i data-lucide="circle-user-round" class="w-6 h-6 text-slate-gray"></i>
-            <span class="text-slate-gray font-bold text-sm">پروفایل</span>
-        </div>
+        {% if request.user.is_authenticated %}
+            {% if request.user.doctor_profile %}
+                <a href="{% url 'doctor-panel' %}" class="flex flex-col justify-center items-center gap-1">
+                    <i data-lucide="circle-user-round" class="w-6 h-6 text-slate-gray"></i>
+                    <span class="text-slate-gray font-bold text-sm">پروفایل</span>
+                </a>
+                {% elif request.user.user_profile %}
+                    <a href="{% url 'doctor-panel' %}" class="flex flex-col justify-center items-center gap-1">
+                        <i data-lucide="circle-user-round" class="w-6 h-6 text-slate-gray"></i>
+                        <span class="text-slate-gray font-bold text-sm">پروفایل</span>
+                    </a>
+                {% elif request.user.is_superuser %}
+                    <a href="{% url 'admin:index' %}" class="flex flex-col justify-center items-center gap-1">
+                        <i data-lucide="circle-user-round" class="w-6 h-6 text-slate-gray"></i>
+                        <span class="text-slate-gray font-bold text-sm">پروفایل</span>
+                    </a>
+                {% else %}
+                    <a href="{% url 'user_panel_page' %}" class="flex flex-col justify-center items-center gap-1">
+                        <i data-lucide="circle-user-round" class="w-6 h-6 text-slate-gray"></i>
+                        <span class="text-slate-gray font-bold text-sm">پروفایل</span>
+                    </a>
+            {% endif %}
+        {% endif %}
     </div>
 </header>
 
@@ -100,62 +119,63 @@
         <div class="flex flex-row items-center">
             <h2 class="text-primary-special text-2xl text font-bold">Medi<span
                     class="text-primary-dark-blue">Care</span></h2>
-            <img src="/static/images/logo.png" class="w-12.75 -mr-2 -mt-2" alt="logo"/>
+            <a href="{% url 'home' %}">
+                <img src="/static/images/logo.png" class="w-12.75 -mr-2 -mt-2" alt="logo"/>
+            </a>
         </div>
-        <button id="close-sidebar-icon" class="cursor-pointer"><i data-lucide="x"
-                                                                  class="w-10 h-9 border border-low-gray px-1.5 font-normal text-primary-blue-gray rounded-lg"></i>
+        <button id="close-sidebar-icon" class="cursor-pointer"><i data-lucide="x" class="w-10 h-9 border border-low-gray px-1.5 font-normal text-primary-blue-gray rounded-lg"></i>
         </button>
     </div>
 
     {% comment %}list of sidebar items{% endcomment %}
     <div class="flex flex-col gap-4 h-dvh px-2">
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <a href="{% url 'doctors_list_page' %}" class="flex items-center gap-2">
                 <i data-lucide="calendar-clock" class="w-6 h-6"></i>
                 <span class="text-custom-black text-[16px] font-bold">نوبت دهی مطب</span>
-            </div>
+            </a>
             <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
         </div>
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <a href="{% url 'doctors_list_page' %}" class="flex items-center gap-2">
                 <i data-lucide="stethoscope" class="w-6 h-6"></i>
                 <span class="text-custom-black text-[16px] font-bold">لیست پزشکان</span>
-            </div>
+            </a>
             <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
         </div>
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <a href="{% url 'register_page' %}" class="flex items-center gap-2">
                 <i data-lucide="user-plus" class="w-6 h-6"></i>
                 <span class="text-custom-black text-[16px] font-bold">ثبت نام پزشکان</span>
-            </div>
+            </a>
             <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
         </div>
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <a href="{% url 'faq_page' %}" class="flex items-center gap-2">
                 <i data-lucide="message-circle" class="w-6 h-6"></i>
                 <span class="text-custom-black text-[16px] font-bold">سوالات متداول</span>
-            </div>
+            </a>
             <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
         </div>
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <a href="{% url 'terms_conditions_page' %}" class="flex items-center gap-2">
                 <i data-lucide="shield-check" class="w-6 h-6"></i>
                 <span class="text-custom-black text-[16px] font-bold">قوانین و مقررات</span>
-            </div>
+            </a>
             <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
         </div>
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <a href="{% url 'about_us_page' %}" class="flex items-center gap-2">
                 <i data-lucide="info" class="w-6 h-6"></i>
                 <span class="text-custom-black text-[16px] font-bold">درباره ما</span>
-            </div>
+            </a>
             <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
         </div>
         <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
+            <a href="{% url 'contact_us_page' %}" class="flex items-center gap-2">
                 <i data-lucide="phone" class="w-6 h-6"></i>
                 <span class="text-custom-black text-[16px] font-bold">تماس با ما</span>
-            </div>
+            </a>
             <i data-lucide="chevron-left" class="w-6 h-6 text-custom-black"></i>
         </div>
     </div>
@@ -209,5 +229,4 @@
 
 {% comment %}overlay{% endcomment %}
 
-<div class="w-full fixed inset-0 bg-overlay-gray/50 z-30 opacity-0 invisible transition-all duration-300"
-     id="overlay"></div>
+<div class="w-full fixed inset-0 bg-overlay-gray/50 z-30 opacity-0 invisible transition-all duration-300" id="overlay"></div>

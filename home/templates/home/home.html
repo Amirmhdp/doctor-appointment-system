@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <main class="px-3 py-1 flex flex-col justify-center animate-slide-up mt-10">
+    <main class="px-3 py-1 flex flex-col justify-center animate-slide-up mt-13.75">
         {% comment %}hero header{% endcomment %}
         <div class="flex flex-col lg:flex-row gap-3 justify-center items-center mt-2">
             <div class="w-full flex items-center justify-center lg:w-[60%]">
@@ -127,11 +127,6 @@
 
                     </div>
                 </div>
-                {% comment %} <div class="relative flex items-center justify-between gap-3 border border-light-gray rounded-lg px-5 py-2 w-full lg:py-3 cursor-pointer">
-          <label for="appointment-date" id="btn-date-calendar" class="cursor-pointer dropdown-button"><i data-lucide="calendar-days" class="w-5 h-5 text-slate-gray"></i></label>
-          <input type="text" id="appointment-date" name="date" readonly placeholder="انتخاب تاریخ" class="w-full bg-transparent focus:outline-none focus:ring-0 border-none text-sm text-slate-gray cursor-pointer" />
-          <i data-lucide="chevron-down" class="w-5 h-5 hidden sm:inline text-slate-gray"></i>
-        </div> {% endcomment %}
                 <button class="flex items-center cursor-pointer justify-center gap-1 text-white bg-primary-special px-5 py-2 w-full rounded-lg lg:py-3">
                     <i data-lucide="search" class="w-5 h-5 text-white"></i>
                     جستجو
@@ -146,10 +141,6 @@
         <div class="flex flex-col justify-center gap-0.5 lg:gap-2 px-3 py-3 shadow-[0_0_20px_#e0edfd] mt-4">
             <div class="mt-4 px-2 flex items-center justify-between">
                 <h2 class="text-lg text-custom-black font-black">محبوب ترین تخصص ها</h2>
-                <span class="text-sm text-primary-special flex items-center gap-1">
-          مشاهده همه
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special"></i>
-        </span>
             </div>
             <!-- Slider main container -->
             <div class="swiper special-list w-full h-fit mt-5">
@@ -175,13 +166,14 @@
         </div>
 
         {% comment %}end special list{% endcomment %}
+
         {% comment %} register doctor {% endcomment %}
-         <section class="relative md:flex md:items-center md:justify-center md:shadow-[0_0px_30px_#e0edfd] lg:shadow-none md:rounded-lg w-full overflow-hidden bg-white mt-4 ">
+         <section class="relative md:flex md:items-center md:justify-center md:shadow-[0_0px_30px_#e0edfd] lg:shadow-none md:rounded-lg w-full overflow-hidden bg-white mt-6 ">
             <!-- Decorative background blobs -->
             <div class="md:hidden absolute -top-10 -right-10 w-40 h-40 bg-blue-200/50 rounded-full blur-2xl pointer-events-none"></div>
             <div class="md:hidden absolute bottom-24 -left-12 w-44 h-44 bg-blue-300/40 rounded-full blur-2xl pointer-events-none"></div>
 
-            <div class="w-full lg:w-[70%]  md:flex items-center justify-center relative bg-white rounded-lg  lg:shadow-[0_0px_30px_#e0edfd] my-8  px-3 py-2 sm:p-8">
+            <div class="w-full lg:w-[70%]  md:flex items-center justify-center relative bg-white rounded-lg  lg:shadow-[0_0px_30px_#e0edfd] md:my-8  px-3 py-2 sm:p-8">
 
               <!-- Illustration area -->
               <div class="relative mb-8 sm:mb-10">
@@ -228,7 +220,7 @@
                   با عضویت در مدیکر به عنوان پزشک، می‌توانید به راحتی نوبت‌های خود را مدیریت کرده و بیماران بیشتری را جذب کنید.
                 </p>
 
-                <a href="{% url 'doctor_register' %}" class="mt-8 inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 transition-colors text-white font-semibold rounded-2xl px-8 py-4 shadow-lg shadow-blue-200">
+                <a href="{% url 'doctor_register' %}" class="mt-4 inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 transition-colors text-white font-semibold rounded-2xl px-8 py-4 shadow-lg shadow-blue-200">
                   <span>ثبت نام به عنوان پزشک</span>
                   <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-5-5m0 0l5-5m-5 5h12"/>
@@ -246,10 +238,10 @@
         <div class="flex flex-col justify-center gap-0.5 lg:gap-2 px-3 py-3 shadow-[0_0_20px_#e0edfd] mt-4">
             <div class="mt-4 px-2 flex items-center justify-between">
                 <h2 class="text-lg text-custom-black font-black">محبوب ترین پزشکان</h2>
-                <span class="text-sm text-primary-special flex items-center gap-1">
-          مشاهده همه
-          <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special"></i>
-        </span>
+                <a href="{% url 'doctors_list_page' %}" class="text-sm text-primary-special flex items-center gap-1">
+                  مشاهده همه
+                  <i data-lucide="chevron-left" class="w-5 h-5 text-primary-special"></i>
+                </a>
             </div>
             <!-- Slider main container -->
             <div class="swiper special-list w-full h-fit mt-5">
@@ -339,11 +331,10 @@
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                         </div>
-                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
-                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <p class="text-xs text-slate-gray font-bold leading-6">ه سایت کامله، هم نوبت پزشک داره هم مشاوره تلفنی، پشتیبانی هم واقعاً عالیه. خیلی راضی بودم 😍😍</p>
                         <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                            <span class="text-sm text-slate-gray font-bold">علی رضایی</span>
+                            <span class="text-sm text-slate-gray font-bold">۱۴۰۵/۰۶/۲۵</span>
                         </div>
                     </div>
                     <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
@@ -358,11 +349,10 @@
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                         </div>
-                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
-                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <p class="text-xs text-slate-gray font-bold leading-6">خیلی راحت تونستم پزشک موردنظرم رو پیدا کنم و نوبت بگیرم. سایت هم سریع و کاربردیه، واقعاً عالیه 👌❤️</p>
                         <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                            <span class="text-sm text-slate-gray font-bold">سارا محمدی</span>
+                            <span class="text-sm text-slate-gray font-bold">۱۴۰۵/۰۶/۲۶</span>
                         </div>
                     </div>
                     <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
@@ -377,11 +367,10 @@
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                         </div>
-                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
-                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <p class="text-xs text-slate-gray font-bold leading-6">تجربه خیلی خوبی داشتم، از گرفتن نوبت تا مشاوره تلفنی همه‌چیز مرتب و بدون دردسر انجام شد. ممنون از تیم خوبتون 🌹</p>
                         <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                            <span class="text-sm text-slate-gray font-bold">محمد حسینی</span>
+                            <span class="text-sm text-slate-gray font-bold">۱۴۰۵/۰۶/۲۷</span>
                         </div>
                     </div>
                     <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
@@ -395,11 +384,10 @@
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                         </div>
-                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
-                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <p class="text-xs text-slate-gray font-bold leading-6">طراحی سایت خیلی خوبه و استفاده ازش راحت و روانه. پشتیبانی هم خیلی سریع جواب میده. واقعاً تجربه خوبی بود 😍</p>
                         <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                            <span class="text-sm text-slate-gray font-bold">امیر کریمی</span>
+                            <span class="text-sm text-slate-gray font-bold">۱۴۰۵/۰۶/۲۹</span>
                         </div>
                     </div>
                     <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
@@ -414,11 +402,10 @@
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                         </div>
-                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
-                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <p class="text-xs text-slate-gray font-bold leading-6">همه‌چیز خیلی منظم و حرفه‌ای طراحی شده، پزشک‌های مختلف رو میشه راحت پیدا کرد و نوبت گرفت. پشتیبانی هم عالیه 🌸😍</p>
                         <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                            <span class="text-sm text-slate-gray font-bold">مریم رضایی</span>
+                            <span class="text-sm text-slate-gray font-bold">۱۴۰۵/۰۶/۳۰</span>
                         </div>
                     </div>
                     <div class="swiper-slide w-58.75! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
@@ -433,11 +420,10 @@
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                             <img src="/static/images/star-svgrepo-com (2).svg" class="w-5 h-5" alt="star"/>
                         </div>
-                        <p class="text-xs text-slate-gray font-bold leading-6">یه سایت کامله هم نوبت پزشک میده هم مشاوره
-                            تلفنی هم پشتیبانی عالی داره و بدون نقصه کارتون عالیه 😍 😍😍</p>
+                        <p class="text-xs text-slate-gray font-bold leading-6">واقعاً سایت کاملیه، هم نوبت حضوری داره هم مشاوره تلفنی و روند گرفتن نوبت هم خیلی ساده‌ست. از خدماتتون کاملاً راضی بودم 🙏❤️</p>
                         <div class="flex flex-col justify-center items-center w-full gap-1.5 border-t-2 border-dashed border-light-gray py-2">
-                            <span class="text-sm text-slate-gray font-bold">امیرمحمد توکلیان</span>
-                            <span class="text-sm text-slate-gray font-bold">13 آبان 1404</span>
+                            <span class="text-sm text-slate-gray font-bold">رضا اکبری</span>
+                            <span class="text-sm text-slate-gray font-bold">۱۴۰۵/۰۶/۳۱</span>
                         </div>
                     </div>
                 </div>

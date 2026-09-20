@@ -2553,7 +2553,6 @@ document.addEventListener('click', async (event) => {
         return;
     }
 
-    // آپدیت وضعیت همان ردیف جدول
     const appointmentRow = document.querySelector(
         `[data-appointment-row="${appointmentId}"]`
     );
@@ -2571,10 +2570,10 @@ document.addEventListener('click', async (event) => {
         return;
     }
 
-    statusElement.textContent =
-        result.appointment.status_display;
+    statusElement.textContent = result.appointment.status_display;
+    const avatarElement = appointmentRow.querySelector('.appointment-avatar');
 
-    // بستن Modal
+
     editStatusModal.classList.add(
         'invisible',
         'opacity-0',
