@@ -27,14 +27,14 @@ def doctor_panel(request):
     get_user = User.objects.filter(id=user).first()
     if not Doctor.objects.filter(user_id=request.user.id).exists():
         return redirect(reverse('home'))
-    doctor = Doctor.objects.get(user_id=request.user.id)
+    doctor = Doctor.objects.select_related('user').prefetch_related('specialties').get(user_id=request.user.id)
     today = timezone.localdate()
     today_patients_count = Patient.objects.filter(appointments__doctor=doctor,appointments__available_slot__date=today).distinct().count()
     today_appointments = Appointment.objects.filter(doctor=doctor, available_slot__date=today).select_related('patient__user', 'available_slot')
     profile_form = ProfileForm(instance=get_user)
     doctor_form = DoctorForm(instance=doctor)
     appointment = Appointment.objects.filter(doctor=doctor, available_slot__is_available=False).select_related('patient__user', 'available_slot').order_by('available_slot__date')
-    patients = Patient.objects.filter(appointments__doctor=doctor).distinct().order_by('appointments__available_slot__date')
+    patients = Patient.objects.filter(appointments__doctor=doctor).select_related('user').distinct().order_by('appointments__available_slot__date')
     paginator = Paginator(appointment, 8)
     get_page_appointment = request.GET.get('page')
     page_obj = paginator.get_page(get_page_appointment)
@@ -216,8 +216,6 @@ def exception_day(request: HttpRequest):
         })
     if request.method == 'POST':
         exception_form = ScheduleExceptionForm(request.POST)
-        print(exception_form)
-        print(request.POST.get('date'))
         if exception_form.is_valid():
             date = exception_form.cleaned_data['date_hidden']
             start_time = exception_form.cleaned_data['exception_start_time'] or None
@@ -305,7 +303,6 @@ def EditProfile(request):
     profile_form = ProfileForm(request.POST, request.FILES, instance=user)
 
     if profile_form.is_valid() and doctor_form.is_valid():
-        print('form valid')
         profile_form.save()
         doctor_form.save()
         profile_form = ProfileForm(instance=user)

@@ -155,7 +155,7 @@
                                 {% endif %}
                                 <div>
                                     <div class="font-bold text-slate-800">دکتر {{ next_appointment.doctor.user.get_full_name }}</div>
-                                    {% for specialty in next_appointment.specialties %}
+                                    {% for specialty in next_appointment.doctor.specialties.all|slice:':1' %}
                                         <div class="text-xs text-slate-400 mt-1">متخصص {{ specialty }}</div>
                                     {% endfor %}
 

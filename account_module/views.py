@@ -48,10 +48,10 @@ class RegisterView(View):
                 new_user.save()
                 Patient.objects.create(user=new_user)
                 request.session['verification_user_id'] = new_user.id
-                # send_sms_task.delay(
-                #     phone_number,
-                #     f"کد فعال سازی حساب کاربری مدیکر: {new_user.verification_code}"
-                # )
+                send_sms_task.delay(
+                    phone_number,
+                    f"کد فعال سازی حساب کاربری مدیکر: {new_user.verification_code}"
+                )
                 return redirect(reverse('otp_verification_page'))
         context = {
             'register_form': register_form

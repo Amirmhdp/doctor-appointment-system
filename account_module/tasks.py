@@ -62,11 +62,11 @@ def send_appointment_reminders():
         if reminder_start <= slot_datetime <= reminder_end:
             user_phone_number = appointment.patient.user.phone_number
 
-            # send_sms_task.delay(
-            #     user_phone_number,
-            #     f'تاریخ نوبت شما در مدیکر: {slot.date}'
-            # )
-            print('ارسال شد !!!')
+            send_sms_task.delay(
+                user_phone_number,
+                f'تاریخ نوبت شما در مدیکر: {slot.date}'
+            )
+
 
             appointment.reminder_sent = True
             appointment.save(update_fields=['reminder_sent'])

@@ -163,10 +163,8 @@
                             نظرات ({{ comments_count }})
                         </span>
                         {% if request.user.is_authenticated %}
-                            <button id="open-comment-box-btn"
-                                    class="flex items-center gap-2 justify-center border border-primary-special text-primary-special rounded-lg px-4 py-1.5 hover:bg-primary-special cursor-pointer hover:text-white duration-200 ease-in-out transition-all group">
-                                <i data-lucide="message-square-plus"
-                                   class="w-6 h-6 group-hover:text-white text-primary-special"></i>ثبت نظر
+                            <button id="open-comment-box-btn" class="flex items-center gap-2 justify-center border border-primary-special text-primary-special rounded-lg px-4 py-1.5 hover:bg-primary-special cursor-pointer hover:text-white duration-200 ease-in-out transition-all group">
+                                <i data-lucide="message-square-plus" class="w-6 h-6 group-hover:text-white text-primary-special"></i>ثبت نظر
                             </button>
                         {% endif %}
                     </div>
@@ -327,17 +325,11 @@
 
                 {% for group in slots_by_date %}
 
-                    <div
-                        class="{% if not forloop.first %}hidden {% endif %}grid grid-cols-4 w-full gap-2 booking-appoiment"
-                        id="booking-appoiment-{{ forloop.counter }}"
-                    >
+                    <div class="{% if not forloop.first %}hidden {% endif %}grid grid-cols-4 w-full gap-2 booking-appoiment" id="booking-appoiment-{{ forloop.counter }}">
 
                         {% for slot in group.list %}
 
-                            <div
-                                class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg"
-                                data-slot-id="{{ slot.id }}"
-                            >
+                            <div class="booking-appoiment-item cursor-pointer flex items-center justify-center border border-light-gray px-3 py-2 rounded-lg" data-slot-id="{{ slot.id }}">
                                 <span class="text-sm text-custom-black font-bold">
                                     {{ slot.start_time|time:"H:i" }}
                                 </span>

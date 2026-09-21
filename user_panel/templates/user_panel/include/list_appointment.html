@@ -107,14 +107,7 @@
 
                 <!-- action -->
                 {% if appointment.status == 'pending' or appointment.status == 'confirmed' %}
-                    <button
-                            type="button"
-                            data-appointment-id="{{ appointment.id }}"
-                            data-url="{% url 'cancel_appointment' appointment.id %}"
-                            data-doctor="{{ appointment.doctor.user.get_full_name }}"
-                            data-date="{{ appointment.available_slot.date|to_jalali }}"
-                            data-time="{{ appointment.available_slot.start_time|time:'H:i' }}"
-                            class="cancel-appoiment-btn cursor-pointer text-red-700 text-xs border border-red-100 rounded-lg px-4 py-2 whitespace-nowrap w-full md:w-auto shrink-0">
+                    <button type="button" data-appointment-id="{{ appointment.id }}" data-url="{% url 'cancel_appointment' appointment.id %}" data-doctor="{{ appointment.doctor.user.get_full_name }}" data-date="{{ appointment.available_slot.date|to_jalali }}" data-time="{{ appointment.available_slot.start_time|time:'H:i' }}" class="cancel-appoiment-btn cursor-pointer text-red-700 text-xs border border-red-100 rounded-lg px-4 py-2 whitespace-nowrap w-full md:w-auto shrink-0">
                             لغو نوبت
                     </button>
                 {% endif %}

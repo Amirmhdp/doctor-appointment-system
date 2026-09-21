@@ -25,3 +25,9 @@ node_modules/
 # OS
 .DS_Store
 Thumbs.db
+
+# Celery Beat
+celerybeat-schedule.bak
+celerybeat-schedule.dat
+celerybeat-schedule.dir
+

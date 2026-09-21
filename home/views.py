@@ -36,9 +36,8 @@ def live_search(request):
             Q(user__first_name__icontains=searched_value)|
             Q(user__last_name__icontains=searched_value)|
             Q(specialties__name__icontains=searched_value) |
-            Q(clinics__province__name__icontains=searched_value)).distinct()[:6]
-        # recent_search = RecentSearch(user=request.user, search=searched_value)
-        # recent_search.save()
+            Q(clinics__province__name__icontains=searched_value)).select_related('user').prefetch_related('specialties').distinct()[:6]
+
         context = {
             'doctors': doctors
         }
@@ -78,7 +77,7 @@ def save_recent_search(request):
 
 
 def footer_component(request):
-    footer = Footer.objects.filter(is_active=True, id=1).first()
+    footer = Footer.objects.filter(is_active=True, id=1).prefetch_related('fast_link').first()
     context = {
         'footer': footer
     }
@@ -92,7 +91,7 @@ class Home(TemplateView):
         context = super(Home, self).get_context_data()
         provinces = Province.objects.all()
         specialties = Specialty.objects.filter(is_active=True)
-        doctors = Doctor.objects.filter(is_active=True)[:12]
+        doctors = Doctor.objects.filter(is_active=True).select_related('user').prefetch_related('specialties')[:12]
         context['specialties'] = specialties
         context['doctors'] = doctors
         context['provinces'] = provinces

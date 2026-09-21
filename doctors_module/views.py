@@ -100,27 +100,16 @@ def doctor_list(request):
 
 
 def detail_doctor(request, url_title):
-    doctor = get_object_or_404(
-        Doctor.objects.prefetch_related('clinics', 'specialties'),
-        is_active=True,
-        url_title=url_title,
-    )
+    doctor = get_object_or_404(Doctor.objects.prefetch_related('clinics', 'specialties', 'educations'),is_active=True,url_title=url_title,)
     today = timezone.localdate()
-    available_slots = AvailableSlot.objects.filter(
-        doctor=doctor,
-        is_available=True,
-        date__gte=today
-    ).order_by(
-        'date',
-        'start_time'
-    )
+    available_slots = AvailableSlot.objects.filter(doctor=doctor, is_available=True, date__gte=today).order_by('date','start_time')
     user = request.user
 
     is_favorite = False
 
     if user.is_authenticated and hasattr(user, 'patient_profile'):is_favorite = FavoriteDoctor.objects.filter(patient=user.patient_profile,doctor=doctor).exists()
-    weekly_schedules = WeeklySchedule.objects.filter(doctor=doctor, is_active=True).order_by('weekday')
-    comments_queryset = Comment.objects.filter(is_active=True, doctor_id=doctor.id, parent=None).select_related('user').order_by('-created_at')
+    weekly_schedules = WeeklySchedule.objects.filter(doctor=doctor, is_active=True).prefetch_related('periods').order_by('weekday')
+    comments_queryset = Comment.objects.filter(is_active=True, doctor_id=doctor.id, parent=None).select_related('user', 'user__doctor_profile').prefetch_related('comment_set', 'comment_set__user').order_by('-created_at')
     faqs = FAQ.objects.filter(is_active=True, specialties__in=doctor.specialties.all())
     is_doctor = hasattr(request.user, 'doctor_profile')
 

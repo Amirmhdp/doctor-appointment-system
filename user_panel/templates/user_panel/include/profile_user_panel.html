@@ -1,62 +1,60 @@
 <div class="flex-1  space-y-5">
-                    <div>
-                        <h1 class="text-xl font-bold text-slate-800">پروفایل</h1>
-                        <p class="text-sm text-slate-500 mt-1">اطلاعات حساب کاربری و پروفایل خود را مدیریت کنید.</p>
-                    </div>
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                        <!-- Profile summary card -->
-                        <div class="bg-white rounded-2xl p-1">
-                            <div class="flex flex-col items-center text-center mb-5">
-                                <div class="relative">
-                                    {% if user.avatar %}
-                                        <img src="{{ user.avatar.url }}" class="w-24 h-24 rounded-full object-cover" alt=""/>
-                                        {% else %}
-                                        <i data-lucide="user" class="w-24 h-24 text-primary-special bg-light-blue p-3 rounded-full"></i>
-                                    {% endif %}
-                                    <button id="edit-img-profile" class="absolute bottom-0 left-0 w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white border-2 border-white">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
-                                             fill="none" stroke="currentColor" stroke-width="2">
-                                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                                            <circle cx="12" cy="13" r="4"/>
-                                        </svg>
-                                        {{ profile_form.avatar.label_tag }}
-                                    </button>
-                                </div>
-                                <div class="font-bold text-slate-800 mt-3">{{ user.get_full_name }}</div>
-
-                            </div>
-
-                            <div class="border-t border-slate-100 pt-1 text-sm text-center">
-                                <span class="text-slate-400 text-xs">عضویت از:</span>
-                                <span class="text-slate-700 text-xs">فروردین ۱۴۰۳</span>
-                            </div>
-                        </div>
-                        <!-- Edit form -->
-                        <form class="lg:col-span-2 bg-white rounded-2xl " id="user-panel-profile-form">
-                            <div class="space-y-4">
-                                <div>
-                                    <label class="block text-xs text-slate-500 mb-1.5">{{ profile_form.first_name.label }}</label>
-{#                                    <input type="text" value="سارا احمدی"#}
-{#                                           class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400"/>#}
-                                    {{ profile_form.first_name }}
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-slate-500 mb-1.5">{{ profile_form.last_name.label }}</label>
-                                    {{ profile_form.last_name }}
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-slate-500 mb-1.5">{{ profile_form.phone_number.label }}</label>
-                                    {{ profile_form.phone_number }}
-                                </div>
-                                <div>
-                                    <label class="block text-xs text-slate-500 mb-1.5">{{ profile_form.gender.label }}</label>
-                                    {{ profile_form.gender }}
-                                </div>
-                                {{ profile_form.avatar }}
-                                <button type="button" id="change-profile-user-btn" class="cursor-pointer w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl mt-2">
-                                    ذخیره تغییرات
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+    <div>
+        <h1 class="text-xl font-bold text-slate-800">پروفایل</h1>
+        <p class="text-sm text-slate-500 mt-1">اطلاعات حساب کاربری و پروفایل خود را مدیریت کنید.</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <!-- Profile summary card -->
+        <div class="bg-white rounded-2xl p-1">
+            <div class="flex flex-col items-center text-center mb-5">
+                <div class="relative">
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" class="w-24 h-24 rounded-full object-cover" alt=""/>
+                        {% else %}
+                        <i data-lucide="user" class="w-24 h-24 text-primary-special bg-light-blue p-3 rounded-full"></i>
+                    {% endif %}
+                    <button id="edit-img-profile" class="absolute bottom-0 left-0 w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center text-white border-2 border-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24"
+                             fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        {{ profile_form.avatar.label_tag }}
+                    </button>
                 </div>
+                <div class="font-bold text-slate-800 mt-3">{{ user.get_full_name }}</div>
+
+            </div>
+
+            <div class="border-t border-slate-100 pt-1 text-sm text-center">
+                <span class="text-slate-400 text-xs">عضویت از:</span>
+                <span class="text-slate-700 text-xs">فروردین ۱۴۰۳</span>
+            </div>
+        </div>
+        <!-- Edit form -->
+        <form class="lg:col-span-2 bg-white rounded-2xl " id="user-panel-profile-form">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1.5">{{ profile_form.first_name.label }}</label>
+                    {{ profile_form.first_name }}
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1.5">{{ profile_form.last_name.label }}</label>
+                    {{ profile_form.last_name }}
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1.5">{{ profile_form.phone_number.label }}</label>
+                    {{ profile_form.phone_number }}
+                </div>
+                <div>
+                    <label class="block text-xs text-slate-500 mb-1.5">{{ profile_form.gender.label }}</label>
+                    {{ profile_form.gender }}
+                </div>
+                {{ profile_form.avatar }}
+                <button type="button" id="change-profile-user-btn" class="cursor-pointer w-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-3 rounded-xl mt-2">
+                    ذخیره تغییرات
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -6,12 +6,10 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.views.decorators.http import require_POST
-
 from account_module.models import User
-from doctors_module.models import Appointment, Doctor
+from doctors_module.models import Appointment
 from patient.models import FavoriteDoctor
 from user_panel.forms import ProfileForm
-
 
 @login_required
 def user_panel(request):
@@ -21,7 +19,7 @@ def user_panel(request):
     user = request.user
     profile_form = ProfileForm(instance=user)
     appointments = Appointment.objects.filter(patient__user_id=patient,status__in=['pending', 'confirmed']).select_related('doctor__user','available_slot', ).prefetch_related('doctor__specialties', ).order_by('available_slot__date', 'available_slot__start_time')
-    favorite_doctors = FavoriteDoctor.objects.filter(patient__user=user)
+    favorite_doctors = FavoriteDoctor.objects.filter(patient__user=user).select_related('doctor__user').prefetch_related('doctor__specialties')
     upcoming_appointments = appointments.filter(status__in=['pending', 'confirmed'],available_slot__date__gte=today).order_by('available_slot__date', 'available_slot__start_time')
     past_appointments = Appointment.objects.filter(status='completed',patient__user_id=patient).order_by('available_slot__date', 'available_slot__start_time')
     cancelled_appointments = Appointment.objects.filter(status='cancelled', patient__user_id=patient).order_by('-available_slot__date', '-available_slot__start_time')
@@ -39,12 +37,10 @@ def user_panel(request):
 
     return render(request,'user_panel/user_panel.html',context)
 
-
-
 @require_POST
 def show_canceled(request, pk):
 
-    appointment = Appointment.objects.filter(id=pk, available_slot__is_available=False).first()
+    appointment = Appointment.objects.filter(id=pk, available_slot__is_available=False).select_related('doctor__user', 'available_slot').first()
 
     if not appointment:
         return JsonResponse({
@@ -166,7 +162,7 @@ def remove_favorite_doctor(request, pk):
         })
     else:
         favorite_doctor.delete()
-        favorite_doctors = FavoriteDoctor.objects.filter(patient__user=request.user).annotate(avg_rating=Avg('doctor__comments__rating'))
+        favorite_doctors = FavoriteDoctor.objects.filter(patient__user=request.user).annotate(avg_rating=Avg('doctor__comments__rating')).select_related('doctor__user').prefetch_related('doctor__specialties')
         context = {
             'favorite_doctors': favorite_doctors
         }

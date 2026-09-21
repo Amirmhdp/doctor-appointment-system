@@ -15,15 +15,7 @@ from payment_module.zarinpal import ZarinPal
 @login_required
 def payment_view(request, slot_id):
 
-    slot = get_object_or_404(
-        AvailableSlot.objects.select_related(
-            'doctor__user'
-        ).prefetch_related(
-            'doctor__specialties'
-        ),
-        id=slot_id,
-        is_available=True
-    )
+    slot = get_object_or_404(AvailableSlot.objects.select_related('doctor__user' ).prefetch_related('doctor__specialties', 'doctor__clinics'), id=slot_id, is_available=True)
 
     try:
         patient = request.user.patient_profile
@@ -156,7 +148,7 @@ def payment_callback(request):
 
     if status != 'OK':
 
-        payment = Payment.objects.filter(authority=authority).first()
+        payment = Payment.objects.filter(authority=authority).select_related('slot__doctor__user').first()
 
         if payment:
             payment.status = 'failed'

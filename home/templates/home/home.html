@@ -249,8 +249,7 @@
                 <div class="swiper-wrapper flex! items-center!">
                     <!-- Slides -->
                     {% for doctor in doctors %}
-                        <a href="{% url 'profile_page' url_title=doctor.url_title %}"
-                           class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
+                        <a href="{% url 'profile_page' url_title=doctor.url_title %}" class="swiper-slide w-auto! flex! flex-col! justify-center! items-center! gap-2! px-2! py-2! shadow-[0_0_20px_#e0edfd] rounded-lg! mr-2!">
                             <div class="">
                                 {% if doctor.image %}
                                     <img src="{{ doctor.image.url }}" class="p-3.75 lg:p-3.25 w-38 h-33.75" alt="img-doctor"/>
