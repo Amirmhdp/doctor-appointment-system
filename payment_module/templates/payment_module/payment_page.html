@@ -52,7 +52,7 @@
         <span class="text-[15px] text-slate-700">پشتیبانی آنلاین</span>
         <span class="text-[15px] text-slate-700">
           امکان لغو نوبت
-          <a href="" class="text-[15px] text-primary-special">(مشاهده شرایط)</a>
+          <a href="{% url 'terms_conditions_page' %}" class="text-[15px] text-primary-special">(مشاهده شرایط)</a>
         </span>
       </div>
       <div class="flex flex-col justify-center md:p-8 px-4 py-3.25 border border-light-gray rounded-lg shadow-[0_0_20px_#e0edfd] gap-4">
@@ -64,17 +64,17 @@
       <span class="text-custom-black font-bold text-[15px]">جزئیات پرداخت</span>
       <div class="flex items-center justify-between">
         <span class="text-[15px] text-slate-700">هزینه ویزیت</span>
-        <span class="text-[15px] text-slate-700">{{ visit_price|thousand_separator }} تومانء</span>
+        <span class="text-[15px] text-slate-700">{{ visit_price|thousand_separator }} تومان</span>
       </div>
       <div class="flex items-center justify-between">
         <span class="text-[15px] text-slate-700">۱۰٪ مالیات بر ارزش افزوده</span>
-        <span class="text-[15px] text-slate-700">{{ tax|thousand_separator }} تومانء</span>
+        <span class="text-[15px] text-slate-700">{{ tax|thousand_separator }} تومان</span>
       </div>
       <div class="flex items-center justify-between mt-3">
         <span class="text-[15px] text-slate-700">مبلغ قابل پرداخت</span>
-        <span class="text-[17px] text-slate-700">{{ total_price|thousand_separator }} تومانء</span>
+        <span class="text-[17px] text-slate-700">{{ total_price|thousand_separator }} تومان</span>
       </div>
-      <p class="text-[15px] text-slate-700">پرداخت به منزله پذیرش <a href="" class="text-primary-special">شرایط و قوانین</a> است</p>
+      <p class="text-[15px] text-slate-700">پرداخت به منزله پذیرش <a href="{% url 'terms_conditions_page' %}" class="text-primary-special">شرایط و قوانین</a> است</p>
       <button
     type="button"
     id="payment-btn"
